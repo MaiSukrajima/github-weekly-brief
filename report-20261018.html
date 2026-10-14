@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 周度热门简报 · 2026 第 42 周</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --txt:#1b2230; --muted:#5c6675; --line:#e5e8ee;
+    --head1:#0f172a; --head2:#1f2b45; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ============ header ============ */
+  header{
+    background:linear-gradient(135deg,var(--head1),var(--head2) 70%);
+    color:#fff; padding:38px 28px 30px; position:relative; overflow:hidden;
+  }
+  header::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(600px 220px at 82% -10%,rgba(99,102,241,.45),transparent 70%),
+               radial-gradient(520px 200px at 8% 120%,rgba(16,185,129,.35),transparent 70%);
+    pointer-events:none;
+  }
+  .hwrap{max-width:1240px;margin:0 auto;position:relative;z-index:1;}
+  .hbadge{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#c7d2fe;border:1px solid rgba(199,210,254,.35);border-radius:999px;padding:3px 12px;margin-bottom:14px;}
+  h1{margin:0 0 8px;font-size:30px;letter-spacing:.3px;font-weight:750;}
+  .hsub{color:#c3ccdd;font-size:14.5px;margin:0;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:10px;padding:8px 14px;font-size:13.5px;color:#e6ebf5;}
+  .stat b{font-size:17px;color:#fff;margin-right:5px;font-variant-numeric:tabular-nums;}
+
+  /* ============ nav ============ */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);}
+  .navin{max-width:1240px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .navlink{font-size:13.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+    color:var(--muted);cursor:pointer;transition:.15s;background:#fff;white-space:nowrap;}
+  .navlink:hover{border-color:var(--accent,#6366f1);color:var(--txt);}
+  .navlink .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;}
+  .navspacer{flex:1;}
+  #q{font-size:13.5px;padding:7px 12px;border-radius:9px;border:1px solid var(--line);
+    min-width:170px;outline:none;background:#fff;color:var(--txt);}
+  #q:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12);}
+
+  /* ============ sections ============ */
+  main{max-width:1240px;margin:0 auto;padding:26px 28px 70px;}
+  section{margin-bottom:34px;scroll-margin-top:64px;}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-left:12px;
+    border-left:5px solid var(--accent);}
+  .sec-head h2{margin:0;font-size:21px;letter-spacing:.2px;font-weight:750;}
+  .sec-head .count{font-size:12.5px;color:var(--muted);background:#eef1f6;border-radius:999px;padding:2px 10px;}
+  .sec-sub{margin:6px 0 18px;padding-left:17px;color:var(--muted);font-size:13.5px;}
+
+  /* ============ grid + card ============ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;}
+  .card{
+    position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,25,45,.10);}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),transparent);}
+
+  /* card style variants (per-project look) */
+  .st-grid{background-image:linear-gradient(rgba(15,23,42,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,23,42,.045) 1px,transparent 1px);background-size:20px 20px;}
+  .st-soft{background:#fff;background:color-mix(in srgb,var(--accent) 7%,#fff);border-radius:18px;}
+  .st-bold{border-left:7px solid var(--accent);border-radius:6px;}
+  .st-paper{background:#fdfcf7;border:1.5px dashed #d7dbe4;border-radius:5px;}
+
+  .card-head{display:flex;gap:12px;padding:15px 15px 10px;align-items:flex-start;}
+  .ico{flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+    background:#eef1f6;background:color-mix(in srgb,var(--accent) 16%,#fff);
+    border:1px solid #e2e6ee;border:1px solid color-mix(in srgb,var(--accent) 32%,#fff);}
+  .hd{flex:1;min-width:0;}
+  .pname{font-size:15.5px;font-weight:700;margin:0 0 3px;letter-spacing:.1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pname a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+  .one{margin:0;font-size:13.2px;color:var(--muted);}
+  .chev{flex:0 0 auto;color:#9aa3b2;font-size:13px;transition:transform .25s ease;margin-top:2px;}
+  .card.open .chev{transform:rotate(180deg);}
+
+  .tags{display:flex;gap:7px;padding:0 15px 13px;flex-wrap:wrap;}
+  .tag{font-size:11.5px;padding:2.5px 9px;border-radius:999px;background:#eef1f6;color:var(--muted);
+    border:1px solid #e6e9f0;font-variant-numeric:tabular-nums;}
+  .tag.lang{background:color-mix(in srgb,var(--accent) 13%,#fff);color:color-mix(in srgb,var(--accent) 72%,#111);
+    border-color:color-mix(in srgb,var(--accent) 26%,#fff);font-weight:600;}
+  .tag.hot{background:#fff3e6;color:#b45309;border-color:#fde3c4;}
+
+  .detail{max-height:0;opacity:0;overflow:hidden;transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .28s ease;}
+  .card.open .detail{max-height:1600px;opacity:1;}
+  .detail-in{padding:2px 15px 16px;border-top:1px dashed #e7eaf0;}
+  .blk{margin-top:12px;}
+  .blk h4{margin:0 0 4px;font-size:12.5px;letter-spacing:.3px;color:var(--accent);font-weight:750;
+    display:flex;align-items:center;gap:6px;}
+  .blk h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .blk p{margin:0;font-size:13px;color:#3c4557;}
+
+  /* ============ footer ============ */
+  .wrapup{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:8px;}
+  .wrapup h2{margin:0 0 10px;font-size:18px;padding-left:12px;border-left:5px solid #6366f1;}
+  .wrapup p{margin:0;color:#39424f;font-size:14px;}
+  footer{max-width:1240px;margin:0 auto;padding:0 28px 50px;color:#98a1b0;font-size:12.5px;}
+  .note{margin-top:14px;padding:11px 14px;border-radius:10px;background:#eef2ff;border:1px solid #dfe4ff;
+    color:#3b3f7a;font-size:12.5px;}
+  .hidden{display:none !important;}
+  @media (max-width:560px){
+    h1{font-size:23px;} .hwrap,main,footer,.navin{padding-left:16px;padding-right:16px;}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media print{ nav{display:none;} .card .detail{max-height:none !important;opacity:1 !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <span class="hbadge">Weekly GitHub Digest</span>
+    <h1>GitHub 周度热门简报 · 2026 第 42 周</h1>
+    <p class="hsub">统计窗口 10.08 – 10.14 ｜ 数据源 GitHub API ｜ 生成于 2026-10-14</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav><div class="navin" id="navin">
+  <div class="navspacer"></div>
+  <input id="q" type="search" placeholder="搜索项目 / 语言…" autocomplete="off">
+</div></nav>
+
+<main id="main"></main>
+
+<div style="max-width:1240px;margin:0 auto;padding:0 28px;">
+  <div class="wrapup">
+    <h2>本周观察</h2>
+    <p id="wrap"></p>
+    <div class="note" id="repolink">📦 归档：本报告将存入 GitHub 仓库 <b>github-weekly-brief</b>，文件名 <code>report-20261018.html</code>（待推送）。</div>
+  </div>
+</div>
+
+<footer>
+  由 WorkBuddy 自动生成 · 卡片可点击展开详情 · 数据以 GitHub API 实际返回为准
+</footer>
+
+<script>
+/* ---------- 卡片风格 / 语言配色 ---------- */
+const LANG_COLOR = {
+  "Python":"#3776AB","TypeScript":"#3178C6","JavaScript":"#B8860B","Go":"#00A7CE",
+  "Rust":"#C0562B","C++":"#D6406B","C":"#6E7681","Java":"#B07219","Swift":"#EE6A43",
+  "Shell":"#3F9E1F","HTML":"#E34C26","Dart":"#12B5A8"
+};
+const STYLES = ["st-soft","st-grid","st-bold","st-paper"];
+
+/* ---------- 数据 ---------- */
+const DATA = {
+  sections: [
+    { key:"hot", title:"综合热门", sub:"本周新建并快速冲榜的项目（不分类型，按 star 排序 Top 12）", color:"#6366f1", items:[
+      { n:"wheresryan22/anatomy", l:"JavaScript", s:"9.2k", i:"🧩",
+        one:"把真实机器与复杂系统画成精致等距插画 SVG 的 agent skill（可选 WebGL 着色与 3D 效果）。",
+        use:"装到支持 skill 的 agent 后，按描述生成等距爆炸图 / 剖面图，直接输出可嵌网页的 SVG。",
+        fit:"你做云大 3D 地图、论文配图、算法讲义时，可用它把「结构 / 系统」一图讲清；它本身就是 skill 形态，与你现有 skill 工作流同构。",
+        opt:"可把「等距示意图生成」接进 paper-deep-reading 的报告插图环节，或为 3D 地图 / 讲义自动产出示意插图。" },
+      { n:"mhtsec/ARTEX", l:"Go", s:"4.0k", i:"🎯",
+        one:"AI 自主渗透测试系统，百度「agent+」攻防挑战赛冠军项目。",
+        use:"面向授权目标做自动化侦察 → 利用 → 验证的编排，可作为 CTF / 靶场训练的自动化助手。",
+        fit:"正对你 CTF / Web 攻防方向，可作为自建靶场与实验环境的自动化测试器。",
+        opt:"借鉴其「多步攻防编排」思路，做成你 CTF 复盘的自动化脚本（仅限授权环境使用）。" },
+      { n:"ARahim3/DigUp", l:"Swift", s:"3.2k", i:"🔎",
+        one:"按文件内容搜索 Mac：图片 / PDF / 录音 / 视频 / 代码，本地运行，基于 DeepMind EmbeddingGemma 2。",
+        use:"macOS 菜单栏应用，本地多模态语义检索，全程无需上传云端。",
+        fit:"与你 D 盘网安知识库、Obsidian 笔记「按内容找资料」的需求同类，核心价值是本地 embedding 语义检索思路。",
+        opt:"启发你给知识库加一层本地语义检索（embedding + 向量检索），让 agent 找笔记更准。" },
+      { n:"t4t5/omdrop-owl", l:"Shell", s:"2.6k", i:"📡",
+        one:"非 Apple 设备之间的 AirDrop（跨平台近场无线传输）。",
+        use:"在 Windows / Linux / Android 之间近场无线传文件。",
+        fit:"与你的日常项目关联一般；多人协作互传素材时可用。",
+        opt:"关联较弱，可先收藏备用。" },
+      { n:"storytold/craft-launcher", l:"Rust", s:"2.5k", i:"🚀",
+        one:"Craft 应用启动器：快速唤起本机应用的轻量启动面板。",
+        use:"作为桌面启动器，快速搜索并打开应用 / 文件。",
+        fit:"属桌面效率工具，与 agent 工作流关联较弱。",
+        opt:"价值有限，可作桌面效率工具试用。" },
+      { n:"liseami/CCBaga", l:"Rust", s:"2.2k", i:"📦",
+        one:"仓库暂无简介，本周新晋高星 Rust 项目，详情需进仓库看 README。",
+        use:"用途待确认。",
+        fit:"暂不明确与现有工作的结合点。",
+        opt:"待其补齐文档后再评估。" },
+      { n:"noahdunnagan/fsearch", l:"Rust", s:"2.0k", i:"⚡",
+        one:"macOS 全盘文件搜索：模糊名称 + 容错 + 内容 grep，800 万文件约 1ms。",
+        use:"替代 Spotlight 做极速全盘检索。",
+        fit:"与你「本机资料太多找不到」的痛点相关，索引思路可迁移到 Windows 侧。",
+        opt:"启发为你的知识库 / 工作目录做一个轻量索引检索小工具。" },
+      { n:"onehumanbeing/esp32-iphone-agent", l:"Python", s:"2.0k", i:"📱",
+        one:"用 7 美元的 ESP32 让 AI 操控真 iPhone：AirPlay 当眼睛、USB HID 当手，接任意 OpenAI 兼容视觉模型，无需 Mac / 开发者账号 / 越狱。",
+        use:"低成本给 agent 接上「真手机」这一执行环境，做 GUI 操作自动化。",
+        fit:"与你「让 agent 操作真实设备 / computer-use」的方向一致，硬件成本极低。",
+        opt:"可作为你探索「agent 操控真实设备」的低成本实验平台。" },
+      { n:"jhaizhou-ops/d2r-mobile", l:"C", s:"1.7k", i:"🎮",
+        one:"《暗黑破坏神 II：狱火重生》iOS / macOS 兼容层，自带触控与 60fps。",
+        use:"在 iPhone / iPad / Mac 上运行你自备的游戏文件。",
+        fit:"与你的开发 / 学习主线无关。",
+        opt:"纯娱乐，无 agent 结合点。" },
+      { n:"NVIDIA-Omniverse/usd-brep", l:"C++", s:"1.3k", i:"📐",
+        one:"USD 生态下的 NURBS BRep 实体建模库（C++ / Python）。",
+        use:"做 CAD / 几何建模与 USD 管线集成。",
+        fit:"与 3D 地图的「几何 / 模型」环节有话题关联，但偏工业 CAD。",
+        opt:"若 3D 项目后续涉及实体建模可关注。" },
+      { n:"T-Auto/dsh-ops", l:"JavaScript", s:"1.2k", i:"🪫",
+        one:"DSH 底层操作工具插件：降低 token 消耗、缩短任务耗时。",
+        use:"作为插件优化 agent 的底层操作路径。",
+        fit:"直接对口：你的定时任务 / 长流程 agent 常受 token 与耗时限制。",
+        opt:"借鉴其「减 token、压缩工具调用」的做法，优化你 agent 的任务编排与提示词。" },
+      { n:"shaongitbd/doory", l:"TypeScript", s:"1.1k", i:"🎨",
+        one:"开源 Canva 替代：在线设计 / 排版工具。",
+        use:"做海报、长图、社媒图。",
+        fit:"你心协招新海报 / 长图的痛点方向，可作为在线设计备选。",
+        opt:"与你的 PS / Canva 手叠文字流程对比，作为排版工具备选。" }
+    ]},
+
+    { key:"sec", title:"网络安全", sub:"攻防、渗透、逆向与网络观测方向", color:"#e11d48", items:[
+      { n:"usestrix/strix", l:"Python", s:"68.5k", i:"🛡️",
+        one:"开源 AI 渗透测试工具，自动发现并修复应用漏洞。",
+        use:"部署后由 LLM 驱动对目标做漏洞发现与验证，输出报告与修复建议。",
+        fit:"同时覆盖你 CTF / Web 攻防与「给自建项目做安全体检」两条线。",
+        opt:"借鉴其「发现 → 验证 → 修复」闭环，给你的 HTML / JS 项目加一道自动安全审计子流程。" },
+      { n:"KeygraphHQ/shannon", l:"TypeScript", s:"48.9k", i:"🧪",
+        one:"面向 Web / API 的 AI 渗透测试员：读源码 → 定攻击向量 → 真实利用验证，可进 CI，输出 SARIF。",
+        use:"接入 CI/CD，对 Web / API 做持续安全测试。",
+        fit:"你常把页面 / 应用发到 GitHub，可加一层自动安全扫描。",
+        opt:"把 SARIF 输出接到你的发布流程，提交前自动扫一遍。" },
+      { n:"x64dbg/x64dbg", l:"C++", s:"49.9k", i:"🔬",
+        one:"Windows 用户态调试器，面向逆向与恶意代码分析。",
+        use:"动态调试、逆向、脱壳。",
+        fit:"PWN / Reverse 方向必备，CTF 逆向题常用。",
+        opt:"与 Ghidra / IDA 组成你的逆向工具链。" },
+      { n:"mitmproxy/mitmproxy", l:"Python", s:"45.6k", i:"🕸️",
+        one:"支持 TLS 的交互式 HTTP 拦截代理。",
+        use:"抓包改包、接口调试、脚本化拦截。",
+        fit:"Web 安全 / CTF 常用；也能调试你 app 的接口。",
+        opt:"用脚本化改写响应，辅助自动化测试。" },
+      { n:"GyulyVGC/sniffnet", l:"Rust", s:"41.5k", i:"📊",
+        one:"舒适的跨平台网络流量监控 GUI。",
+        use:"实时查看流量、识别连接、按规则过滤统计。",
+        fit:"学习网络协议、排查异常连接。",
+        opt:"作为网络类任务的可视化观测工具。" },
+      { n:"caddyserver/caddy", l:"Go", s:"78.0k", i:"🌐",
+        one:"快速多平台 HTTP/1-2-3 服务器，自动 HTTPS。",
+        use:"一行配置起 HTTPS 站点与反向代理。",
+        fit:"你本地 HTML 的发布 / 预览可用它本地起 https 服务。",
+        opt:"替代 python -m http.server 做本地预览与反代。" }
+    ]},
+
+    { key:"agent", title:"Agent", sub:"智能体框架、编排与协作", color:"#0284c7", items:[
+      { n:"langgenius/dify", l:"TypeScript", s:"158.4k", i:"🧭",
+        one:"可视化编排 Agentic workflow 与 RAG 管线的平台，可云 / 自托管。",
+        use:"拖拽搭工作流、接模型与工具、快速做 RAG 应用。",
+        fit:"与你 paper-deep-reading、定时任务等「编排类」工作同构。",
+        opt:"可把重复的「取全文 → 解析 → 生成」流程沉淀成可视化工作流。" },
+      { n:"TauricResearch/TradingAgents", l:"Python", s:"111.1k", i:"📈",
+        one:"多智能体 LLM 金融交易框架（附论文）。",
+        use:"用多个角色 agent 协作做研究与交易决策。",
+        fit:"与你的金融 / 量化兴趣相关；多智能体协作范式可迁移。",
+        opt:"借鉴其多智能体分工范式，用于你的复杂任务编排。" },
+      { n:"OpenHands/OpenHands", l:"TypeScript", s:"90.9k", i:"🛠️",
+        one:"AI 驱动开发：让 agent 写代码、跑命令、改仓库。",
+        use:"作为可自托管的编码 agent 平台。",
+        fit:"与你「让 agent 写代码 / 改仓库」的日常高度一致。",
+        opt:"对比其工具调用与沙箱设计，优化你 agent 的编码任务流程。" },
+      { n:"koala73/worldmonitor", l:"TypeScript", s:"88.4k", i:"🛰️",
+        one:"实时全球情报面板：AI 新闻聚合 + 地缘监控 + 基础设施追踪（含 MCP）。",
+        use:"自建 OSINT 态势面板，可作 MCP 服务接入。",
+        fit:"与你 OSINT / 网安信息搜集相关；自带 MCP，可直接接进 agent。",
+        opt:"把其 MCP 服务接入你的信息搜集流，做自动化情报聚合。" },
+      { n:"bytedance/deer-flow", l:"Python", s:"83.8k", i:"🦌",
+        one:"长周期 SuperAgent：沙箱 / 记忆 / 工具 / skill / 子代理 / 消息网关，处理分钟到小时级任务。",
+        use:"搭建可长时间自主运行的研究与创作 agent。",
+        fit:"与你「深度研究 + skill + 子代理」的工作方式最贴近。",
+        opt:"借鉴其记忆 / 子代理 / 消息网关架构，优化你长任务的上下文与协作。" },
+      { n:"lobehub/lobehub", l:"TypeScript", s:"83.2k", i:"👔",
+        one:"「首席 Agent 运营官」：把多个 agent 组织成 7×24 团队（招聘 / 排班 / 汇报）。",
+        use:"管理多 agent 协同与任务分派。",
+        fit:"与你未来「多 agent 协同」方向相关。",
+        opt:"借鉴其 agent 编排 / 汇报设计，规划你的多 agent 工作流。" },
+      { n:"datawhalechina/hello-agents", l:"Python", s:"83.1k", i:"📚",
+        one:"《从零开始构建智能体》中文教程。",
+        use:"系统学习 agent 原理与实现。",
+        fit:"你是学生，正需系统化的 agent 知识。",
+        opt:"按教程实操，补齐你构建 / 优化 agent 的理论基础。" }
+    ]},
+
+    { key:"ai", title:"AI", sub:"模型、生态与智能体基建", color:"#059669", items:[
+      { n:"openclaw/openclaw", l:"TypeScript", s:"392.0k", i:"🦞",
+        one:"「真正会做事的 AI」，跨 OS / 平台。",
+        use:"开源个人 AI 助手框架，强调跨平台自动化执行。",
+        fit:"与 WorkBuddy 类「能动手的 agent」定位一致，可对照其能力边界。",
+        opt:"对比其跨平台执行层设计，取长补短。" },
+      { n:"obra/superpowers", l:"Shell", s:"299.0k", i:"🦸",
+        one:"agentic skills 框架 + 软件开发方法论。",
+        use:"为 agent 提供可复用的 skill 与开发方法。",
+        fit:"与你自建 skill（paper-deep-reading 等）的实践完全同频。",
+        opt:"借鉴其 skill 组织与「方法论化」思路，规范化你的 skill 库。" },
+      { n:"NousResearch/hermes-agent", l:"Python", s:"253.7k", i:"🔮",
+        one:"「与你共同成长的 agent」。",
+        use:"可自托管、强调持续学习与记忆的 agent。",
+        fit:"与你的记忆 / 长期偏好体系相关。",
+        opt:"参考其记忆与成长机制，优化你的长期记忆沉淀。" },
+      { n:"n8n-io/n8n", l:"TypeScript", s:"207.4k", i:"🔗",
+        one:"工作流自动化平台 + 原生 AI，400+ 集成，可自托管。",
+        use:"可视化串接服务、定时任务与 AI 节点。",
+        fit:"与你「定时任务 + 多服务编排」场景直接相关。",
+        opt:"把跨服务自动化（如抓取 → 处理 → 发布）沉淀到 n8n 编排。" },
+      { n:"firecrawl/firecrawl", l:"TypeScript", s:"191.4k", i:"🔥",
+        one:"为 AI agent 提供网页数据：抓取、转 markdown、搜索。",
+        use:"给 agent 接「上网取数」能力，输出干净 markdown。",
+        fit:"你的 GitHub 简报 / 论文检索等都需要网页取数，正是本简报的数据源思路。",
+        opt:"用它替换 / 增强你 agent 的抓取环节，提升取数质量。" },
+      { n:"f/prompts.chat", l:"HTML", s:"172.9k", i:"💬",
+        one:"社区提示词分享库（Awesome ChatGPT Prompts 后继）。",
+        use:"查找 / 复用高质量提示词模板，可自托管。",
+        fit:"提示词工程与你优化 agent 的需求相关。",
+        opt:"沉淀高频提示词模板，融入你的 skill 与自动化。" }
+    ]}
+  ],
+  wrap:"本周主线是「agent 的工程化基建」：skills 框架、记忆与上下文、跨平台执行、成本优化集中爆发 —— superpowers、hermes-agent、openclaw、dsh-ops、deer-flow 都在解同一道题：让 agent 更省、更久、更自主地干活。网安侧，AI 渗透测试（strix、shannon）已从概念走向「可进 CI」的工程化工具。对你的双重点：一是立刻借鉴技能 / 记忆 / 成本优化思路优化手上 agent；二是把 AI 安全工具接进项目发布链路。"
+};
+
+/* ---------- 渲染 ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lc = l => LANG_COLOR[l] || "#6366F1";
+let gi = 0;
+
+function cardHTML(it){
+  const accent = lc(it.l);
+  const st = STYLES[gi++ % STYLES.length];
+  const url = "https://github.com/" + it.n;
+  return `<article class="card ${st}" style="--accent:${accent}" tabindex="0" role="button" aria-expanded="false">
+    <div class="card-head">
+      <span class="ico">${it.i}</span>
+      <div class="hd">
+        <h3 class="pname"><a href="${url}" target="_blank" rel="noopener">${esc(it.n)}</a></h3>
+        <p class="one">${esc(it.one)}</p>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="tags">
+      <span class="tag lang">${esc(it.l)}</span>
+      <span class="tag hot">★ ${esc(it.s)}</span>
+    </div>
+    <div class="detail"><div class="detail-in">
+      <div class="blk"><h4>能怎么用</h4><p>${esc(it.use)}</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>${esc(it.fit)}</p></div>
+      <div class="blk"><h4>如何优化你的 agent</h4><p>${esc(it.opt)}</p></div>
+    </div></div>
+  </article>`;
+}
+
+function render(){
+  const main = document.getElementById("main");
+  const navin = document.getElementById("navin");
+  const stats = document.getElementById("stats");
+  let total = 0, html = "", nav = "";
+
+  DATA.sections.forEach((sec, si) => {
+    total += sec.items.length;
+    nav += `<a class="navlink" href="#s-${sec.key}" style="--accent:${sec.color}"><span class="dot" style="background:${sec.color}"></span>${sec.title} <b style="color:#9aa3b2;font-weight:600">${sec.items.length}</b></a>`;
+    html += `<section id="s-${sec.key}" style="--accent:${sec.color}">
+      <div class="sec-head"><h2>${sec.title}</h2><span class="count">${sec.items.length} 项</span></div>
+      <p class="sec-sub">${sec.sub}</p>
+      <div class="grid">${sec.items.map(cardHTML).join("")}</div>
+    </section>`;
+  });
+
+  main.innerHTML = html;
+  navin.insertAdjacentHTML("afterbegin", nav);
+
+  stats.innerHTML =
+    `<div class="stat"><b>${total}</b>个项目</div>` +
+    DATA.sections.map(s => `<div class="stat"><span style="color:${s.color}">●</span> ${s.title} <b>${s.items.length}</b></div>`).join("") +
+    `<div class="stat">🏷️ 4 大板块</div>`;
+
+  document.getElementById("wrap").textContent = DATA.wrap;
+
+  // 展开 / 收起
+  document.querySelectorAll(".card").forEach(card => {
+    const toggle = () => { card.classList.toggle("open"); card.setAttribute("aria-expanded", card.classList.contains("open")); };
+    card.addEventListener("click", e => { if(e.target.closest("a")) return; toggle(); });
+    card.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
+  });
+
+  // 搜索过滤
+  const q = document.getElementById("q");
+  q.addEventListener("input", () => {
+    const kw = q.value.trim().toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.toggle("hidden", kw && !card.textContent.toLowerCase().includes(kw));
+    });
+  });
+}
+render();
+</script>
+</body>
+</html>
