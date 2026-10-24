@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub 周度热门简报 · 存档</title>
+<style>
+:root{--ink:#111418;--ink2:#3d4652;--ink3:#65707e;--line:#e3e6ea;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f6f8;color:var(--ink);font-family:var(--sans);line-height:1.7;
+background-image:radial-gradient(900px 420px at 12% -8%,#e9edf3 0,rgba(233,237,243,0) 62%)}
+.wrap{width:min(820px,calc(100% - 40px));margin:0 auto}
+header{padding:64px 0 26px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+h1{margin:12px 0 8px;font-size:clamp(26px,4.4vw,38px);letter-spacing:-.02em}
+p.lead{margin:0;color:var(--ink2);font-size:15px;max-width:60ch}
+ul{list-style:none;padding:0;margin:28px 0 0}
+li{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;
+border-left:4px solid #111418;transition:box-shadow .16s ease,transform .16s ease}
+li:hover{box-shadow:0 8px 22px -16px rgba(17,20,24,.5);transform:translateY(-1px)}
+a.row{display:flex;align-items:baseline;gap:14px;padding:15px 18px;text-decoration:none;color:inherit}
+.wk{font-family:var(--mono);font-size:12px;color:var(--ink3);flex:0 0 auto}
+.t{font-size:16px;font-weight:640;color:var(--ink2)}
+.d{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3);flex:0 0 auto}
+.arrow{flex:0 0 auto;color:var(--ink3);font-family:var(--mono)}
+footer{padding:30px 0 64px;color:var(--ink3);font-size:12.5px;border-top:1px solid var(--line);margin-top:34px}
+code{font-family:var(--mono);font-size:12px;background:#eef1f5;border:1px solid #e2e7ed;border-radius:4px;padding:0 4px}
+@media(max-width:560px){.row{flex-wrap:wrap;gap:6px}.d{margin-left:0;order:3;width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">GitHub Weekly Brief &middot; Archive</div>
+  <h1>GitHub 周度热门简报</h1>
+  <p class="lead">每周日生成，按「综合热门 / 网络安全 / Agent / AI」四板块归档当周新建的高星项目，每张卡片展开后给出用途、与本机 agent 的结合判断、以及可落地的改进建议。</p>
+  <ul>
+    <li><a class="row" href="report-20261025.html">
+      <span class="wk">W43</span>
+      <span class="t">2026 第 43 周 · 33 个项目</span>
+      <span class="d">2026-10-24</span>
+      <span class="arrow">→</span>
+    </a></li>
+    <li><a class="row" href="report-20261018.html">
+      <span class="wk">W42</span>
+      <span class="t">2026 第 42 周 · 31 个项目</span>
+      <span class="d">2026-10-14</span>
+      <span class="arrow">→</span>
+    </a></li>
+  </ul>
+</header>
+<footer>
+  数据来源：GitHub REST API 搜索 <code>created:&gt;=YYYY-MM-DD</code> 且按 stars 排序，窗口为执行日往前 7 天。<br>
+  仓库：<a href="https://github.com/MaiSukrajima/github-weekly-brief">MaiSukrajima/github-weekly-brief</a>
+</footer>
+</div>
+</body>
+</html>
