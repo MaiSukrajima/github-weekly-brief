@@ -1,925 +1,911 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="2026 第 43 周 GitHub 热门项目周报：综合热门、网络安全、Agent、AI 四板块，33 个项目结合实测背景的可用性分析。">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GitHub 周度热门简报 · 2026 第 43 周</title>
 <style>
-:root{
-  --ink:#111418; --ink2:#3d4652; --ink3:#65707e; --line:#e3e6ea;
-  --bg:#f5f6f8; --card:#ffffff; --radius:14px;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
-  font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(900px 420px at 12% -8%, #e9edf3 0%, rgba(233,237,243,0) 62%),
-                   radial-gradient(760px 380px at 92% -4%, #eaf3ee 0%, rgba(234,243,238,0) 60%);
-  background-repeat:no-repeat;
-}
-.wrap{width:min(1120px,calc(100% - 40px)); margin:0 auto}
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --txt:#1b2230; --muted:#5c6675; --line:#e5e8ee;
+    --head1:#0f172a; --head2:#1f2b45; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
 
-/* ---------- hero ---------- */
-.hero{padding:54px 0 26px; border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink3)}
-h1{margin:12px 0 6px; font-size:clamp(28px,4.6vw,44px); line-height:1.16; letter-spacing:-.02em; font-weight:750}
-.sub{margin:0; color:var(--ink2); font-size:15px}
-.sub b{font-family:var(--mono); font-weight:600; color:var(--ink)}
-.hlink{
-  margin-top:16px; padding:10px 14px; border:1px dashed #cfd6df; border-radius:10px;
-  background:rgba(255,255,255,.66); font-size:13px; color:var(--ink2); overflow-wrap:anywhere;
-}
-.hlink a{word-break:break-all}
-.hlink .k{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; color:var(--ink3); margin-right:8px; text-transform:uppercase}
-a{color:#12507f; text-decoration:none; border-bottom:1px solid rgba(18,80,127,.28)}
-a:hover{border-bottom-color:#12507f}
-.stats{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px}
-.stat{
-  flex:1 1 118px; min-width:104px; padding:11px 13px; background:var(--card);
-  border:1px solid var(--line); border-radius:11px;
-}
-.stat b{display:block; font-family:var(--mono); font-size:22px; line-height:1.1; letter-spacing:-.02em}
-.stat span{font-size:11.5px; color:var(--ink3); letter-spacing:.02em}
+  /* ============ header ============ */
+  header{
+    background:linear-gradient(135deg,var(--head1),var(--head2) 70%);
+    color:#fff; padding:38px 28px 30px; position:relative; overflow:hidden;
+  }
+  header::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(600px 220px at 82% -10%,rgba(99,102,241,.45),transparent 70%),
+               radial-gradient(520px 200px at 8% 120%,rgba(16,185,129,.35),transparent 70%);
+    pointer-events:none;
+  }
+  .hwrap{max-width:1240px;margin:0 auto;position:relative;z-index:1;}
+  .hbadge{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#c7d2fe;border:1px solid rgba(199,210,254,.35);border-radius:999px;padding:3px 12px;margin-bottom:14px;}
+  h1{margin:0 0 8px;font-size:30px;letter-spacing:.3px;font-weight:750;}
+  .hsub{color:#c3ccdd;font-size:14.5px;margin:0;}
+  .hlink{margin:9px 0 0;font-size:13px;color:#a9b6cc;word-break:break-all;}
+  .hlink a{color:#a5b4fc;border-bottom:1px dotted rgba(165,180,252,.5);}
+  .hlink a:hover{color:#e0e7ff;border-bottom-color:#e0e7ff;}
+  .hsep{color:#5b6b86;margin:0 6px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:10px;padding:8px 14px;font-size:13.5px;color:#e6ebf5;}
+  .stat b{font-size:17px;color:#fff;margin-right:5px;font-variant-numeric:tabular-nums;}
 
-/* ---------- toolbar ---------- */
-.toolbar{position:sticky; top:0; z-index:20; background:rgba(245,246,248,.9);
-  backdrop-filter:saturate(150%) blur(9px); border-bottom:1px solid var(--line)}
-.tbin{display:flex; align-items:center; gap:8px; padding:9px 0; flex-wrap:wrap}
-.tbin .lb{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; color:var(--ink3); text-transform:uppercase; margin-right:2px}
-.jump{font-size:13px; padding:5px 11px; border-radius:999px; border:1px solid var(--line);
-  background:#fff; color:var(--ink2); border-bottom:1px solid var(--line); cursor:pointer}
-.jump:hover{color:var(--ink); border-color:#c3ccd6}
-.jump .n{font-family:var(--mono); font-size:10.5px; color:var(--ink3); margin-left:5px}
-.spacer{flex:1 1 auto}
-.tbtn{font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; padding:6px 12px; border-radius:8px;
-  border:1px solid #cfd6df; background:#fff; color:var(--ink2); cursor:pointer}
-.tbtn:hover{background:#eef2f6; color:var(--ink)}
+  /* ============ nav ============ */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);}
+  .navin{max-width:1240px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .navlink{font-size:13.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+    color:var(--muted);cursor:pointer;transition:.15s;background:#fff;white-space:nowrap;}
+  .navlink:hover{border-color:var(--accent,#6366f1);color:var(--txt);}
+  .navlink .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;}
+  .navspacer{flex:1;}
+  #q{font-size:13.5px;padding:7px 12px;border-radius:9px;border:1px solid var(--line);
+    min-width:170px;outline:none;background:#fff;color:var(--txt);}
+  #q:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12);}
 
-/* ---------- sections ---------- */
-main{padding:8px 0 0}
-.block{padding:34px 0 6px; scroll-margin-top:64px}
-.bhead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px}
-.bhead .no{font-family:var(--mono); font-size:12px; color:#9aa4b1; letter-spacing:.08em}
-.bhead h2{margin:0; font-size:22px; letter-spacing:-.01em; font-weight:720}
-.bhead .cnt{font-family:var(--mono); font-size:11.5px; color:#fff; background:var(--ink); border-radius:999px; padding:1px 9px}
-.bdesc{margin:0 0 18px; color:var(--ink3); font-size:13.5px; max-width:74ch}
+  /* ============ sections ============ */
+  main{max-width:1240px;margin:0 auto;padding:26px 28px 70px;}
+  section{margin-bottom:34px;scroll-margin-top:64px;}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-left:12px;
+    border-left:5px solid var(--accent);}
+  .sec-head h2{margin:0;font-size:21px;letter-spacing:.2px;font-weight:750;}
+  .sec-head .count{font-size:12.5px;color:var(--muted);background:#eef1f6;border-radius:999px;padding:2px 10px;}
+  .sec-sub{margin:6px 0 18px;padding-left:17px;color:var(--muted);font-size:13.5px;}
 
-.grid{display:grid; grid-template-columns:1fr; gap:12px}
+  /* ============ grid + card ============ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;}
+  .card{
+    position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,25,45,.10);}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),transparent);}
 
-/* ---------- card ---------- */
-.card{
-  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-  border-left:4px solid var(--ac); overflow:hidden;
-  transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease;
-}
-.card:hover{box-shadow:0 6px 20px -12px rgba(17,20,24,.35); border-color:#d3d9e0; border-left-color:var(--ac)}
-.card.open{box-shadow:0 10px 28px -16px rgba(17,20,24,.42)}
-.chead{display:flex; align-items:flex-start; gap:13px; padding:14px 16px 14px 15px; cursor:pointer;
-  background:linear-gradient(180deg,var(--soft),#fff 78%); outline:none}
-.chead:focus-visible{box-shadow:inset 0 0 0 2px #12507f}
-.ico{flex:0 0 auto; width:34px; height:34px; display:grid; place-items:center; font-size:17px;
-  border-radius:9px; background:#fff; border:1px solid var(--line); box-shadow:0 1px 2px rgba(17,20,24,.05)}
-.ttl{flex:1 1 auto; min-width:0}
-.name{font-family:var(--mono); font-size:14.5px; font-weight:650; color:var(--ink2); letter-spacing:-.01em;
-  border-bottom:1px solid transparent; word-break:break-all}
-.name:hover{color:var(--ac); border-bottom-color:var(--ac)}
-.sum{margin:3px 0 0; font-size:13.5px; color:var(--ink2); line-height:1.6}
-.chips{flex:0 0 auto; display:flex; align-items:center; gap:6px; padding-top:2px}
-.chip{font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; padding:2px 7px; border-radius:6px;
-  white-space:nowrap}
-.chip.lang{background:#eef1f5; color:var(--ink2); border:1px solid #e0e5eb}
-.chip.star{background:var(--soft); color:var(--ac); border:1px solid color-mix(in srgb,var(--ac) 26%,#fff)}
-.chev{flex:0 0 auto; width:18px; height:18px; margin-top:8px; position:relative; opacity:.5; transition:transform .2s ease}
-.chev::before,.chev::after{content:""; position:absolute; left:50%; top:50%; width:8px; height:1.5px;
-  background:var(--ink2); border-radius:2px}
-.chev::before{transform:translate(-70%,-50%) rotate(45deg)}
-.chev::after{transform:translate(-30%,-50%) rotate(-45deg)}
-.card.open .chev{transform:rotate(180deg); opacity:.8}
+  /* card style variants (per-project look) */
+  .st-grid{background-image:linear-gradient(rgba(15,23,42,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,23,42,.045) 1px,transparent 1px);background-size:20px 20px;}
+  .st-soft{background:#fff;background:color-mix(in srgb,var(--accent) 7%,#fff);border-radius:18px;}
+  .st-bold{border-left:7px solid var(--accent);border-radius:6px;}
+  .st-paper{background:#fdfcf7;border:1.5px dashed #d7dbe4;border-radius:5px;}
 
-.cbody{display:none; padding:2px 16px 16px 15px; border-top:1px solid var(--line); background:#fff}
-.card.open .cbody{display:block; animation:drop .2s ease both}
-@keyframes drop{from{opacity:0; transform:translateY(-4px)}to{opacity:1; transform:none}}
-.row{padding:12px 0 0 13px; border-left:2px solid var(--soft); margin-top:12px}
-.row:first-child{margin-top:14px}
-.row .lb{display:inline-block; font-size:10.5px; font-family:var(--mono); letter-spacing:.1em;
-  color:var(--ac); background:var(--soft); padding:1px 7px; border-radius:5px; margin-bottom:5px}
-.row p{margin:0; font-size:13.5px; color:var(--ink2); line-height:1.75}
-.row code{font-family:var(--mono); font-size:12px; background:#f2f4f7; border:1px solid #e6eaef;
-  border-radius:4px; padding:0 4px; color:#25303c}
+  .card-head{display:flex;gap:12px;padding:15px 15px 10px;align-items:flex-start;}
+  .ico{flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+    background:#eef1f6;background:color-mix(in srgb,var(--accent) 16%,#fff);
+    border:1px solid #e2e6ee;border:1px solid color-mix(in srgb,var(--accent) 32%,#fff);}
+  .hd{flex:1;min-width:0;}
+  .pname{font-size:15.5px;font-weight:700;margin:0 0 3px;letter-spacing:.1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pname a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+  .one{margin:0;font-size:13.2px;color:var(--muted);}
+  .chev{flex:0 0 auto;color:#9aa3b2;font-size:13px;transition:transform .25s ease;margin-top:2px;}
+  .card.open .chev{transform:rotate(180deg);}
 
-/* ---------- observe ---------- */
-.observe{margin:40px 0 10px; padding:24px 26px; background:#fff; border:1px solid var(--line);
-  border-radius:16px; border-top:3px solid var(--ink)}
-.observe h2{margin:0 0 4px; font-size:19px; letter-spacing:-.01em}
-.observe .wt{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; color:var(--ink3); text-transform:uppercase}
-.observe p{margin:12px 0 0; font-size:14.5px; color:var(--ink2); line-height:1.85}
+  .tags{display:flex;gap:7px;padding:0 15px 13px;flex-wrap:wrap;}
+  .tag{font-size:11.5px;padding:2.5px 9px;border-radius:999px;background:#eef1f6;color:var(--muted);
+    border:1px solid #e6e9f0;font-variant-numeric:tabular-nums;}
+  .tag.lang{background:color-mix(in srgb,var(--accent) 13%,#fff);color:color-mix(in srgb,var(--accent) 72%,#111);
+    border-color:color-mix(in srgb,var(--accent) 26%,#fff);font-weight:600;}
+  .tag.hot{background:#fff3e6;color:#b45309;border-color:#fde3c4;}
 
-footer{padding:26px 0 54px; color:var(--ink3); font-size:12.5px; border-top:1px solid var(--line); margin-top:34px}
-footer p{margin:5px 0}
-footer .mono{font-family:var(--mono); font-size:11.5px}
+  .detail{max-height:0;opacity:0;overflow:hidden;transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .28s ease;}
+  .card.open .detail{max-height:1600px;opacity:1;}
+  .detail-in{padding:2px 15px 16px;border-top:1px dashed #e7eaf0;}
+  .blk{margin-top:12px;}
+  .blk h4{margin:0 0 4px;font-size:12.5px;letter-spacing:.3px;color:var(--accent);font-weight:750;
+    display:flex;align-items:center;gap:6px;}
+  .blk h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .blk p{margin:0;font-size:13px;color:#3c4557;}
 
-@media (min-width:760px){ .grid{grid-template-columns:1fr 1fr} .card.open{grid-column:1 / -1} }
-@media (max-width:640px){
-  .wrap{width:calc(100% - 26px)}
-  .hero{padding:38px 0 20px}
-  .stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
-  .stat{min-width:0; padding:9px 10px}
-  .stat b{font-size:19px}
-  .tbin .lb{display:none}
-  .spacer{display:none}
-  .toolbar{overflow-x:auto}
-  .chead{display:grid; grid-template-columns:34px minmax(0,1fr) 18px; gap:10px; padding:12px 13px}
-  .ico{grid-column:1; grid-row:1}
-  .ttl{grid-column:2; grid-row:1}
-  .name{font-size:12.5px; overflow-wrap:anywhere; word-break:normal}
-  .chev{grid-column:3; grid-row:1; justify-self:end; margin-top:7px}
-  .chips{grid-column:2 / 4; grid-row:2; flex-direction:row; justify-content:flex-start; gap:6px; padding-top:2px}
-  .sum{font-size:13px}
-  .observe{padding:20px}
-}
-@media print{
-  .toolbar{display:none} body{background:#fff}
-  .card{break-inside:avoid} .cbody{display:block !important}
-}
+  /* ============ footer ============ */
+  .wrapup{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:8px;}
+  .wrapup h2{margin:0 0 10px;font-size:18px;padding-left:12px;border-left:5px solid #6366f1;}
+  .wrapup p{margin:0;color:#39424f;font-size:14px;}
+  footer{max-width:1240px;margin:0 auto;padding:0 28px 50px;color:#98a1b0;font-size:12.5px;}
+  .note{margin-top:14px;padding:11px 14px;border-radius:10px;background:#eef2ff;border:1px solid #dfe4ff;
+    color:#3b3f7a;font-size:12.5px;}
+  .hidden{display:none !important;}
+  @media (max-width:560px){
+    h1{font-size:23px;} .hwrap,main,footer,.navin{padding-left:16px;padding-right:16px;}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media print{ nav{display:none;} .card .detail{max-height:none !important;opacity:1 !important;} }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">GitHub Weekly Brief &middot; 2026 W43</div>
-    <h1>GitHub 周度热门简报</h1>
-    <p class="sub">2026 第 43 周 &nbsp;|&nbsp; 统计窗口 <b>2026-10-17</b> &rarr; <b>2026-10-24</b> &nbsp;|&nbsp; 生成于 2026-10-24</p>
-    <div class="hlink">
-      <span class="k">本期在线报告</span>
-      <a href="https://maisukrajima.github.io/github-weekly-brief/report-20261025.html" target="_blank" rel="noopener noreferrer">maisukrajima.github.io/github-weekly-brief/report-20261025.html</a>
-      &nbsp;&middot;&nbsp; <span class="k">仓库</span>
-      <a href="https://github.com/MaiSukrajima/github-weekly-brief" target="_blank" rel="noopener noreferrer">github-weekly-brief</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>33</b><span>项目总数</span></div>
-      <div class="stat"><b>13</b><span>综合热门</span></div>
-      <div class="stat"><b>8</b><span>网络安全</span></div>
-      <div class="stat"><b>7</b><span>Agent</span></div>
-      <div class="stat"><b>5</b><span>AI</span></div>
-      <div class="stat"><b>66.8k</b><span>合计星标</span></div>
-    </div>
+<header>
+  <div class="hwrap">
+    <span class="hbadge">Weekly GitHub Digest</span>
+    <h1>GitHub 周度热门简报 · 2026 第 43 周</h1>
+    <p class="hsub">统计窗口 10.18 – 10.25 ｜ 数据源 GitHub API ｜ 生成于 2026-10-25</p><p class="hlink">🔗 本周报告链接：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261025.html" target="_blank" rel="noopener">https://maisukrajima.github.io/github-weekly-brief/report-20261025.html</a><span class="hsep">｜</span>归档仓库：<a href="https://github.com/MaiSukrajima/github-weekly-brief" target="_blank" rel="noopener">https://github.com/MaiSukrajima/github-weekly-brief</a></p>
+    
+    <div class="stats" id="stats"></div>
   </div>
 </header>
 
-<nav class="toolbar">
-  <div class="wrap tbin">
-    <span class="lb">Jump</span>
-    <a class="jump" href="#hot">综合热门<span class="n">13</span></a>
-    <a class="jump" href="#sec">网络安全<span class="n">8</span></a>
-    <a class="jump" href="#agent">Agent<span class="n">7</span></a>
-    <a class="jump" href="#ai">AI<span class="n">5</span></a>
-    <span class="spacer"></span>
-    <button class="tbtn" id="expandAll" type="button">全部展开</button>
-    <button class="tbtn" id="collapseAll" type="button">全部收起</button>
+<nav><div class="navin" id="navin">
+  <div class="navspacer"></div>
+  <input id="q" type="search" placeholder="搜索项目 / 语言…" autocomplete="off">
+</div></nav>
+
+<main id="main"></main>
+
+<div style="max-width:1240px;margin:0 auto;padding:0 28px;">
+  <div class="wrapup">
+    <h2>本周观察</h2>
+    <p id="wrap"></p>
+    <div class="note" id="repolink">📦 已归档：<a href="https://github.com/MaiSukrajima/github-weekly-brief/blob/main/report-20261025.html" target="_blank" rel="noopener">report-20261025.html</a> ｜ 在线预览：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261025.html" target="_blank" rel="noopener">GitHub Pages</a></div>
   </div>
-</nav>
-
-<main class="wrap">
-    <section class="block" id="hot">
-      <div class="bhead">
-        <span class="no">01</span>
-        <h2>综合热门</h2>
-        <span class="cnt">13</span>
-      </div>
-      <p class="bdesc">不分类型，按本周新增星标排序。四款去广告电视桌面合计 3.9 万星，三款进了前四——这是本周最直白的信号。</p>
-      <div class="grid">
-      <article class="card" data-cat="综合热门" style="--ac:#b07219;--soft:#fdf4e8">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p1">
-          <span class="ico" aria-hidden="true">📺</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener noreferrer">Gathin23/cleanyourtv</a>
-            <p class="sum">不 root、不卸载，用 Wi-Fi 上的 ADB 把 Android / Google TV 的广告和预装清掉，换成 tvOS 风格的干净桌面。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Java</span>
-            <span class="chip star">&#9733; 29.1k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p1">
-          <div class="row"><span class="lb">能怎么用</span><p>电视开开发者选项与 USB 调试，电脑上跑仓库脚本；它自带一个纯 Python 的 ADB 客户端 <code>tools/tv.py</code>，专治系统 <code>adb</code> 二进制被拦或 macOS 本地网络权限报错；全部改动一行命令还原，官方还给了 <code>tools/relay.py</code> 给沙箱里够不到局域网的工具做端口转发。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>和论文精读、CTF、心协、地图四条线都不重叠，属于纯消费电子向。真正可迁移的是它的工程姿态：只用设备自己开放给机主的开关（开发者选项 / ADB），每一步都能撤销。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把两个零件搬进你的工具箱：<code>tools/tv.py</code>（纯 Python 实现的 ADB，替代外部二进制）和 <code>relay.py</code>（把本地端口转给够不到目标网段的执行环境）。CTF 里遇到「靶机在内网、agent 跑在沙箱」的情况，这个转发思路比临时架隧道省事；同时把「每步可回滚 + 先给还原命令」写进你的自动化脚本规范。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#5b6b7c;--soft:#eff2f5">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p2">
-          <span class="ico" aria-hidden="true">🎮</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/ly05010419/MacNativeGames" target="_blank" rel="noopener noreferrer">ly05010419/MacNativeGames</a>
-            <p class="sum">让《旷野之息》《王国之泪》在 Apple Silicon Mac / iPhone / iPad 上原生跑起来，仓库只放补丁代码与校验信息。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">C</span>
-            <span class="chip star">&#9733; 5.0k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p2">
-          <div class="row"><span class="lb">能怎么用</span><p>仓库不含任何游戏内容，只提供补丁代码、地址与哈希、以及 shader 清单；用户必须用自己 dump 的 Switch 文件在本机构建 App。README 直接把「用 Claude Code / Codex 帮你完成构建」写进正文。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>它对你不是可用的软件（需要自备游戏本体与密钥，法律边界很窄），但「agent 驱动一次超长本地构建」这件事，和你的 PDF→LaTeX→HTML 三栏流水线是同构任务。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>抄它的 README 结构：先写法律/边界声明，再写「你需要自备什么」，最后给分阶段构建步骤。你的 skill 交付说明目前缺第一段，导致用户常问「这能不能直接给我 PDF 就出报告」。另外它把大构建拆成可验收的小段，这一点可以对齐到你的 assemble 脚本：每段产出先自检再进下一段。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#7f52ff;--soft:#f2eeff">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p3">
-          <span class="ico" aria-hidden="true">🌄</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/pengchujin/aerial-tv" target="_blank" rel="noopener noreferrer">pengchujin/aerial-tv</a>
-            <p class="sum">给小米、TCL 等国产电视的一块干净桌面：仿 tvOS，没有广告和推荐流，开机自动接管。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Kotlin</span>
-            <span class="chip star">&#9733; 4.1k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p3">
-          <div class="row"><span class="lb">能怎么用</span><p>从 Releases 下 APK 装到 Android TV 5.0+，首次启动设为默认桌面即可开机自启；壁纸与航拍屏保可换，待机不会被系统清理。官网 + APK 直链 + 一页安装说明，非技术用户也能装。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>与现有四条工作线无关。它值得看的是「交付形态」：一个成品 APK、一个落地页、一页安装说明，把解释成本压到最低。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>心协的海报/长图现在靠你在群里逐条解释怎么用，可以照这个模式做一个极简落地页（一个下载按钮 + 三行说明），再配二维码。你本来就要把 HTML 推到 GitHub Pages 生二维码，顺手多做一屏即可。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#0e7490;--soft:#e9f5f8">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p4">
-          <span class="ico" aria-hidden="true">📡</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/simbasjungles/free-my-tv" target="_blank" rel="noopener noreferrer">simbasjungles/free-my-tv</a>
-            <p class="sum">Google TV、LG webOS、三星 Tizen 三套系统通用的无广告主页，推荐只来自你已装的应用。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Java</span>
-            <span class="chip star">&#9733; 4.0k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p4">
-          <div class="row"><span class="lb">能怎么用</span><p>按 README 分三个入口安装；功能上是玻璃质感应用架 + 每小时三条来自你已有应用的趋势推荐 + 天气与行情抽屉 + 跟随当地日落自动切换明暗 + 配套屏保；装错了有一个按钮撤销。README 明确写了 Built with Claude Code。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>同样不属于你的工作范围，但它是本周第二个「Claude Code 产出可直接交付的桌面/嵌入式应用」的实例，和你的自动化产出是一类东西。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>看它的三平台适配拆法：同一产品、三套打包与三套安装说明，但共用一份产品逻辑。你要做的「简报 HTML / 讲稿 HTML / 地图 HTML」同理——共用一套样式与渲染逻辑，只在入口和产物上分叉，别每次重写 CSS。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#2b6cb0;--soft:#eaf2fb">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p5">
-          <span class="ico" aria-hidden="true">📐</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/xiaoyang111222/cn-math-taxonomy" target="_blank" rel="noopener noreferrer">xiaoyang111222/cn-math-taxonomy</a>
-            <p class="sum">对齐 2022 课标与 2025 修订版的中小学数学/英语/物理知识图谱：1644 个知识点、2403 条先修边、6723 道题。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 3.0k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p5">
-          <div class="row"><span class="lb">能怎么用</span><p>数据是 <code>topics.json</code>（知识点）与 <code>dependencies.json</code>（先修边），字段在 README 里有完整说明；自带 <code>scripts/validate.py</code> 做数据自校验，还有一个前置知识自适应诊断小工具，本地起 http.server 打开 <code>/diagnose/</code> 即可用。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>和你的「数据结构与算法讲稿」是同一套骨架：知识点 + 先修关系 + 题。你现在是按文档顺序线性讲（递归→汉诺塔→线性表），缺「先修边」显式化，学生卡住时没法定位到底缺哪一块。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>两件事可以直接做。① 把你已有的算法讲稿改造成同构结构：每篇 md 的 frontmatter 加 <code>prereq: []</code>，用脚本生成一张先修图（递归←汉诺塔，栈←线性表），讲稿开头自动插一段「听不懂先回看哪篇」。② 抄它的 <code>validate.py</code>：每篇笔记落盘后自动校验双链是否闭合、口诀/易错点字段是否齐全——你的 Obsidian 库已经开始出现「写了但没链」的孤岛笔记了。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#2f6f4f;--soft:#ecf5ef">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p6">
-          <span class="ico" aria-hidden="true">🧰</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/aicodeking/leanrea" target="_blank" rel="noopener noreferrer">aicodeking/leanrea</a>
-            <p class="sum">一个 8 KB 的 skill 文件，干掉了 REA（Reverse Engineer Anything）那套 207 个工具、25 MB 的 MCP 服务。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 1.9k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p6">
-          <div class="row"><span class="lb">能怎么用</span><p><code>npx skills add aicodeking/leanrea</code>，然后 <code>/leanrea Foo.app 的搜索功能怎么实现的？给出证据</code>。它只做三件事：按文件类型路由到最快的命令、给可直接粘贴的侦察命令、列出 REA 代码里替你处理过的坑（asar 完整性、.<code>webpack/</code> 隐藏目录、Hermes 字节码等）。基准：比 REA 少 38% 时间、35% 成本，得分 74/75 对 75/75。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>两处直接命中：① 你在维护的 paper-deep-reading 就是同形态（纯 SKILL.md + 脚本，无 MCP）；② CTF 逆向/Web 题的第一步永远是「先摸清目标结构」，这正是它的路由表干的事。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>直接对标它做减法。你的 skill 现在把三栏 HTML 规范、四类批注口径、脚本契约全塞在 SKILL.md 里，读一次要很久——按它的做法把「每次都必须遵守的规则」压进 SKILL.md，长表格和示例挪到 <code>references/</code>，用引用拉取。再照它的基准表做一次对照实验：同一篇论文跑「有 skill / 裸模型」，记时间、成本、成品缺陷数，你才有依据说这个 skill 到底值不值。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#8b1e3f;--soft:#fbebef">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p7">
-          <span class="ico" aria-hidden="true">🔑</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/EthanArbuckle/fairplay-decrypt" target="_blank" rel="noopener noreferrer">EthanArbuckle/fairplay-decrypt</a>
-            <p class="sum">用账号的 16 字节凭据离线解密 App Store 的 FairPlay 加密 IPA。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">C</span>
-            <span class="chip star">&#9733; 1.8k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p7">
-          <div class="row"><span class="lb">能怎么用</span><p>凭据从受支持的越狱设备上取，写成 <code>credential.bin</code>；<code>python decrypt.py in.ipa out.ipa --credential credential.bin</code> 即可，macOS/Linux 可跑。支持 SUPF v3/v5、448 与 440 字节 SINF priv 记录、arm64 加密 Mach-O 分片。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>iOS 逆向方向的技术样本，你的 CTF 线目前偏 Web 与内网，这块是空白。但注意：仓库无许可证，且本质是 DRM 绕过，别放进课程作业或公开仓库。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>不值得直接引入工具链，值得读它的文档：SINF / SUPF → page key 的派生流程写得很清楚。你写 WP 时最缺的正是这种「文件格式级」的解释——把「为什么这样能解」讲透，比贴一串命令有用。可以顺手把它当成你逆向笔记里的一个附录条目。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#4b5563;--soft:#f1f3f5">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p8">
-          <span class="ico" aria-hidden="true">🧹</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/humblemuzzu/dumbtv" target="_blank" rel="noopener noreferrer">humblemuzzu/dumbtv</a>
-            <p class="sum">通过 ADB 把 Fire TV 上的广告、追踪和推荐流关掉，应用和 HDMI 输入全部保留。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Java</span>
-            <span class="chip star">&#9733; 1.4k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p8">
-          <div class="row"><span class="lb">能怎么用</span><p>不用 root，按 dumbtv.org/start 的步骤走；每一步都标了怎么撤销，站点上另有一页列清「它到底屏蔽了什么」。这也是本周四款同类项目里唯一把「误伤面」单独成页的。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>无直接关联。它的价值在「预期管理」：先告诉你它不动什么，再告诉你它动什么。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把这个习惯带进你的定时任务：每周简报的自动运行说明里，应该明确写「它只读 GitHub API、只写这个仓库的一个文件、失败不会动历史报告」。出了问题时你能立刻判断影响范围，而不是先怀疑是不是把别的东西改坏了。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#d9531a;--soft:#fcefe8">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p9">
-          <span class="ico" aria-hidden="true">🏠</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/wesbos/3d-model-anything" target="_blank" rel="noopener noreferrer">wesbos/3d-model-anything</a>
-            <p class="sum">用 iPhone 的 LiDAR 扫一个房间，再由 agent 把它重建成可编辑的 Three.js 场景。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Swift</span>
-            <span class="chip star">&#9733; 1.3k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p9">
-          <div class="row"><span class="lb">能怎么用</span><p>仓库含 iPhone 采集 App、Three.js 浏览器查看器、<code>scan-to-threejs</code> agent skill 和作者自己办公室的样例。查看器用 Node 22.12+：<code>npm ci &amp;&amp; npm run dev</code>，开 <code>localhost:5188</code>，有娃娃屋、行走、俯视、线框、平铺五种视角。定位是房间/室内，且是迭代式重建而非一键扫描。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>正面命中你的云大双校区 3D 地图。你现在是腾讯 LBS + 3D 表达，缺「真实建筑几何」这一层；它给的正是从实景到可编辑 Three.js 的那一段。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>先做最小验证：扫一间教室或一段走廊，跑通 <code>npm run dev</code> 看重建质量，再判断值不值得接进地图。如果质量够，路线是「实测几何打底 + LBS 经纬度锚点 + 点击弹出信息卡」，把现在的示意模型换成有真实尺度的模型——这也是你说的「3D 效果 + 场景切换」最自然的升级路径。注意它需要 iPhone（LiDAR 机型），先确认手上有设备。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#b7410e;--soft:#fbeee7">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p10">
-          <span class="ico" aria-hidden="true">📦</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/xevrion/hatchzip" target="_blank" rel="noopener noreferrer">xevrion/hatchzip</a>
-            <p class="sum">原地解压超大压缩包：边解边把压缩包截短，只需要输出大小的空间，而不是输出加上压缩包两份。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 1.2k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p10">
-          <div class="row"><span class="lb">能怎么用</span><p>先 <code>hatchzip check game.zip</code> 看空间够不够，再解；桌面版是 per-user 安装、不需要管理员权限、带右键菜单，也有 CLI，Windows / macOS / Linux 三平台。安全性在 README 里单列一节。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的日常里大包不少：论文 PDF 合集、CTF 镜像、地图瓦片包。C 盘吃紧的时候，「需要两倍空间」这条约束经常直接让任务失败。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把自动化脚本里的 <code>unzip</code> 换成 <code>hatchzip check</code> + 解压：先判空间、再动手。定时任务最怕的不是单步失败，而是把磁盘写满导致后面几步连环失败——这条「先 check 再执行」的写法可以推广到所有会落大量文件的步骤。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#a16207;--soft:#fbf4e3">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p11">
-          <span class="ico" aria-hidden="true">🧬</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/colinhacks/reylo" target="_blank" rel="noopener noreferrer">colinhacks/reylo</a>
-            <p class="sum">把 .sql 文件当模块直接 import 进 TypeScript，列类型全自动推导，零 codegen。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 1.1k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p11">
-          <div class="row"><span class="lb">能怎么用</span><p><code>npm i reylo</code> 后 <code>import</code> 一个 .sql 文件即可，查询结果的字段类型由 SQL 本身推出来，编辑器 hover 就能看到；不需要先生成 migration 或 d.ts。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你偶尔写小工具存数据（心协报名、加分统计），现在多半是「Python 脚本 + CSV」或者手写类型。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>只在你真要做小站时才有价值：把积分/报名做成网页时，它能让「表结构」成为唯一事实来源，省掉一层手写类型和随之而来的错位。当下不必引入，先记着——它比 ORM 轻，适合你这种「一个学期用两次」的项目。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#3f4a5a;--soft:#eef1f5">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p12">
-          <span class="ico" aria-hidden="true">🗂️</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/ELY-Open-Source/ElyOffice" target="_blank" rel="noopener noreferrer">ELY-Open-Source/ElyOffice</a>
-            <p class="sum">离线优先的桌面办公套件：Word / 表格 / 演示 / PDF / 邮件 / Git / Markdown，文件留在你自己的文件夹里。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 952</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p12">
-          <div class="row"><span class="lb">能怎么用</span><p>Win / macOS / Linux 直接下安装包（AppImage、deb、rpm、Arch、Nix 都有）。Doc、Table、Show 底层是 LibreOfficeKit，PDF 用 MuPDF + Tesseract 做 OCR 与签名，Markdown 支持 mermaid 与公式渲染。没有账号、没有云同步。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的交付物经常是 docx / xlsx / pptx（心协表单、活动证明、简报）。现在靠 Office/WPS 或 python-docx 生成，验证环节全靠肉眼开一次。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把 ElyDoc 当作「离线渲染校验器」：agent 生成 docx 后，用它打开确认表格没塌、页码没乱、字体没回退，再交付。这比只信 python-docx 的返回值可靠得多——它用的是真正的排版引擎。也可以作为机器上没有 Office 时的兜底打开方式。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="综合热门" style="--ac:#0f5132;--soft:#e9f5ee">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p13">
-          <span class="ico" aria-hidden="true">📈</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/Jakeschincariol/day-trader-skill" target="_blank" rel="noopener noreferrer">Jakeschincariol/day-trader-skill</a>
-            <p class="sum">11 个日内交易的 Claude skills：扫上千张图找形态、盯突发新闻、逐 bar 等入场、预设止损、下单前重放一万次给出概率。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 916</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p13">
-          <div class="row"><span class="lb">能怎么用</span><p>免费 MIT，不需要注册也不需要 API key，数据来自 Yahoo Finance、Nasdaq Trader、SEC EDGAR 等公开源；默认纸面交易，任何订单都要你亲口同意，没有任何一个 skill 能自己下单。其中「时间机器」会用该股近期 bar 把当日剩余时段重放一万次。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你本人不做交易，别引入。但它是本周结构最值得抄的一组 skill：11 个职责单一、边界清楚的 skill 分工协作，还共享一道「人类确认」的闸门。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把「默认不执行 + 人类确认」这道闸门抄进你的自动化：任何会对外产生副作用的定时任务（推仓库、发群消息、发推文）都先生成 draft 文件，等你确认再发。你现在是直接推送，一旦抓取环节出错就把错的东西推上线了——上周那个待办里「避免直接复用旧文件」说的就是这个风险。</p></div>
-        </div>
-      </article>
-      </div>
-    </section>
-    <section class="block" id="sec">
-      <div class="bhead">
-        <span class="no">02</span>
-        <h2>网络安全</h2>
-        <span class="cnt">8</span>
-      </div>
-      <p class="bdesc">本周由 php2shell 一个漏洞主导：PoC、绕过、补丁、检测规则，以及大厂出的自查工具，五天之内全部到齐。</p>
-      <div class="grid">
-      <article class="card" data-cat="网络安全" style="--ac:#c1121f;--soft:#fdeced">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p14">
-          <span class="ico" aria-hidden="true">🐚</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/ikow/php2shell-poc" target="_blank" rel="noopener noreferrer">ikow/php2shell-poc</a>
-            <p class="sum">CVE-2026-109618 / 109619：PHP 预认证 RCE，影响 5.4.0–8.5.11 共 14 年的版本，本周全网工具的源头仓库。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 1.7k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p14">
-          <div class="row"><span class="lb">能怎么用</span><p><code>docker compose up -d</code> 起 PHP-FPM + nginx + mod_php 三套靶场，再跑 <code>poc/verify_*.py</code> 逐条验证。5 条利用链开源 3 条：A 会话注入 + LFI、B var_destroy UAF 覆写 <code>var_dump</code> handler、C FPM serializer 错配触发 <code>__destruct</code>；D（mod_php 零依赖预认证）和 E（FPM 跨请求脏状态）需付费。仓库自带 Suricata / Sigma / ModSecurity 检测规则。修在 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>直接进你的 CTF 与 Web 攻防线，而且是「本周最该知道的一个洞」——它不需要应用有漏洞，PHP 默认配置就可能被打。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>三步落地。① 当靶场跑一遍四条 verify 脚本，把输出整理成 WP，重点写清 D/E 两条链为什么对「任何 endpoint」都成立（rfc1867 处理器在应用代码之前执行）。② 把检测规则段落抄成一份排查清单：查 PHP 版本、查 <code>session.upload_progress</code> 是否可达、查 FPM 的 serializer 配置——以后接到「帮我看看这个站」的活，先跑三分钟清单。③ 给它写一个 <code>make lab</code> 目标串起起靶场和四条验证，下次重跑只花一条命令。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#9d0208;--soft:#fdeaea">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p15">
-          <span class="ico" aria-hidden="true">🧨</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/9bie/php2shell-bypass-aslr-exp" target="_blank" rel="noopener noreferrer">9bie/php2shell-bypass-aslr-exp</a>
-            <p class="sum">在完全官方配置下打通 php2shell：不改 memory_limit、不开 display_errors、目标只有一行 echo，10/10 成功。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 1.4k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p15">
-          <div class="row"><span class="lb">能怎么用</span><p>约束很硬：官方 prefork 的 <code>MaxRequestWorkers=150</code>、官方 ini、官方镜像；目标页只有 <code>&lt;?php echo "OK\n"; ?&gt;</code>，全程只走 HTTP。手法是先占住 149 个 worker 的未完成请求，再把 A1/B1/A2/B2 固定到剩下的同一个 child 上，单次 3–4 秒。单 worker 版本是早期调试形态，<code>--workers 1</code> 仍可复现。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>补上了 ikow 那篇「实验室环境」和「生产默认配置」之间的差距——这正是写 WP 时最缺的一节：为什么在真实环境也打得通。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>它的核心技巧是「把资源池耗干当同步点」：占满 worker 之后，后续请求必然落到同一个进程。这个方法可以搬到你其他的并发类脚本上——限速下的暴力枚举、竞态窗口利用、需要「保证同进程」的内存马投递，都可以用「先耗尽再复用」替代死等。把这套写法整理成一个可复用模块，比每次重写 sleep 靠谱。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#2d6a4f;--soft:#eaf5ee">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p16">
-          <span class="ico" aria-hidden="true">🩺</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/openai/php2shell-checker" target="_blank" rel="noopener noreferrer">openai/php2shell-checker</a>
-            <p class="sum">OpenAI 出的 PHP 版本自查工具：从响应头或本地安装判断是否落在 php2shell 的影响区间。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">JavaScript</span>
-            <span class="chip star">&#9733; 1.3k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p16">
-          <div class="row"><span class="lb">能怎么用</span><p><code>node phpcheck.js https://example.com</code>，或作为两个 skill 装进 Codex：有服务器权限用 <code>phpcheck-server</code>，只有 URL 用 <code>phpcheck-url</code>。输出 OK / POTENTIALLY VULNERABLE / UNKNOWN，对应退出码 0 / 1 / 3；<code>--json</code> 给机器读，字段 <code>patch_status</code>。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你在跑的几个站（GitHub Pages 不算，但学校/社团可能给过 PHP 空间）值得扫一次；更重要的是它示范了「厂商把应急自查做成 skill」这件事本身。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>写进定时任务：每周对你关心的站点跑一次 <code>phpcheck.js --json</code>，结果落到本地 md，版本一落后就提醒。比手动 phpinfo 可靠，也比等你想起这件事可靠。顺带说，这个仓库是本周一个信号——漏洞出来五天内，工具链已经下沉到「一条命令自查」的粒度。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#b45309;--soft:#fdf4e6">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p17">
-          <span class="ico" aria-hidden="true">🕸️</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/opentrap/opentrap" target="_blank" rel="noopener noreferrer">opentrap/opentrap</a>
-            <p class="sum">基于 OWASP ZAP 引擎的开源抓包与扫描一体代理，自称 Burp Suite 的免费替代。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Java</span>
-            <span class="chip star">&#9733; 411</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p17">
-          <div class="row"><span class="lb">能怎么用</span><p>Linux 直接下 AppImage 跑（需要 Java 17+），拦截、重放、扫描在同一个界面里；AGPL-3.0，还在活跃开发中。平台目前只有 Linux。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你打靶/做题的抓包主力是 Burp 社区版（有功能阉割），这是无功能限制的备选；但 ZAP 引擎的扫描噪音大，结论必须人工复核。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>值得用的场景是「批量」而不是「精修」：让它常驻在 Docker 里跑自动扫描，把重复劳动分担掉，你只处理它标记出的可疑点；手工精修还是用 Burp。注意它只有 Linux 版，你机器是 Windows，走 WSL 或单独一台虚拟机更省事。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#1d4ed8;--soft:#eaf0fd">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p18">
-          <span class="ico" aria-hidden="true">🛡️</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/Spectrmachina/Ztrust" target="_blank" rel="noopener noreferrer">Spectrmachina/Ztrust</a>
-            <p class="sum">开源供应链的零信任扫描：查依赖里的恶意包与已知漏洞，输出能直接进 GitHub code scanning 的 SARIF。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 153</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p18">
-          <div class="row"><span class="lb">能怎么用</span><p>Python 3.11–3.13，CLI 或 API 调用；数据源是 OSV.dev，输出 SARIF 2.1.0。项目还给修漏洞的人发 Zcash 赏金（shielded ZEC），这是它比较特别的地方。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的 GitHub 仓库（weekly-brief、skill 仓库、地图项目）都在吃第三方依赖，尤其是前端那堆快速迭代的包。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>加一条 GitHub Action：每周跑 Ztrust → 上传 SARIF 到 code scanning，和你已有的「周日生成简报」并成一条流水线。这样每周你拿到的不只是「哪些项目火」，还有「我自己这几个仓库的依赖出了什么问题」。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#6b21a8;--soft:#f3ecfa">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p19">
-          <span class="ico" aria-hidden="true">🔬</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/yuatemycat/SuperGhidra" target="_blank" rel="noopener noreferrer">yuatemycat/SuperGhidra</a>
-            <p class="sum">让 Ghidra 常驻后台不再每次冷启动，并把反编译输出重写成可编译的 C 代码，附一套 MCP 给 agent 调。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 128</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p19">
-          <div class="row"><span class="lb">能怎么用</span><p><code>pip install superghidra</code>；后台 daemon 常驻 <code>127.0.0.1:5073</code>，避免每次 headless 吃掉 5–15 秒 JVM 启动、也避开 GUI 开着时的 <code>.rep</code> 锁冲突。额外能力：MSVC RTTI 与 MFC <code>CRuntimeClass</code> 恢复、<code>Serialize()</code> 布局追踪、跨版本函数与结构体偏移匹配、P-code 的 Z3 等价校验。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>PWN / Reverse 方向直接可用；「常驻服务 + MCP」这个形态对你的整套工具链都有借鉴意义。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>你跑逆向脚本时的真实痛点是「每次都要等 JVM 起来」，这和你 paper-deep-reading 里「每次重跑 PDF 提取」是一类问题。把重型工具做成常驻 daemon，agent 只发请求不重启进程——这条改法能同时省掉你两条流水线里的冷启动开销。先做 PDF/LaTeX 那侧：把提取器做成常驻，跑一篇论文能省十几秒，跑十篇就是分钟级。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#0f766e;--soft:#e8f6f5">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p20">
-          <span class="ico" aria-hidden="true">🧭</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/Fazmin/cve-intel" target="_blank" rel="noopener noreferrer">Fazmin/cve-intel</a>
-            <p class="sum">本地优先的 CVE 分诊台：38 个工具、39 个数据源、端侧 AI 打分，带桌面界面、CLI、REST 和 MCP。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 94</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p20">
-          <div class="row"><span class="lb">能怎么用</span><p>Tauri 2 写的原生桌面应用；给它 CVE 编号或依赖清单，它给出风险分和处置建议；MCP 这一路可以直接接进 agent，让 agent 自己查而不是你手动检索。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你写 WP 时经常要判「这个 CVE 影响哪些版本、修了没有」，现在靠翻公告和记忆。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把它的 MCP 接进 agent，让「这篇 WP 里提到的 CVE 影响面」由 agent 直接查证并带出处——这正好补上你最在意的点：不要靠记忆，要有可核对的来源。装好之后可以先拿本周的 php2shell 两个编号做一次对照，看它给的修复版本和你手上的一致不一致。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="网络安全" style="--ac:#a21caf;--soft:#fbedfb">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p21">
-          <span class="ico" aria-hidden="true">🔓</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/hassan-algo/open-sesame" target="_blank" rel="noopener noreferrer">hassan-algo/open-sesame</a>
-            <p class="sum">把 Claude 变成有纪律的渗透测试员的 skill 包：按 OWASP WSTG + PTES 走完整流程，Web 与内网两条线。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">HTML</span>
-            <span class="chip star">&#9733; 86</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p21">
-          <div class="row"><span class="lb">能怎么用</span><p>装成 Claude Code 的 skills；给一个已获授权的目标，它依次做攻击面测绘、按方法论逐项验证、用最轻的安全证明复现问题，最后出报告。强调授权边界与最小影响。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>和你的授权渗透流程最贴的一套「方法论落地」，也是你现有 pentest 类 skill 最该对齐的样板。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>拿它的阶段划分给你的 skill 做一次体检：你现在的 skill 偏「点名工具」（nmap 怎么打、sqlmap 怎么传参），缺每一阶段的出口判据。补上判据（例如信息收集阶段：资产清单闭合、无新增子域、端口指纹齐备才进下一阶段），agent 才不会在侦察阶段无限打转——这是你这周真正该改的那一处。</p></div>
-        </div>
-      </article>
-      </div>
-    </section>
-    <section class="block" id="agent">
-      <div class="bhead">
-        <span class="no">03</span>
-        <h2>Agent</h2>
-        <span class="cnt">7</span>
-      </div>
-      <p class="bdesc">重心从「再做一个 agent」转向「让 agent 好用的周边」——并排会话、依赖变更提示、只读数据接入。</p>
-      <div class="grid">
-      <article class="card" data-cat="Agent" style="--ac:#db2777;--soft:#fdedf3">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p22">
-          <span class="ico" aria-hidden="true">🎬</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/alchaincyf/huashu-motion" target="_blank" rel="noopener noreferrer">alchaincyf/huashu-motion</a>
-            <p class="sum">让 agent 一键直出商业级产品宣传片：自己写分镜、自己谱曲，你指着画面就能改。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">JavaScript</span>
-            <span class="chip star">&#9733; 1.6k</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p22">
-          <div class="row"><span class="lb">能怎么用</span><p><code>npx skills add alchaincyf/huashu-motion</code>，然后跟 agent 说「给我的产品做个 30 秒发布片」。它会先读你的产品、给三个方向让你挑，再写完整支片并配乐，最后在浏览器里打开编辑器等你；哪里不满意，在画面上点一下写下要改什么，它只改那一处。README 明确列出支持 Claude Code / Codex / WorkBuddy / Grok Bot 等。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>心协招新现在是「AI 生背景 + PS/Canva 手动叠字」，宣传片是同一批物料最自然的延伸；「暮光里的云大」也需要一段预告。它支持 WorkBuddy，接进来不需要换执行环境。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>先试一支 15 秒的「暮光里的云大」预告：素材用活动现场照，配乐让它生成，二维码仍然走你原来的 GitHub Pages 方案。跑通之后再决定要不要写进「活动宣传」自动化——重点看两件事：分镜方向是否可用、局部修改是否真的只改那一处。如果可用，你的宣传物料就从「一张海报」变成「海报 + 长图 + 15 秒片」三件套，成本却几乎不增。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#374151;--soft:#eef0f3">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p23">
-          <span class="ico" aria-hidden="true">🐼</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/aicodeking/pandacode" target="_blank" rel="noopener noreferrer">aicodeking/pandacode</a>
-            <p class="sum">一个安静的桌面工作台，把 Claude Code、Codex、DeepSeek、Copilot CLI 等编码 agent 并排跑在同一个窗口里。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 605</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p23">
-          <div class="row"><span class="lb">能怎么用</span><p>Tauri 2 + Rust + SQLite + 原生 webview，不打包 Chromium、不带常驻 Node 服务；一个窗口里同时有多个 agent 会话、项目树、Git、终端和浏览器。无账号、无 license key、无遥测。许可证是 MIT 加一条：商用或公开分发的分支必须声明来源。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你经常同时开两条线（论文精读 + CTF），现在靠多个终端窗口切换，容易把 agent 指到错的目录。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>不管用不用它，先抄它的组织方式：一个任务一个目录、一个 <code>AGENTS.md</code>。你现在的工作区里 <code>dist/</code>、旧报告、skill 脚本混在一层，agent 很容易读到上一周的产物——上次「避免直接复用旧文件」的隐患就来自这里。目录一分，这个问题自动消失。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#0e7490;--soft:#e9f4f7">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p24">
-          <span class="ico" aria-hidden="true">🎻</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/dominikmartn/harp" target="_blank" rel="noopener noreferrer">dominikmartn/harp</a>
-            <p class="sum">把 Warp 终端的 tab 换成一条「哪个 agent 需要你」的侧栏，多个 Claude Code / Codex 会话并排跑。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 597</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p24">
-          <div class="row"><span class="lb">能怎么用</span><p>开源 Warp 的分支，会话按项目分组，状态分「干活中 / 等你 / 完成 / 搁置」；其余终端功能保持原样。目前只有 macOS 版，AGPL-3.0。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你机器是 Windows，本体用不上。但「状态可见」这件事你现在就缺：定时任务在后台跑，成功失败都得你自己去看。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把四个状态搬进你的定时任务：pending / running / needs-you / done，失败时明确落到 needs-you 并留下原因（网络失败？上传 403？），而不是静默跳过等下周日。你这套简报任务已经跑了几轮，中间那种「产物在、但不知道是不是这一轮生成的」情况，就是缺这个状态机。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#4f46e5;--soft:#ecebfc">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p25">
-          <span class="ico" aria-hidden="true">🎨</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/vercel-labs/fx0" target="_blank" rel="noopener noreferrer">vercel-labs/fx0</a>
-            <p class="sum">轻量设计 agent：描述一个页面，agent 把它写成一个 HTML 文件，每一轮都留一个可回退的版本。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">TypeScript</span>
-            <span class="chip star">&#9733; 396</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p25">
-          <div class="row"><span class="lb">能怎么用</span><p>基于 libfx，一次 <code>createFxAgent()</code> 就拿到 agent loop、流式、工具调用、重试和可持久会话；<code>createFxEngine()</code> 跑子 agent。可以 clone 下来改成自己的；线上有 demo。断线也能续上——函数中途死了，这一轮会从断点继续。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的简报、讲稿、地图都是「单文件 HTML」交付，和它的产出形态完全一致，这是本周和你最同构的一个项目。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>两处直接可用。① 「每轮一个版本快照」：你的 report-YYYYMMDD.html 天然按周分版本，但样式改动没有版本记录，改坏了只能凭记忆回滚——把每轮的 CSS/JS 也存一份快照，成本极低。② 「一个入口函数包住 agent loop」：你现在的生成脚本每次都要重写抓取、渲染、上传的胶水，抽成一个 <code>buildBrief(week)</code> 入口，下周日只改数据不改流程。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#15803d;--soft:#e9f6ee">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p26">
-          <span class="ico" aria-hidden="true">💬</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener noreferrer">finereli/whatsapp-mcp</a>
-            <p class="sum">只读的 WhatsApp MCP：让 agent 搜索、阅读你自己的聊天记录，但永远发不出消息。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">TypeScript</span>
-            <span class="chip star">&#9733; 342</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p26">
-          <div class="row"><span class="lb">能怎么用</span><p>部署在你自己的 Cloudflare 账号里；像连 WhatsApp Web 那样扫一次码，之后任何 MCP 客户端都能搜。设计上不常连——agent 要数据时才连上、拉取队列里的新消息、写进自己的库、然后断开，手机始终是事实来源。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的沟通主力是微信和 QQ，WhatsApp 用不上；但它的权限模型正好是你需要的那个答案。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>抄它的三条约束：只读、按需连接、写操作另开一条需要确认的通道。你要做的是微信侧（见下一条），把「只读」当默认、「发消息」当例外，能避免掉绝大多数「agent 把消息发错群」的事故。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#059669;--soft:#e7f7f0">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p27">
-          <span class="ico" aria-hidden="true">💚</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/stkoecn/im-mcp" target="_blank" rel="noopener noreferrer">stkoecn/im-mcp</a>
-            <p class="sum">本地的微信 / 钉钉聊天记录检索 MCP：直接读本地解密库，毫秒级，只读，完全离线。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 63</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p27">
-          <div class="row"><span class="lb">能怎么用</span><p>按 README 装好服务后在 Claude Desktop / Cursor / Cline 里注册；它给了「复制即用」的配置提示词，把仓库地址丢给 agent 让它自己读 README 配好即可。所有数据留在本机，不联网。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>心协的活动通知、场地沟通、预算确认全在群里，找历史记录靠翻聊天记录，做结项材料时最费时间。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>接上之后做一个「活动档案自动归档」：每周把心协群里与活动相关的关键决议（时间、地点、预算、负责人、指导老师意见）抽成结构化条目落到本地 md，活动结束时直接拼结项材料。你本来就要写活动证明、志愿证明、第二课堂积分申请表——文字都在群里躺着。前提是只读、只在本机，别把权限开到能发消息。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="Agent" style="--ac:#ca8a04;--soft:#fbf6e3">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p28">
-          <span class="ico" aria-hidden="true">🧷</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/Umair/stalemap" target="_blank" rel="noopener noreferrer">Umair/stalemap</a>
-            <p class="sum">告诉编码 agent：你的依赖在它的训练截止之后变了什么——哪个包跳了大版本、哪个 API 改了名、替代是什么。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">TypeScript</span>
-            <span class="chip star">&#9733; 100</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p28">
-          <div class="row"><span class="lb">能怎么用</span><p><code>npx stalemap</code>，或作为 Claude Code 插件、MCP server 用。它对比项目依赖版本与模型 cutoff，输出变更说明，示例里能直接告诉你 <code>CoreMessage</code> 已被 <code>ModelMessage</code> 取代。README 有一节专门写「什么数据会离开你的机器」。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的简报和 3D 地图都在用快速迭代的前端库（Three.js、腾讯 LBS 的 JS API）。模型给的老写法经常跑不通，你得写完报错再改，来回好几轮。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>在生成前端代码之前先跑一次 stalemap，把变更说明直接塞进上下文。这一步能砍掉大部分「写完→报错→改」的往返，而且是给任何 skill 加「版本护栏」最省事的做法——不用你去维护一份 API 变更文档，它按你项目的实际版本算。建议先在地图项目上试，那里 Three.js 的版本跨度最大。</p></div>
-        </div>
-      </article>
-      </div>
-    </section>
-    <section class="block" id="ai">
-      <div class="bhead">
-        <span class="no">04</span>
-        <h2>AI</h2>
-        <span class="cnt">5</span>
-      </div>
-      <p class="bdesc">两条线：把推理和记忆往下压（草稿模型、记忆原生、优化器自改），以及把多模型调用收进一个网关。</p>
-      <div class="grid">
-      <article class="card" data-cat="AI" style="--ac:#0c4a6e;--soft:#e8f2f9">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p29">
-          <span class="ico" aria-hidden="true">🦅</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/eagle-hq/EAGLE-4" target="_blank" rel="noopener noreferrer">eagle-hq/EAGLE-4</a>
-            <p class="sum">投机解码的草稿模型：一个 drafter 同时覆盖各种 batch size 和硬件，把同一个模型生成得更快。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 959</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p29">
-          <div class="row"><span class="lb">能怎么用</span><p><code>pip install eagle-harness</code>；用 vLLM 起服务时挂上 <code>--speculative-algorithm EAGLE_HARNESS</code>、草稿模型路径 <code>EAGLE-Corp/Qwen3.8-27B-EAGLE4</code>，再配 <code>--speculative-num-steps 12 --speculative-eagle-topk 4 --speculative-num-draft-tokens 16</code>。官方基准用 4 张 B300，<code>--tp-size 4</code>。答案是同一份，只是更快。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你在本地跑小模型做离线任务（笔记整理、批量摘要）时，瓶颈常在生成速度。但这条路径需要 GPU，且对 27B 量级的模型才划算。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>短期不动。若你之后有 GPU 机器，值得用它把「批量处理一批论文/笔记」的耗时压下来；顺带记住这个模式：加速不一定要换模型，加一个小的草稿模型 + 验证就够了。这也解释了为什么本周好几个项目都在做「小模型干粗活、大模型做裁决」的分工。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="AI" style="--ac:#7c3aed;--soft:#f1ecfd">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p30">
-          <span class="ico" aria-hidden="true">🎵</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/kanaworksai-hue/audio-studio-mcp" target="_blank" rel="noopener noreferrer">kanaworksai-hue/audio-studio-mcp</a>
-            <p class="sum">本地 AI 配乐与音效 MCP：说一句「来段咖啡馆 BGM」，它在你自己机器上生成、循环、归一化、导出。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 468</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p30">
-          <div class="row"><span class="lb">能怎么用</span><p><code>./install.sh</code> 会装 uv、把 Stable Audio 3 拉到 <code>vendor/</code>、下 medium 模型（1.4B，约 5.9 GB），最后打印注册 MCP 的命令。跑在 macOS Apple Silicon（MLX）或 Windows NVIDIA（PyTorch）。无云服务、无 API key、生成不花钱。还能预览 1–4 个候选、教客户端用官方的提示词格式。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>心协的宣传片和活动预告要配乐，你现在只能翻免费素材库，选曲和情绪经常对不上。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>和 huashu-motion 组一条链：画面由它出、BGM 由 audio-studio 出，最后你合。先确认显存能跑 1.4B 模型——机器不够就先只做「活动背景音乐」这一件事，别急着上全流程。要留意的是生成音乐的版权归属，公开传播前看清 Stable Audio 的许可条款。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="AI" style="--ac:#1e40af;--soft:#eaf0fb">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p31">
-          <span class="ico" aria-hidden="true">🧠</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/MemTensor/MemT-1.0" target="_blank" rel="noopener noreferrer">MemTensor/MemT-1.0</a>
-            <p class="sum">记忆原生的基座模型：把「持续演化的记忆」做进模型计算本身，而不是外挂一个检索库。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 379</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p31">
-          <div class="row"><span class="lb">能怎么用</span><p>技术报告在 arXiv 2610.26825，HF 上有模型集合。结构是局部记忆块（动态多通道记忆矩阵，逐轮演化）加可训练的超记忆块（记忆 query/key/value 投影，带擦除、写入、遗忘门和输出门）；生成时记忆注意力读出并门控后加回主干。128K 历史下状态大小恒定，存储比全上下文 KV cache 省约 66×。训练用了 34B token 的数据。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你现在靠 MEMORY.md 加每日日志做「外挂记忆」，本质是检索式：写得进、但淘汰不出去。它的遗忘门设计正好戳中这个短板。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>短期不可能部署（要自己训），但可以马上用它的思路改你的记忆策略：给 MEMORY.md 加「过期 / 淘汰」规则，而不是只增不删。具体做法——每条记忆带一个「最后被用到」的日期，超过三个月没被引用又没写进长期约定的，定期归并或删除。你的记忆文件已经开始变长，这个成本会随时间放大。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="AI" style="--ac:#ea580c;--soft:#fdefe8">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p32">
-          <span class="ico" aria-hidden="true">⚡</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/eliasbiondo/antirion" target="_blank" rel="noopener noreferrer">eliasbiondo/antirion</a>
-            <p class="sum">单二进制的 AI 网关，自带管理台，横在你的应用和各模型商之间。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Rust</span>
-            <span class="chip star">&#9733; 186</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p32">
-          <div class="row"><span class="lb">能怎么用</span><p>一个 Rust 二进制跑起来即可，统一入口兼容 OpenAI / Azure / Anthropic / Bedrock 等；支持回退链与加权/最低成本/最低延迟路由、按组织到密钥粒度的预算与限流、PII 与密钥护栏、精确加语义缓存、MCP 与 agent 网关、OIDC SSO，落 PostgreSQL + Valkey。作者声称在同一台机器上比 Bifrost、LiteLLM 开销都低。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你的 agent 目前直连单一模型商，没有成本账本：一个任务花多少、哪类调用最贵，全靠感觉。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>如果你要把简报、讲稿、地图几个小工具共用一把 key 并看住花费，它比自写代理省事。做法：本地起一份，把每周简报的调用先接过去，跑两周看账本，再决定要不要把其他任务也迁。注意它要 PostgreSQL 和 Valkey，属于「有服务器才划算」的方案——你本机单人用，可能配一个简单的本地记账就够了，先衡量。</p></div>
-        </div>
-      </article>
-      <article class="card" data-cat="AI" style="--ac:#0d9488;--soft:#e7f6f4">
-        <div class="chead" role="button" tabindex="0" aria-expanded="false" aria-controls="p33">
-          <span class="ico" aria-hidden="true">🔁</span>
-          <div class="ttl">
-            <a class="name" href="https://github.com/xingjian-bai/opal" target="_blank" rel="noopener noreferrer">xingjian-bai/opal</a>
-            <p class="sum">让 agent 在训练过程中重写优化器：一行包住现有 PyTorch optimizer，每隔一段让 Claude Code 读训练报告、决定改哪。</p>
-          </div>
-          <div class="chips">
-            <span class="chip lang">Python</span>
-            <span class="chip star">&#9733; 185</span>
-          </div>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-        <div class="cbody" id="p33">
-          <div class="row"><span class="lb">能怎么用</span><p>OPtimizer with an Agent in the Loop：把优化器变成程序，agent 在训练中反复改写两个小东西——优化器程序（梯度怎么变成更新）和分析程序（该看哪些指标）。你只加一行 wrapper，其余交给 agent 加它自己的观测。</p></div>
-          <div class="row"><span class="lb">能否结合当前 agent 实际</span><p>你不训模型，但这套「读运行报告 → 改代码 → 再跑」的闭环，正是自动化该有的样子，而你现在是固定参数硬跑。</p></div>
-          <div class="row"><span class="lb">如何优化当前 agent 任务处理</span><p>把它搬到定时任务上：简报跑完输出一份 metrics（抓到多少项目、几个请求失败、上传是否成功、生成耗时），agent 读这份 metrics 决定下次要不要调抓取参数。比「参数写死，坏了才知道」高一个层级，而且改动很小——你已经有输出，只是没让它回流成输入。</p></div>
-        </div>
-      </article>
-      </div>
-    </section>
-
-    <section class="observe">
-      <div class="wt">Weekly Take</div>
-      <h2>本周观察</h2>
-      <p>本周两条主线。一是「夺回设备」：四款去广告电视桌面合计 3.9 万星，用户不等厂商，直接 ADB 接管加一键还原。二是 php2shell，单周催生二十多个仓库——PoC、绕过、补丁、检测规则，连 OpenAI 都出了自查 skill，漏洞到「一条命令」只隔了几天。Agent 侧从「造功能」转向「造工作台」：并排会话、依赖提示、重型工具常驻。共性是把复杂度收进一个可回滚的开关。</p>
-    </section>
-</main>
+</div>
 
 <footer>
-  <div class="wrap">
-    <p class="mono">数据来源：GitHub REST API &middot; <code>/search/repositories?q=created:&gt;=2026-10-17&amp;sort=stars</code>（含 security / cybersecurity / pentest / ctf / agent / ai-agents / llm / mcp / llmops 等维度交叉检索）</p>
-    <p class="mono">窗口 2026-10-17 → 2026-10-24 &middot; 共 33 个项目 &middot; 星标为抓取时刻数值 &middot; 报告文件 report-20261025.html</p>
-    <p>点击卡片展开详情，键盘 Tab 聚焦后按 Enter / 空格同样可展开。分析基于各项目 README 与仓库元数据，未做实际安装验证。</p>
-  </div>
+  由 WorkBuddy + github-weekly-brief skill 自动生成 · 卡片可点击展开详情 · 数据以 GitHub API 实际返回为准
 </footer>
 
 <script>
-(function(){
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+/* ---------- 卡片风格 / 语言配色 ---------- */
+const LANG_COLOR = {
+  "Python":"#3776AB","TypeScript":"#3178C6","JavaScript":"#B8860B","Go":"#00A7CE",
+  "Rust":"#C0562B","C++":"#D6406B","C":"#6E7681","Java":"#B07219","Swift":"#EE6A43",
+  "Shell":"#3F9E1F","HTML":"#E34C26","Dart":"#12B5A8"
+};
+const STYLES = ["st-soft","st-grid","st-bold","st-paper"];
 
-  function head(c){ return c.querySelector('.chead'); }
-  function setId(c, open){
-    var h = head(c);
-    h.setAttribute('aria-expanded', open ? 'true' : 'false');
-    c.classList.toggle('open', open);
-  }
-  function toggle(c){
-    var open = !c.classList.contains('open');
-    setId(c, open);
-    if(open){
-      var h = head(c).getBoundingClientRect();
-      if(h.top < 70) window.scrollBy({top: h.top - 76, behavior:'smooth'});
+/* ---------- 数据 ---------- */
+const DATA = {
+  "sections": [
+    {
+      "key": "hot",
+      "title": "综合热门",
+      "sub": "近 7 天新建并快速冲榜的项目（不分类型，按 star 排序）",
+      "color": "#6366f1",
+      "items": [
+        {
+          "n": "pengchujin/aerial-tv",
+          "l": "Kotlin",
+          "s": "4.7k",
+          "stars": 4734,
+          "created": "2026-10-20",
+          "desc": "给国产电视的一块干净桌面：参照 tvOS 设计的开源 Android TV 桌面，没有广告，开机自动接管。A tvOS-style launcher for Xiaomi, TCL and other China-market TVs.",
+          "topics": [],
+          "url": "https://github.com/pengchujin/aerial-tv",
+          "i": "📺",
+          "one": "照 Apple TV 重做的国产电视桌面：无广告、开机接管、可随时还原。",
+          "use": "下载 release 里的 aerial-standard.apk 用 adb 装，或 macOS/Linux 一行 `curl -fsSL https://aerial.qust.me/install.sh | KEEP_ADB=1 TV=<电视IP> bash`；前提是先在电视开 ADB 调试（小米/TCL/海尔/OPPO 的开法各不相同，README 有分品牌表）。验收就看 `dumpsys window | grep mCurrentFocus` 里是不是 app.orchard.tv。",
+          "fit": "与你手上的六项工作都无直接关系，属于消费级折腾。但它的交付形态值得抄：README 专门写了一段「发给 Agent 的安装提示词」，把 IP、验收命令、回滚方式都写死在 prompt 里，让任意 Agent 照着自检。",
+          "opt": "借鉴它的 agent.md 交付法：给你的心协物料和云大 3D 地图各写一份 handoff 文档，写清入口、验收命令、回滚步骤。下一步：在「心协工作事项」目录下新增一份「物料交付与验收」清单，先只写三条——装到哪、怎么确认装对了、怎么退回。"
+        },
+        {
+          "n": "Zagitta/gpu-unlock",
+          "l": "C",
+          "s": "4.6k",
+          "stars": 4616,
+          "created": "2026-10-18",
+          "desc": "Unlock FP/BF16 instruction issue rate on Nvidia 3000's cards to their professional equivalents",
+          "topics": [],
+          "url": "https://github.com/Zagitta/gpu-unlock",
+          "i": "🚀",
+          "one": "Linux 内核模块，在驱动绑定前把 N 卡 FP/BF16 发射率解锁到专业卡水平。",
+          "use": "编译 kmod 后在原版 NVIDIA 驱动加载前 insmod，写入速度选择子（SS0 0x88888888、SS1 0x8）并做 FLR；只支持 Linux，GA102/103/104/106（3090Ti/3080/3070/3060）实测 BF16 GEMM 提升 25%–80%。3090Ti 上 FP16 从 87.46 到 118.39 TFLOPS。",
+          "fit": "与你当前负载无关——你的重活是 PDF 解析和无头 Chrome 核验，都不是矩阵运算。唯一有意义的是它「在驱动之前抢占」这个切入时机，属于理解 GPU 启动链的样本。",
+          "opt": "关联较弱，先收藏。真要跑本机小模型（比如下面那类 3 千万参数的本地推理）时，再回来看它的兼容表挑卡，别看营销数字。"
+        },
+        {
+          "n": "simbasjungles/free-my-tv",
+          "l": "Java",
+          "s": "4.4k",
+          "stars": 4413,
+          "created": "2026-10-19",
+          "desc": "A fast, ad-free home screen for Google TV, LG webOS and Samsung Tizen. One button to undo.",
+          "topics": [
+            "android-tv",
+            "claude-code",
+            "google-tv",
+            "home-screen",
+            "launcher",
+            "no-ads",
+            "open-source",
+            "samsung-tizen"
+          ],
+          "url": "https://github.com/simbasjungles/free-my-tv",
+          "i": "🌅",
+          "one": "Google TV / LG / Samsung 通用的无广告桌面，一键还原。",
+          "use": "电视开开发者模式 → 电脑 `adb connect <IP>:5555 && adb install -r FreeMyTV.apk`，也可以在 Claude Code 里说一句「装到 192.168.1.50，我住里斯本」让它全程代劳。装完在电视里把默认桌面切成 Free My TV。作者实测首页内存从 242MB 降到 96MB，全程 60fps。",
+          "fit": "同样与你无关。但它和 aerial-tv 是同一波「AI 装电视」现象的两面：一个中文场景一个英文场景，都在把安装步骤改写成给 Agent 的指令。",
+          "opt": "关联较弱。可借它的「一句话装好」写法改你的自动化 prompt：目标、地址、验收三点写死，别让 Agent 自己猜参数。下一步：把你现有那条发布自动化的 prompt 按这三段重写一遍。"
+        },
+        {
+          "n": "xiaoyang111222/cn-math-taxonomy",
+          "l": "Python",
+          "s": "3.5k",
+          "stars": 3536,
+          "created": "2026-10-18",
+          "desc": "数学（小学到高中）、英语（三年级到高中）、初中物理的知识图谱：1644 个知识点、2403 条先修边、6723 道题，对齐课标，附自适应前置诊断。",
+          "topics": [
+            "chinese",
+            "curriculum",
+            "diagnostic",
+            "edtech",
+            "education",
+            "elementary-school",
+            "english",
+            "high-school"
+          ],
+          "url": "https://github.com/xiaoyang111222/cn-math-taxonomy",
+          "i": "🧮",
+          "one": "对齐课标的中小学知识图谱：1644 个知识点、2403 条先修边。",
+          "use": "不是程序而是数据集 + 静态站：clone 后取 topics 与 dependencies 两份 JSON 就能自建诊断——给一道错题，沿先修边从高中一路回溯到具体的小学知识点（配方法 → 完全平方公式）。`data/cn-curriculum-standards.json` 还收了 314 条课标原文条目。",
+          "fit": "强关联你的数据结构与算法讲稿：先修边就是讲稿的依赖图，你现在排章节靠经验，它给了拓扑序的现成做法。也顺手能给家教类活动做学情诊断。",
+          "opt": "用它替换「凭经验排讲稿顺序」这一步：把递归、汉诺塔、线性表按先修关系排序。下一步：clone 后写个小脚本，把 topics+dependencies 里「数据结构」子图导成拓扑序，直接当讲稿目录；顺带记下它「AI 生成初稿、未经教师审核」的免责写法，你引用数据时也该这样标。"
+        },
+        {
+          "n": "JoasASantos/REA-Prompts",
+          "l": "—",
+          "s": "2.3k",
+          "stars": 2277,
+          "created": "2026-10-19",
+          "desc": "REAP - Prompts for you to use REA (Reverse Engineer Anything), get the most out of it, and clone or break down any program",
+          "topics": [
+            "prompt-engineering",
+            "rea",
+            "reverse-enginnering"
+          ],
+          "url": "https://github.com/JoasASantos/REA-Prompts",
+          "i": "🔎",
+          "one": "给 REA 逆向工具用的提示词集，把分析拆成可举证的一步步。",
+          "use": "先 `npx rea-agents@latest setup` 把 REA 接到 Claude Code / Codex，再从 README 目录挑一节粘进对话，例如「Trace a button to its effect」。输入是一个功能点加二进制路径，输出是带文件/函数/地址的调用链，且强制区分「已确认 / 推断 / 未知」三段。共 17 类场景，含固件、内核、Electron、APK。",
+          "fit": "直接对上你的 CTF 逆向与 git 泄露实战。你现在让 Agent 自由分析，容易拿到一堆看着像的结论；它那套「每个结论必须给证据」的口径正是你写 WP 缺的骨架。",
+          "opt": "用它替换逆向时「让 Agent 自由发挥」那一步，固定三段输出。下一步：把它的 vulnerability-research 与 kernel 两节提示词抄进你的 CTF 笔记库当模板，写 WP 时按「证据 / 推断 / 未知」填，别写成流水账。"
+        },
+        {
+          "n": "xevrion/hatchzip",
+          "l": "Rust",
+          "s": "1.9k",
+          "stars": 1851,
+          "created": "2026-10-21",
+          "desc": "HatchZip is a free, open-source archive extractor for Windows, macOS and Linux that extracts ZIP, 7z, RAR, tar and split archives in place, so it needs free space for the extracted files only. Desktop app and CLI.",
+          "topics": [
+            "7z",
+            "7zip",
+            "archive",
+            "archive-extractor",
+            "cli",
+            "crash-safe",
+            "disk-space",
+            "extract"
+          ],
+          "url": "https://github.com/xevrion/hatchzip",
+          "i": "🗜️",
+          "one": "边解压边删包体的解压器：180G 的包不用备 380G 盘。",
+          "use": "装 release 的 setup.exe / dmg，右键「HatchZip → Extract here」；它在动手前先算「装不装得下」，中途可停可续。输入一个装不下的 7z/zip/rar 分卷，输出解好的文件，原包被逐步切成空。对照：同场景 WinRAR 和 7-Zip 都要 380G，它只要 200G 出头。",
+          "fit": "对上你本机的真实处境——WorkBuddy 项目、论文 PDF、CTF 靶场镜像都堆在同一块盘上，真到解压前发现差几个 G 时它救命。",
+          "opt": "把「解压前先查容量」变成习惯而不是事后救火。下一步：下次下靶场镜像或论文数据集，先用它看一眼是否装得下；顺便把「大文件先预检」写进你的磁盘整理方案文档。"
+        },
+        {
+          "n": "JustAResearcher/gpu-unlock-ada",
+          "l": "C",
+          "s": "1.8k",
+          "stars": 1818,
+          "created": "2026-10-23",
+          "desc": "GPU tensor unlock source for RTX 4090 and experimental RTX 4070 Ti SUPER; firmware generated locally",
+          "topics": [],
+          "url": "https://github.com/JustAResearcher/gpu-unlock-ada",
+          "i": "⚡",
+          "one": "把上面那套解锁扩到 RTX 4090：FP16/BF16 张量吞吐约翻倍。",
+          "use": "Linux 内核模块 + 自动为 4090（10de:2684）选 AD102 固件与 payload，需在 NVIDIA 615.78.08 之前加载。4090 实测 FP16 165.6 → 331.6 TF/s。但它自己写明：真实 cuBLAS GEMM 只涨 12%–34%，4096³ 形状几乎没变——发射率翻倍不等于应用翻倍。",
+          "fit": "与你当前负载无关。真正的价值是它的报告口径：把「寄存器级 issue rate」和「应用级 GEMM」分开列，还标了「单卡、一次配对测量、未做长稳」。",
+          "opt": "借它的口径改你写性能结论的习惯：先给环境与样本数，再给数字，最后给边界。下一步：翻你上次写的性能对比，看有没有把「测试环境的数字」直接说成「实际效果」。"
+        },
+        {
+          "n": "wesbos/3d-model-anything",
+          "l": "Swift",
+          "s": "1.8k",
+          "stars": 1815,
+          "created": "2026-10-21",
+          "desc": "Capture iPhone LiDAR and photos, reconstruct editable Three.js rooms, and explore them in a browser.",
+          "topics": [],
+          "url": "https://github.com/wesbos/3d-model-anything",
+          "i": "🧊",
+          "one": "iPhone 扫房间生成可编辑 Three.js 场景，附带建模 skill。",
+          "use": "`npm ci && npm run dev` 起 viewer（localhost:5188），能切 dollhouse / walking / overhead / wireframe / knolling 五种视角；自己扫需要带 LiDAR 的 iPhone，导出后放进 `data/captures-in/<room>/`，再让 Agent 用 `.agents/skills/scan-to-threejs` 建模并与原照片做 matched-camera 比对。整个流程是「迭代重建」，不是一键出完美模型。",
+          "fit": "直接对上云大双校区 3D 地图。你现在走的是腾讯 LBS 贴地模型那条路，它给的是另一条：真实空间量测 → Three.js 可编辑场景 → 用实拍照片逐角度校准。屋顶、走廊、泽湖这种不规则边界，这条路比地图 API 拼体块更自由。",
+          "opt": "用它替换「靠地图 API 拼建筑体块」的建模环节，但先小范围验证。下一步：只在呈贡校区挑一栋楼或泽湖一角跑通 scan → threejs → 照片比对，把它的 matched-camera 比对脚本摘出来，作为你验收新模型是否「长得像」的基准。"
+        },
+        {
+          "n": "ikow/php2shell-poc",
+          "l": "Python",
+          "s": "1.8k",
+          "stars": 1779,
+          "created": "2026-10-21",
+          "desc": "CVE-2026-109618/109619 — 5 RCE chains + detection rules (Suricata, Sigma, ModSecurity). PHP session.upload_progress pre-auth exploit research.",
+          "topics": [
+            "cve-2026-109618",
+            "cve-2026-109619",
+            "detection-rules",
+            "exploit",
+            "php-exploit",
+            "php-security",
+            "php2shell",
+            "poc"
+          ],
+          "url": "https://github.com/ikow/php2shell-poc",
+          "i": "💥",
+          "one": "PHP 预认证 RCE 五条利用链 + 检测规则，CVSS 9.2。",
+          "use": "`exploit/` 下三条链现成可跑：`python3 exploit/chain_a_session_lfi.py --host TARGET --port 80 --command 'id'`。配套给 Suricata / Sigma / ModSecurity 三套检测规则。最关键的是一张条件表：A 链要 LFI、B 链要 unserialize、C 链要两个不同 serialize_handler 的目录、D 链 mod_php 零依赖、E 链 FPM 下任意端点即可消费。",
+          "fit": "这是你这周最该逐字读的一篇：与你手上的 CTF Web 攻防同源（session.upload_progress + OOM bailout），而且那张条件表本身就是「拿到题先判该走哪条链」的决策模板。",
+          "opt": "用它补你 Web 题的「链选择」环节：先按条件表判断走 A/B/C/D/E，再动手。下一步：本地 docker 起 stock PHP 8.4 打一遍 Chain A，把流量存成 pcap，作为你 CTF 流量分析的对照样本。"
+        },
+        {
+          "n": "alchaincyf/huashu-motion",
+          "l": "JavaScript",
+          "s": "1.6k",
+          "stars": 1625,
+          "created": "2026-10-18",
+          "desc": "让你的agent一键直出商业级产品宣传片：会作曲，能指着画面改。Commercial-grade launch films by your coding agent — point at the frame to change it.",
+          "topics": [
+            "agent-skills",
+            "animation",
+            "claude-code",
+            "codex",
+            "gsap",
+            "launch-video",
+            "motion-graphics",
+            "skills"
+          ],
+          "url": "https://github.com/alchaincyf/huashu-motion",
+          "i": "🎬",
+          "one": "让 coding agent 一键出商业级宣传片：自己写谱配乐，还能指着画面改。",
+          "use": "`npx skills add alchaincyf/huashu-motion` 装进 Claude Code / Codex / WorkBuddy，说一句「给我的产品做个 30 秒发布片」；它会先读产品、给三个方向、出片，再在浏览器编辑器里等你，按 C 点画面提意见就只改那一处。配乐是它按 ABC 记谱法先写谱再演奏（本机采样，不调收费接口），输出 MP4 + 可改的时间线源码。",
+          "fit": "对上你的心协招新物料：海报是静帧，这条能补一支 30 秒竖版招新短片；技法也与你「AI 生背景 + PS 手动叠字」同源，只是把叠字换成了动画层。",
+          "opt": "新增一条物料产线：把「招新海报 → 30 秒竖版短片」定成固定模板，agent 只换文案与照片。下一步：先跑一支 15 秒样片，重点验证不跑 `om samples build` 时的合成音色能不能听——你机器上没有真乐器采样也能出片才算可交付。"
+        },
+        {
+          "n": "Ansub/tv-detox",
+          "l": "Java",
+          "s": "1.5k",
+          "stars": 1525,
+          "created": "2026-10-18",
+          "desc": "Make an old Android TV fast again with Claude Code or Codex: a tiny ad-free home screen plus the prompt to clean it up",
+          "topics": [],
+          "url": "https://github.com/Ansub/tv-detox",
+          "i": "🧹",
+          "one": "让 Agent 远程清理 Android TV 广告与臃肿应用，可撤销。",
+          "use": "电视开 USB 调试 → 电脑开 Claude Code / Codex → 粘 README 里那段提示词（里面已经写好「先告诉我风险，等我确认」）。输入电视型号和 IP，输出一份被禁用的应用清单加 `undo.sh`——注意是禁用不是删除，随时能全量恢复。",
+          "fit": "与你手头工作无关。但它把「破坏性操作前先要确认 + 必须附回滚脚本」做成了标准交付，而这正是你做文件整理、批量改名时该守的纪律。",
+          "opt": "借它的交付结构改你的自动化：凡是会动用户文件的定时任务，必须同时产出 undo 步骤。下一步：给桌面整理那条自动化补一份「如何撤回本次整理」的清单，写在报告第一屏。"
+        },
+        {
+          "n": "9bie/php2shell-bypass-aslr-exp",
+          "l": "Python",
+          "s": "1.4k",
+          "stars": 1415,
+          "created": "2026-10-21",
+          "desc": "A php2shell exploit that requires no modifications to the official version, and does not require display_errors or limit_memory.",
+          "topics": [],
+          "url": "https://github.com/9bie/php2shell-bypass-aslr-exp",
+          "i": "🧪",
+          "one": "不改目标配置、不开 display_errors，纯 HTTP 打穿 php2shell。",
+          "use": "`./pure/run_pure.sh` 起 stock PHP 8.4.26 + 官方 prefork（MaxRequestWorkers=150），再 `python3 exploit.py --port 18110`。核心是 worker pinning：先发 149 个只带一半 body 的 POST 占满池子，让 A1/B1/A2/B2 落在同一个 child 上，跨请求的悬空指针才成立。stock 环境 10/10 成功，单次 3–4 秒。",
+          "fit": "对 CTF 有直接战术价值：「占满 worker 池当同步点」是可迁移的通用手法，任何需要跨请求悬空指针或竞态同步的场景都能借，不只这一条 CVE。",
+          "opt": "把 worker pinning 收进你的 Web 手法库，和 race condition 类题并排放。下一步：本地复现一次，把 149 个占位连接的时间窗参数记下来，写成 WP 里「为什么需要同步点」那一节——这是别人抄你思路的关键。"
+        },
+        {
+          "n": "openai/php2shell-checker",
+          "l": "JavaScript",
+          "s": "1.4k",
+          "stars": 1388,
+          "created": "2026-10-21",
+          "desc": "",
+          "topics": [],
+          "url": "https://github.com/openai/php2shell-checker",
+          "i": "🏷️",
+          "one": "两个 Agent skill：给个 URL 就判断 PHP 是否中招。",
+          "use": "`node phpcheck.js https://example.com` 直接跑，只读 X-Powered-By 与 Server 头（HEAD 失败才退 GET，不跟重定向、不看 body）。退出码 0/1/3 分别对应 OK / 可能中招 / 未知，加 `--json` 出机器可读结果，能直接进 CI。也可 `$skill-installer install both skills from …` 装成 Codex skill。",
+          "fit": "对上你的侦察环节与日常自查：判断目标 PHP 版本以前要手工看响应头，现在一条命令、退出码可编排。也说明了一件事——OpenAI 开始把「漏洞应急」做成 skill 交付。",
+          "opt": "替换侦察阶段「手工看响应头」这一步：包成脚本对目标列表批量跑。下一步：写个十行的批处理，把本周遇到的 PHP 站点过一遍，输出一张「域名 / 版本 / 风险」的表贴进你的 CTF 记录。"
+        },
+        {
+          "n": "oosexgang/hackios-xnu-kernel",
+          "l": "C",
+          "s": "1.4k",
+          "stars": 1368,
+          "created": "2026-10-22",
+          "desc": "",
+          "topics": [],
+          "url": "https://github.com/oosexgang/hackios-xnu-kernel",
+          "i": "🍏",
+          "one": "把苹果 XNU 内核搬到骁龙安卓机，跑未改动的 iOS 16.5。",
+          "use": "不用真机也能试：Linux x86-64 + 12GB 盘，`common/setup.sh` → `ios165/fetch.sh`（从苹果 CDN 下 7.4GB 自己解）→ `common/build.sh qemu-virt` → `common/run.sh`，在 QEMU 里点亮锁屏和 SpringBoard。手机上则用 `fastboot boot` 启动，不刷机、重启回安卓。",
+          "fit": "与你内网渗透/系统底层的兴趣方向对得上，但不是能产出的线——没有蜂窝、没有蓝牙、没有 Secure Enclave，App Store 登不进。价值在于它把「自写 EFI loader + 替换闭源驱动 + 兼容层跑 Wi-Fi 驱动」拆得极清楚。",
+          "opt": "当阅读材料，别当项目接。下一步：只读 `docs/air.md` 里「456 个系统 shader 已有 293 个跑在 Adreno 上」那段，理解 GPU 驱动兼容层的能力边界——这比通读全仓库有用。"
+        }
+      ]
+    },
+    {
+      "key": "sec",
+      "title": "网络安全",
+      "sub": "攻防、渗透、逆向与网络观测方向",
+      "color": "#e11d48",
+      "items": [
+        {
+          "n": "opentrap/opentrap",
+          "l": "Java",
+          "s": "415",
+          "stars": 415,
+          "created": "2026-10-19",
+          "desc": "A free, open-source alternative to Burp Suite: an intercepting proxy and web app security testing suite with Repeater, Intruder, Collaborator and a built-in OWASP ZAP scanner. Linux, AGPL-3.0.",
+          "topics": [
+            "application-security",
+            "appsec",
+            "bug-bounty",
+            "burp-alternative",
+            "burp-suite",
+            "dast",
+            "http-proxy",
+            "infosec"
+          ],
+          "url": "https://github.com/opentrap/opentrap",
+          "i": "🕸️",
+          "one": "Burp 的开源替代：Burp 式界面套 OWASP ZAP 引擎。",
+          "use": "`wget …/opentrap-x86_64.appimage && chmod +x && ./opentrap-x86_64.appimage`（Linux，Java 17+）。拦截代理 + 爬虫 + 主动审计出 Dashboard：输入一个目标站，输出按严重度排序的问题表，每条都留复现请求。AGPL-3.0，功能不设付费墙。",
+          "fit": "对上你的 Web 攻防与 CTF：Burp 社区版没有主动扫描，这个正好补上，界面又是你熟的 proxy-first 那套。本地 Kali/WSL 起靶场就是它的主场。",
+          "opt": "替换你现在「手抓包 + 手工看」的基线环节。下一步：在 WSL 里装一次，用 DVWA 跑通 crawl + audit 全流程，再决定 CTF 时是它先扫还是你直接上手——别为了工具而工具。"
+        },
+        {
+          "n": "yuatemycat/SuperGhidra",
+          "l": "Python",
+          "s": "138",
+          "stars": 138,
+          "created": "2026-10-20",
+          "desc": "SuperGhidra: Autonomous Agent Reverse Engineering, Lock-Free Ghidra Daemon & C++ Recovery Suite",
+          "topics": [
+            "arm64",
+            "binary-analysis",
+            "decompiler",
+            "disassembler",
+            "ghidra",
+            "mcp",
+            "pcode",
+            "python"
+          ],
+          "url": "https://github.com/yuatemycat/SuperGhidra",
+          "i": "🔬",
+          "one": "Ghidra 常驻 daemon，反编译转可编译 C，MCP 接 Agent。",
+          "use": "`pip install superghidra`，不需要 Ghidra 就能 `superghidra rtti-recover target.dll -o classes.json` 抽 MSVC RTTI / MFC 类。要让 Agent 驱动 Ghidra：`pip install git+https://github.com/yuatemycat/SuperGhidraMCP.git` 再 `claude mcp add superghidra -- superghidra-mcp -t stdio --project-path <bin>`，省掉每次 5–15 秒的 JVM 启动和 .rep 锁争用。另有 Z3 做 P-code 等价性检查。",
+          "fit": "直击你逆向时的真痛点：no-JVM 的类恢复 + MCP 接 Agent。你现在是每次会话重开 headless Ghidra，慢且容易锁死；daemon + JSON overlay 写入正好绕开。",
+          "opt": "用它替换 RE 流程里的「每次重开 Ghidra」环节。下一步：先只装 standalone 部分跑 `rtti-recover`，确认不装 Ghidra 也能出类名；能出再上 MCP，别一上来就折腾 JVM 和 OpenJDK 21。"
+        },
+        {
+          "n": "Spectrmachina/Ztrust",
+          "l": "Python",
+          "s": "153",
+          "stars": 153,
+          "created": "2026-10-22",
+          "desc": "Zero-trust supply-chain security for open source: detects malicious & vulnerable dependencies, typosquats, leaked secrets and unsafe GitHub Actions — and pays independent researchers in shielded Zcash via a front-running-proof bounty protocol.",
+          "topics": [],
+          "url": "https://github.com/Spectrmachina/Ztrust",
+          "i": "🛡️",
+          "one": "供应链零信任扫描器：查恶意依赖、抢注包名、泄露密钥、危险 CI，出 SARIF。",
+          "use": "`ztrust scan` 扫 manifests / lockfile / workflow，数据源 OSV.dev（含 OpenSSF MAL- 恶意包库），结果可进 GitHub Security tab。覆盖 requirements / poetry / uv / package-lock v1–v3 / go.mod / Cargo.lock。另有 Zcash 悬赏池给独立研究者（commit-reveal 防抢功）。",
+          "fit": "对上你「把 HTML 报告往 GitHub 推」这条链路：现在仓库只有静态文件，但一旦接了脚本就有了依赖面。也适合 CTF 里「审计别人源码」的起手扫描——先扫依赖再看逻辑，能省一半时间。",
+          "opt": "新增一道自动化：周报发布前对仓库跑一次扫描。下一步：把 `ztrust scan --format sarif` 插到 publish_github 之前，跑一周看误报率，再决定是否常驻。"
+        },
+        {
+          "n": "NCSC-NL/php2shell",
+          "l": "Python",
+          "s": "284",
+          "stars": 284,
+          "created": "2026-10-21",
+          "desc": "Operational information regarding the 2026 php2shell vulnerabilities",
+          "topics": [],
+          "url": "https://github.com/NCSC-NL/php2shell",
+          "i": "📋",
+          "one": "荷兰网安中心的 php2shell 作战情报库：产品清单 + 缓解。",
+          "use": "三个目录直接当资料查：`software/` 是逐日更新的厂商/产品受影响状态表（Broadcom、HP 等，按版本标 Fix/受影响的 CVE），`detection_mitigation/` 是检测与缓解材料，`tools/` 是生成脚本。TLP:CLEAR，可自由引用。",
+          "fit": "比你手上任何 PoC 都更适合写 WP 的「影响面」一节：它回答「哪些设备被波及」，而不只是「怎么打」。对你这种要写总结文档的人，这是权威引用源。",
+          "opt": "接进你的漏洞情报流程：以后遇到大 CVE，先找对应 CSIRT 的 repo 拿产品矩阵。下一步：把它 `software/` 表的字段结构记下来（厂商 / 产品 / 版本 / 双 CVE 状态 / 来源链接），做成你自己的「漏洞影响面」模板。"
+        },
+        {
+          "n": "haiou-666/Haiou-workshop",
+          "l": "—",
+          "s": "127",
+          "stars": 127,
+          "created": "2026-10-20",
+          "desc": "海鸥工坊（Haiou Workshop）｜面向逆向工程、授权渗透测试与安全研发的 AI 专业工作台。内置rea逆向流程，融合 Codex、Claude Code 与 DeepSeek Harness，整合专业技能库、REA 分析能力及按需工具链，辅助开展二进制分析、Web/API 安全评估、代码审计、CTF、数字取证、移动端与协议分析。覆盖任务拆解、脚本编写、工具分析、证据整理、修复建议与技术报告等工作环节，让 AI 深入参与专业分析与开发实践。",
+          "topics": [],
+          "url": "https://github.com/haiou-666/Haiou-workshop",
+          "i": "🧰",
+          "one": "国内 AI 安全工作台：REA 逆向、技能库、工具链塞进 Codex。",
+          "use": "下载 release 安装，界面按方向点功能：逆向、Web 与 API 安全、代码审计、CTF、恶意样本、移动端、自动化脚本。底层调 Codex / Claude Code / DeepSeek Harness，内置 REA 逆向接入与统一技能库。输入一段待分析材料，输出可检查的脚本、证据、修复建议与报告草稿。",
+          "fit": "与你六个场景里的 CTF 和逆向两块重合度最高，而且是中文界面 + 中文报告口径，省下翻译和「英文 prompt 水土不服」的成本。",
+          "opt": "当参考实现读，别直接装：它最值钱的是「按方向分技能包 + 按需装工具链」这套组织方式。下一步：抄它的结构，把你自己的 CTF 技能按 Web / Pwn / RE / Crypto / Misc 分目录，每个目录一份「先查什么、用什么工具」。"
+        },
+        {
+          "n": "syhunt/php2shell-protection",
+          "l": "PHP",
+          "s": "113",
+          "stars": 113,
+          "created": "2026-10-21",
+          "desc": "Defensive mitigation and testing toolkit for PHP security vulnerabilities (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560), including Apache protections and PHP hardening guidance",
+          "topics": [
+            "apache",
+            "application-security",
+            "appsec",
+            "cybersecurity",
+            "defenses",
+            "mitigation",
+            "patches",
+            "php"
+          ],
+          "url": "https://github.com/syhunt/php2shell-protection",
+          "i": "🚧",
+          "one": "检验 .htaccess 规则能否挡住 multipart POST 的测试套件。",
+          "use": "把规则贴进 Apache `.htaccess`，跑它的用例看两件事是否成立：multipart POST 被拒、普通 urlencoded POST 放行。没有站点专属配置，就是个通用验证器。作者自己写明：这**不是**完整缓解，只挡其中一条路径。",
+          "fit": "对上你可能要维护的 PHP 站点自保。更重要的是它示范了一种诚实：先声明覆盖边界，再谈方案——这比多一条规则值钱。",
+          "opt": "把「缓解措施的覆盖边界必须写明」变成你写报告的硬要求。下一步：在你的 WP 模板里加一格「本条缓解拦不住什么」，写完再交。"
+        },
+        {
+          "n": "theorem-labs/oss-verify-proofs",
+          "l": "Rocq Prover",
+          "s": "139",
+          "stars": 139,
+          "created": "2026-10-22",
+          "desc": "Theorem statements about OSS-Fuzz fuzz targets as compiled RISC-V binaries, and machine-checked Rocq proofs of them",
+          "topics": [
+            "formal-verification",
+            "fuzzing",
+            "oss-fuzz",
+            "proofs",
+            "riscv",
+            "rocq"
+          ],
+          "url": "https://github.com/theorem-labs/oss-verify-proofs",
+          "i": "📜",
+          "one": "用 Rocq 证明某些 fuzz target 在限定输入域内不会崩。",
+          "use": "Rocq 9.2.0 校验；每个 `proofs/<lib>/<target>/` 里是命题加证明，针对的是编译后的 RISC-V 二进制（建在 LPS 这个 Linux 进程模型上），不是源码。25 个库、60 个入口已验证，如 bzip2、cjson、boost-json、leptonica。可逐条复验，但 LPS 本身「best effort」，前提要自己认。",
+          "fit": "与课业和 CTF 都不直接接，但这是漏洞挖掘的另一条腿：证明某类输入不存在崩溃，和 fuzz 找反例互补。你要写安全类报告时，「已证明 / 未覆盖」比「测了没崩」强一档。",
+          "opt": "当方法论储备。下一步：读一个 `bzip2_compress_target` 的命题陈述，看清它把输入域限定在哪——以后你写 fuzz 结论时，也把「覆盖到哪、没覆盖到哪」写成显式约束，而不是「未发现漏洞」。"
+        }
+      ]
+    },
+    {
+      "key": "agent",
+      "title": "Agent",
+      "sub": "智能体框架、编排与协作",
+      "color": "#0284c7",
+      "items": [
+        {
+          "n": "dominikmartn/harp",
+          "l": "Rust",
+          "s": "608",
+          "stars": 608,
+          "created": "2026-10-20",
+          "desc": "Run many Claude Code and Codex agents side by side, in one sidebar that tells you which one needs you. An unofficial fork of Warp.",
+          "topics": [],
+          "url": "https://github.com/dominikmartn/harp",
+          "i": "🎛️",
+          "one": "Warp 的分叉：把标签栏换成侧栏，专门管一堆并跑的 coding agent。",
+          "use": "下 `Harp-<version>.dmg` 拖进 Applications（仅 macOS，独立 bundle id 可与 Warp 共存）。侧栏每行标 working / 需要你 / 完成，未读有标记，后台还在跑的标一个点；底部两圈是 5 小时窗和每周额度。开 tmux 集成后分组与顺序跟着 tmux session 走，手机 ssh 上来也能接手。",
+          "fit": "对上你的实际：简报自动化、CTF 复现、论文精读常同时跑，现在只能靠记忆分屏，谁卡住了不知道。可惜只有 macOS，你在 Windows 上只能借设计不能借工具。",
+          "opt": "借它的「状态外显」改你的 agent 编排：任何长任务都要能一眼看出在跑 / 卡住 / 等我确认。下一步：让你现有的长任务在回复首行就打出当前状态与下一步要人做什么，别让人回头翻。"
+        },
+        {
+          "n": "aicodeking/pandacode",
+          "l": "Rust",
+          "s": "638",
+          "stars": 638,
+          "created": "2026-10-18",
+          "desc": "PandaCode: a calm desktop workspace for coding agents",
+          "topics": [],
+          "url": "https://github.com/aicodeking/pandacode",
+          "i": "🐼",
+          "one": "Tauri 写的 agent 工作台：多 harness、任务板、组队、Bot。",
+          "use": "有 Windows x64 安装包（`PandaCode-Windows-x64-setup.exe`）。一个窗口里选 Claude Code / Codex / Copilot CLI / DeepSeek 等 harness，按任务选模型与推理档；任务板 Pending → In progress → Review → Completed；architect 带最多 3 个 worker 组队；还能把 agent 挂到 Telegram / Slack 后面。用系统 webview，不打包 Chromium。",
+          "fit": "比 harp 更适合你——Windows 原生。你手上并行的几件事（周报、CTF、讲稿、海报）正好能落成任务板上的并行条目，而不是开四个会话互相抢上下文。",
+          "opt": "用它替换「一个会话干一件事、靠记忆串」的现状。下一步：只装 Windows 版、先接一个 harness、跑通一条任务再扩；别一上来就把架构师小队和云沙箱全开，配置成本会吃掉收益。"
+        },
+        {
+          "n": "actionow-ai/vvv",
+          "l": "Python",
+          "s": "366",
+          "stars": 366,
+          "created": "2026-10-22",
+          "desc": "Build a video template once, reuse it across coding agents. Editable Remotion templates and an Agent Skill for Claude Code, Codex and 25+ agents.",
+          "topics": [],
+          "url": "https://github.com/actionow-ai/vvv",
+          "i": "🎥",
+          "one": "视频模板库 + Agent Skill：一套模板反复换图文出片。",
+          "use": "README 明确给了 WorkBuddy 的装法：从 Releases 下 skill ZIP，在「技能 → 添加技能」里上传；渲染在本机（Python 3.9+ / Node 26，其余 agent 自己装）。输入 `./photos` 里的照片加一句需求，输出 16:9 或 9:16 成片，且必须过 `vvv check` 才算交付。另有 MCP 端点可在不装的情况下浏览模板。",
+          "fit": "这是本周最该装的一个：官方支持 WorkBuddy，且「模板化换图换字出新片」正好是你心协物料的形态——招新、活动回顾、报名倒计时都能套同一套模板。",
+          "opt": "新增你专属模板：把心协海报的版式（主视觉 + 时间地点 + 二维码位）做成一套 vvv 模板，以后只换文案和照片。下一步：装 skill → 跑官方 starter 模板 → 再把你的招新海报版式改造成模板二，二维码位留固定占位。"
+        },
+        {
+          "n": "kanaworksai-hue/audio-studio-mcp",
+          "l": "Python",
+          "s": "488",
+          "stars": 488,
+          "created": "2026-10-18",
+          "desc": "Local AI BGM and sound effects for Claude Code and any MCP client. Stable Audio 3 on Apple Silicon (MLX) and Windows NVIDIA GPUs (PyTorch). No cloud, no API key.",
+          "topics": [
+            "apple-silicon",
+            "audio-generation",
+            "claude-code",
+            "cuda",
+            "game-audio",
+            "mcp",
+            "mcp-server",
+            "mlx"
+          ],
+          "url": "https://github.com/kanaworksai-hue/audio-studio-mcp",
+          "i": "🎵",
+          "one": "本机 MCP 音效工作室：一句话生成 BGM 与音效，可循环、可响度归一。",
+          "use": "MCP server，接 Claude Code / Desktop / Cursor，底层 Stable Audio 3，macOS 走 MLX、Windows 走 NVIDIA PyTorch，本地跑不联网不计费。输入「一段咖啡店 lo-fi，11 小节无缝循环」，输出 48kHz WAV/OGG/FLAC 加同名 `.json`（prompt、seed、参数全留档，可复现）。",
+          "fit": "对上心协招新短片：画面有 huashu-motion 了，还缺配乐和落地音效；你这台 Windows + N 卡正是官方支持的路径。",
+          "opt": "把它接成物料产线的音频环节：短片定稿后调一次 BGM、一次收尾音效。下一步：在你的 MCP 配置里加这条 server，先用一段 15 秒样片验证 Windows 端质量——不好听就退回剪映自带库，别为一致性牺牲效果。"
+        },
+        {
+          "n": "lovisdotio/motion2code",
+          "l": "HTML",
+          "s": "254",
+          "stars": 254,
+          "created": "2026-10-20",
+          "desc": "Skills for coding agents: rebuild a motion design video as looping SVG + GSAP code, checked frame by frame against the source",
+          "topics": [
+            "agent-skills",
+            "animation",
+            "claude-code",
+            "gsap",
+            "motion-design",
+            "svg",
+            "video-to-code"
+          ],
+          "url": "https://github.com/lovisdotio/motion2code",
+          "i": "🎞️",
+          "one": "教 agent 把动效视频重建成 SVG + GSAP 代码，并逐帧对照验证。",
+          "use": "`claude plugin marketplace add lovisdotio/motion2code` 装 skill。核心机制是单一 GSAP 时间线 + 暴露 `window.anim.seek(t)`，于是任何一帧都能渲染、比对、测试；`study_video.py` 把参考片切成 0.25 秒一帧再动手，`frame_diff.py` 逐帧打分，`check_anim.py` 量循环接缝。输入 10 秒动效，输出几十 KB 的可编辑 HTML，4K/8K 不糊。",
+          "fit": "对上你的宣传长图与海报：静态物料能升级成浏览器里可播的动效页；技术路线也和你 paper-deep-reading 的 HTML 交付同源——单文件、零依赖、内联。",
+          "opt": "用它替换「让 agent 凭想象写动画」：先切帧再写码，最后用 compare.html 逐帧校。下一步：拿你的招新海报做一段 5 秒入场动效，重点看接缝——招新海报要循环播放，接缝跳一下就毁所有。"
+        },
+        {
+          "n": "vercel-labs/fx0",
+          "l": "TypeScript",
+          "s": "401",
+          "stars": 401,
+          "created": "2026-10-19",
+          "desc": "A lightweight design agent built with libfx. Describe a page and an agent writes it as one HTML file.",
+          "topics": [],
+          "url": "https://github.com/vercel-labs/fx0",
+          "i": "🎨",
+          "one": "Vercel 的设计 agent：说一句要什么页面，写成一个 HTML。",
+          "use": "线上 fx0.vercel.dev 可直接试；自建就 clone 后配 AI Gateway。每轮保留一版设计，能回开任意历史版本并导出 HTML。底层 libfx 提供 agent loop、流式、工具调用、重试、持久 session——函数中途挂掉，这一轮接着跑完。",
+          "fit": "和你「生成单页 HTML 报告」这条主线同类：它解决的正是「agent 写页面写到一半进程没了」和「改坏了没法退回」两个问题，而你的简报现在是覆盖式写文件。",
+          "opt": "借鉴它的「每轮一个可回滚版本」：你的周报改坏了只能重跑。下一步：给 `build_report.py` 的输出加一个版本快照（如 `dist/versions/report-YYYYMMDD-HHMM.html`），生成成功才覆盖正式文件。"
+        },
+        {
+          "n": "realskyrin/ns-game-apple-arm-port",
+          "l": "—",
+          "s": "499",
+          "stars": 499,
+          "created": "2026-10-18",
+          "desc": "Agent skill for native Nintendo Switch game porting to Apple Silicon macOS, iPadOS and iOS with Rust and Metal",
+          "topics": [],
+          "url": "https://github.com/realskyrin/ns-game-apple-arm-port",
+          "i": "🎮",
+          "one": "把 Switch 游戏移植到 Apple Silicon 的指令型 skill。",
+          "use": "`git clone … ~/.codex/skills/ns-game-apple-arm-port`，然后在移植项目里说「使用 $ns-game-apple-arm-port 检查当前游戏版本…」。仓库只有方法、诊断清单与验证阶梯，不含游戏、密钥、固件。工作节奏很硬：先全量改完再统一测试，实现期间不逐文件跑测试。",
+          "fit": "与你项目无直接关系，但它是本周「skill 本身就是交付物」最极端的样本：一个 skill 里塞了架构、模块边界、证据阶梯、案例复盘，比很多项目代码还长。",
+          "opt": "借它的「证据阶梯」改你写 WP 的方式：构建成功 ≠ 跑起来 ≠ 可玩，逐级要证据。下一步：给你的 CTF WP 模板加一行「本条结论的证据等级」（命令输出 / 截图复现 / 推测），不确定就写推测。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "title": "AI",
+      "sub": "模型、生态与智能体基建",
+      "color": "#059669",
+      "items": [
+        {
+          "n": "eagle-hq/EAGLE-4",
+          "l": "Python",
+          "s": "980",
+          "stars": 980,
+          "created": "2026-10-20",
+          "desc": "Official Inference Code of EAGLE-4",
+          "topics": [
+            "eagle",
+            "gpu",
+            "llm-inference",
+            "sglang",
+            "speculative-decoding",
+            "tokenspeed",
+            "vllm"
+          ],
+          "url": "https://github.com/eagle-hq/EAGLE-4",
+          "i": "🦅",
+          "one": "投机解码 drafter：按硬件与 batch 决定猜多远，最快 3.4×。",
+          "use": "`eagle-harness` 接 SGLang / vLLM / TokenSpeed。一条 docker 起服务：`ghcr.io/eagle-hq/eagle-4-sglang:0.1.2` 加 `--model-path Qwen/Qwen3.8-27B`，首次会下约 62GB（目标模型 + draft），四卡加 `--tp-size 4`。输出与目标模型完全一致，只是更快。",
+          "fit": "与你日常无直接关系——你用的是托管 API，不是自建推理。但「加速比」这类数字你以后会反复看到，它给了个诚实样本。",
+          "opt": "关联较弱。可记一个判断：看到加速比先问三件事——batch 多大、几张卡、输出是否与基线逐字一致。下一步：把这个三问写进你的技术笔记，以后引用别人性能数字时先过一遍。"
+        },
+        {
+          "n": "recursive-oss/rec",
+          "l": "Python",
+          "s": "195",
+          "stars": 195,
+          "created": "2026-10-21",
+          "desc": "Our lightning-fast inference engine.",
+          "topics": [],
+          "url": "https://github.com/recursive-oss/rec",
+          "i": "🏎️",
+          "one": "Flint 模型的本地推理引擎，M4 Pro 上比 llama.cpp 快 2×。",
+          "use": "`curl -fsSL …/install.sh | bash` 装到 ~/.local/bin，然后 `rec launch pi` 或 `rec launch opencode` 自动起服务并接上客户端；`rec doctor` 查硬件，`rec stop` 停。硬门槛：M4 Pro / M5 Pro 起、≥48GB 统一内存、约 30GB 盘。官方说明它只为单会话优化，多 agent 并跑要另找方案。",
+          "fit": "你 Windows + 没有 48GB 的 Mac，装不了。但「把模型、服务、harness 打包成一条 launch 命令、并划清适用边界（单会话）」这个封装思路对你有用。",
+          "opt": "借它的封装思路：把你「起服务 + 接客户端 + 保活」的碎片脚本合成一条命令。下一步：翻你现有脚本，看有没有三个文件在干同一件事（比如启动、登录、保活），合成一个入口。"
+        },
+        {
+          "n": "blendi-remade/prompt2rig",
+          "l": "JavaScript",
+          "s": "408",
+          "stars": 408,
+          "created": "2026-10-19",
+          "desc": "Type a motion, watch a rigged character perform it: fast video model + GVHMR + live Mixamo retargeting",
+          "topics": [],
+          "url": "https://github.com/blendi-remade/prompt2rig",
+          "i": "🕺",
+          "one": "一句话描述动作 → 视频模型演 → 本机提 3D 动作 → 角色照做。",
+          "use": "`node server.mjs` 起 :5177，实时档在浏览器里用 MediaPipe 逐帧重定向，立刻能看；质量档走 `hq\\setup.ps1` 装 CUDA PyTorch + GVHMR + WiLoR（约 5GB 权重，另需 SMPL-X / MANO 注册）。RTX 4090 上 5 秒片子：视频 8–9 秒、动作 3.5–4 秒、手指 +0.3 秒，输出 `.glb` 进 Blender / Unity。",
+          "fit": "与云大 3D 地图弱相关（都是 3D 资产），但若你要做「校园里走动的学生」这种人物动效，它是现成动作来源，比手 K 帧快得多。",
+          "opt": "关联中等，先收藏。真要在地图里加行人，比起手 K 帧，用它的 `.glb` 更省。下一步：只跑实时预览档（不需要 GPU 权重和 SMPL 注册）先看动作质量，值得再上质量档。"
+        },
+        {
+          "n": "nicobailon/pi-cached-compaction",
+          "l": "TypeScript",
+          "s": "87",
+          "stars": 87,
+          "created": "2026-10-21",
+          "desc": "Pi compaction that reads the conversation's prompt cache, with a cache-expiry timer",
+          "topics": [],
+          "url": "https://github.com/nicobailon/pi-cached-compaction",
+          "i": "💾",
+          "one": "复用 prompt 缓存的压缩：钱少一个数量级，摘要还看得全。",
+          "use": "Pi 的扩展。机制值得抄：压缩时不换 system prompt、不删工具、不把消息拍平成文本，原样追加一句「总结这些」，于是约 99% 走缓存（0.1× 价格）；同时在缓存过期前 20 秒自动压缩，避免下条消息重写整段。667k token 的会话 $0.19，Pi 原生约 $1.4。",
+          "fit": "直击你长会话的痛点：论文精读动辄几十页，工具输出上万字，而现在通用的压缩会把长输出截到 2000 字符——摘要只看到开头，看不到测试输出末尾的失败。",
+          "opt": "把「压缩时保留完整工具输出 + 命中缓存」写进你的长任务规范。下一步：改 paper-deep-reading 的多段提取——每段结果落盘成文件，压缩后只读文件路径，而不是让全文留在对话里被反复重发。"
+        },
+        {
+          "n": "0c-biggo/0c-ime",
+          "l": "Go",
+          "s": "143",
+          "stars": 143,
+          "created": "2026-10-19",
+          "desc": "免選字的注音輸入法：在本機用 Transformer 看前文選字。支援 Linux（Fcitx5／IBus）、macOS、Windows。",
+          "topics": [
+            "bopomofo",
+            "chinese-input-method",
+            "fcitx5",
+            "go",
+            "ibus",
+            "ime",
+            "input-method",
+            "language-model"
+          ],
+          "url": "https://github.com/0c-biggo/0c-ime",
+          "i": "⌨️",
+          "one": "注音输入法：本机 3260 万参数 Transformer 看前文选字。",
+          "use": "官网下安装包，支持 Linux（Fcitx5 / IBus）、macOS、Windows TSF。首选出字 86.0%，新酷音 64.2%、小麥注音 67.2%；CPU 上 P95 延迟 7–16ms，全程本地不联网，可设「打繁出简」。模型撑不住时自动退回统计引擎排序，打字不卡。",
+          "fit": "你用拼音，没直接需求。但它是「小模型 + 单一任务 + 本机推理」的极佳样本：3 千万参数、从零训练、只做一件事，就把一个高频任务做到 86%，比通用大模型加提示词稳。",
+          "opt": "借它的三段式——统计出 N-best → 模型重排 → 超时降级到统计——改你 agent 里的分类与排序类小任务。下一步：下次要模型做确定性选择（选标题、选文件、排优先级），先让它给候选再由小模型重排，而不是一次生成终稿。"
+        },
+        {
+          "n": "JackWang666666/my-rag",
+          "l": "Java",
+          "s": "153",
+          "stars": 153,
+          "created": "2026-10-18",
+          "desc": "我的rag系统，可以用于导入知识库进行知识问答，可集成第三方mcp，也做了权限隔离等",
+          "topics": [],
+          "url": "https://github.com/JackWang666666/my-rag",
+          "i": "📚",
+          "one": "个人 RAG 问答系统，可接 MCP、带权限隔离（暂无 README）。",
+          "use": "仓库没有 README，只有一句简介：导入知识库做问答、可集成第三方 MCP、做了权限隔离。要真用只能读代码确认部署方式（Java 服务，通常 Maven 起）。功能描述之外的东西——分块策略、向量库、检索方式——目前无法从仓库获知，不要凭简介脑补。",
+          "fit": "与你 D 盘网安知识库 + Obsidian 双库的结构重合：你在攒笔记，但确实还没有可检索的问答层，靠关键词翻 note 效率低。",
+          "opt": "只作选型参考，别急着接：你的笔记已是 Markdown，用现成的本地检索成本更低。下一步：等它补 README 再看分块与权限怎么做的；在那之前，给 D 盘库的笔记补 tags 与 aliases 收益更直接。"
+        }
+      ]
     }
-  }
+  ],
+  "wrap": "本周两条主线。一是电视去广告继续爆发：八款桌面同题竞速，且几乎都由 Agent 远程安装——「一句话让 AI 装好、自带验收命令」成了新的交付格式。二是 php2shell 从 PoC 走向工程化：CSIRT 级产品情报、检测规则、版本自查 skill，以及靠占满 worker 池做同步点的稳定利用链。AI 板块本周偏弱，热点让位给终端工具；真正的新形态是 skill 本身成了交付物。"
+};
 
-  cards.forEach(function(c){
-    var h = head(c);
-    h.addEventListener('click', function(e){
-      if(e.target.closest('a')) return;
-      toggle(c);
-    });
-    h.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
-        e.preventDefault(); toggle(c);
-      }
-      if(e.key === 'Escape') setId(c, false);
-    });
+/* ---------- 渲染 ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lc = l => LANG_COLOR[l] || "#6366F1";
+let gi = 0;
+
+function cardHTML(it){
+  const accent = lc(it.l);
+  const st = STYLES[gi++ % STYLES.length];
+  const url = "https://github.com/" + it.n;
+  return `<article class="card ${st}" style="--accent:${accent}" tabindex="0" role="button" aria-expanded="false">
+    <div class="card-head">
+      <span class="ico">${it.i}</span>
+      <div class="hd">
+        <h3 class="pname"><a href="${url}" title="${esc(it.n)}" target="_blank" rel="noopener">${esc(it.n)}</a></h3>
+        <p class="one">${esc(it.one)}</p>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="tags">
+      <span class="tag lang">${esc(it.l)}</span>
+      <span class="tag hot">★ ${esc(it.s)}</span>
+    </div>
+    <div class="detail"><div class="detail-in">
+      <div class="blk"><h4>能怎么用</h4><p>${esc(it.use)}</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>${esc(it.fit)}</p></div>
+      <div class="blk"><h4>如何优化你的 agent</h4><p>${esc(it.opt)}</p></div>
+    </div></div>
+  </article>`;
+}
+
+function render(){
+  const main = document.getElementById("main");
+  const navin = document.getElementById("navin");
+  const stats = document.getElementById("stats");
+  let total = 0, html = "", nav = "";
+
+  DATA.sections.forEach((sec, si) => {
+    total += sec.items.length;
+    nav += `<a class="navlink" href="#s-${sec.key}" style="--accent:${sec.color}"><span class="dot" style="background:${sec.color}"></span>${sec.title} <b style="color:#9aa3b2;font-weight:600">${sec.items.length}</b></a>`;
+    html += `<section id="s-${sec.key}" style="--accent:${sec.color}">
+      <div class="sec-head"><h2>${sec.title}</h2><span class="count">${sec.items.length} 项</span></div>
+      <p class="sec-sub">${sec.sub}</p>
+      <div class="grid">${sec.items.map(cardHTML).join("")}</div>
+    </section>`;
   });
 
-  document.getElementById('expandAll').addEventListener('click', function(){
-    cards.forEach(function(c){ setId(c, true); });
-  });
-  document.getElementById('collapseAll').addEventListener('click', function(){
-    cards.forEach(function(c){ setId(c, false); });
-    window.scrollTo({top:0, behavior:'smooth'});
+  main.innerHTML = html;
+  navin.insertAdjacentHTML("afterbegin", nav);
+
+  stats.innerHTML =
+    `<div class="stat"><b>${total}</b>个项目</div>` +
+    DATA.sections.map(s => `<div class="stat"><span style="color:${s.color}">●</span> ${s.title} <b>${s.items.length}</b></div>`).join("") +
+    `<div class="stat">🏷️ 4 大板块</div>`;
+
+  document.getElementById("wrap").textContent = DATA.wrap;
+
+  // 展开 / 收起
+  document.querySelectorAll(".card").forEach(card => {
+    const toggle = () => { card.classList.toggle("open"); card.setAttribute("aria-expanded", card.classList.contains("open")); };
+    card.addEventListener("click", e => { if(e.target.closest("a")) return; toggle(); });
+    card.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
   });
 
-  // jump links: smooth scroll with sticky offset
-  document.querySelectorAll('.jump').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var el = document.querySelector(a.getAttribute('href'));
-      if(!el) return;
-      e.preventDefault();
-      var y = el.getBoundingClientRect().top + window.pageYOffset - 58;
-      window.scrollTo({top:y, behavior:'smooth'});
+  // 搜索过滤
+  const q = document.getElementById("q");
+  q.addEventListener("input", () => {
+    const kw = q.value.trim().toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.toggle("hidden", kw && !card.textContent.toLowerCase().includes(kw));
     });
   });
-})();
+}
+render();
 </script>
 </body>
 </html>
