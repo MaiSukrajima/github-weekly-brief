@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 周度热门简报 · 2026 第 44 周</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --txt:#1b2230; --muted:#5c6675; --line:#e5e8ee;
+    --head1:#0f172a; --head2:#1f2b45; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ============ header ============ */
+  header{
+    background:linear-gradient(135deg,var(--head1),var(--head2) 70%);
+    color:#fff; padding:38px 28px 30px; position:relative; overflow:hidden;
+  }
+  header::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(600px 220px at 82% -10%,rgba(99,102,241,.45),transparent 70%),
+               radial-gradient(520px 200px at 8% 120%,rgba(16,185,129,.35),transparent 70%);
+    pointer-events:none;
+  }
+  .hwrap{max-width:1240px;margin:0 auto;position:relative;z-index:1;}
+  .hbadge{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#c7d2fe;border:1px solid rgba(199,210,254,.35);border-radius:999px;padding:3px 12px;margin-bottom:14px;}
+  h1{margin:0 0 8px;font-size:30px;letter-spacing:.3px;font-weight:750;}
+  .hsub{color:#c3ccdd;font-size:14.5px;margin:0;}
+  .hlink{margin:9px 0 0;font-size:13px;color:#a9b6cc;word-break:break-all;}
+  .hlink a{color:#a5b4fc;border-bottom:1px dotted rgba(165,180,252,.5);}
+  .hlink a:hover{color:#e0e7ff;border-bottom-color:#e0e7ff;}
+  .hsep{color:#5b6b86;margin:0 6px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:10px;padding:8px 14px;font-size:13.5px;color:#e6ebf5;}
+  .stat b{font-size:17px;color:#fff;margin-right:5px;font-variant-numeric:tabular-nums;}
+
+  /* ============ nav ============ */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);}
+  .navin{max-width:1240px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .navlink{font-size:13.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+    color:var(--muted);cursor:pointer;transition:.15s;background:#fff;white-space:nowrap;}
+  .navlink:hover{border-color:var(--accent,#6366f1);color:var(--txt);}
+  .navlink .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;}
+  .navspacer{flex:1;}
+  #q{font-size:13.5px;padding:7px 12px;border-radius:9px;border:1px solid var(--line);
+    min-width:170px;outline:none;background:#fff;color:var(--txt);}
+  #q:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12);}
+
+  /* ============ sections ============ */
+  main{max-width:1240px;margin:0 auto;padding:26px 28px 70px;}
+  section{margin-bottom:34px;scroll-margin-top:64px;}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-left:12px;
+    border-left:5px solid var(--accent);}
+  .sec-head h2{margin:0;font-size:21px;letter-spacing:.2px;font-weight:750;}
+  .sec-head .count{font-size:12.5px;color:var(--muted);background:#eef1f6;border-radius:999px;padding:2px 10px;}
+  .sec-sub{margin:6px 0 18px;padding-left:17px;color:var(--muted);font-size:13.5px;}
+
+  /* ============ grid + card ============ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;}
+  .card{
+    position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,25,45,.10);}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),transparent);}
+
+  /* card style variants (per-project look) */
+  .st-grid{background-image:linear-gradient(rgba(15,23,42,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,23,42,.045) 1px,transparent 1px);background-size:20px 20px;}
+  .st-soft{background:#fff;background:color-mix(in srgb,var(--accent) 7%,#fff);border-radius:18px;}
+  .st-bold{border-left:7px solid var(--accent);border-radius:6px;}
+  .st-paper{background:#fdfcf7;border:1.5px dashed #d7dbe4;border-radius:5px;}
+
+  .card-head{display:flex;gap:12px;padding:15px 15px 10px;align-items:flex-start;}
+  .ico{flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+    background:#eef1f6;background:color-mix(in srgb,var(--accent) 16%,#fff);
+    border:1px solid #e2e6ee;border:1px solid color-mix(in srgb,var(--accent) 32%,#fff);}
+  .hd{flex:1;min-width:0;}
+  .pname{font-size:15.5px;font-weight:700;margin:0 0 3px;letter-spacing:.1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pname a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+  .one{margin:0;font-size:13.2px;color:var(--muted);}
+  .chev{flex:0 0 auto;color:#9aa3b2;font-size:13px;transition:transform .25s ease;margin-top:2px;}
+  .card.open .chev{transform:rotate(180deg);}
+
+  .tags{display:flex;gap:7px;padding:0 15px 13px;flex-wrap:wrap;}
+  .tag{font-size:11.5px;padding:2.5px 9px;border-radius:999px;background:#eef1f6;color:var(--muted);
+    border:1px solid #e6e9f0;font-variant-numeric:tabular-nums;}
+  .tag.lang{background:color-mix(in srgb,var(--accent) 13%,#fff);color:color-mix(in srgb,var(--accent) 72%,#111);
+    border-color:color-mix(in srgb,var(--accent) 26%,#fff);font-weight:600;}
+  .tag.hot{background:#fff3e6;color:#b45309;border-color:#fde3c4;}
+
+  .detail{max-height:0;opacity:0;overflow:hidden;transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .28s ease;}
+  .card.open .detail{max-height:1600px;opacity:1;}
+  .detail-in{padding:2px 15px 16px;border-top:1px dashed #e7eaf0;}
+  .blk{margin-top:12px;}
+  .blk h4{margin:0 0 4px;font-size:12.5px;letter-spacing:.3px;color:var(--accent);font-weight:750;
+    display:flex;align-items:center;gap:6px;}
+  .blk h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .blk p{margin:0;font-size:13px;color:#3c4557;}
+
+  /* ============ footer ============ */
+  .wrapup{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:8px;}
+  .wrapup h2{margin:0 0 10px;font-size:18px;padding-left:12px;border-left:5px solid #6366f1;}
+  .wrapup p{margin:0;color:#39424f;font-size:14px;}
+  footer{max-width:1240px;margin:0 auto;padding:0 28px 50px;color:#98a1b0;font-size:12.5px;}
+  .note{margin-top:14px;padding:11px 14px;border-radius:10px;background:#eef2ff;border:1px solid #dfe4ff;
+    color:#3b3f7a;font-size:12.5px;}
+  .hidden{display:none !important;}
+  @media (max-width:560px){
+    h1{font-size:23px;} .hwrap,main,footer,.navin{padding-left:16px;padding-right:16px;}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media print{ nav{display:none;} .card .detail{max-height:none !important;opacity:1 !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <span class="hbadge">Weekly GitHub Digest</span>
+    <h1>GitHub 周度热门简报 · 2026 第 44 周</h1>
+    <p class="hsub">统计窗口 10.25 – 11.01 ｜ 数据源 GitHub API ｜ 生成于 2026-11-01</p><p class="hlink">🔗 本周报告链接：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261101.html" target="_blank" rel="noopener">https://maisukrajima.github.io/github-weekly-brief/report-20261101.html</a><span class="hsep">｜</span>归档仓库：<a href="https://github.com/MaiSukrajima/github-weekly-brief" target="_blank" rel="noopener">https://github.com/MaiSukrajima/github-weekly-brief</a></p>
+    
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav><div class="navin" id="navin">
+  <div class="navspacer"></div>
+  <input id="q" type="search" placeholder="搜索项目 / 语言…" autocomplete="off">
+</div></nav>
+
+<main id="main"></main>
+
+<div style="max-width:1240px;margin:0 auto;padding:0 28px;">
+  <div class="wrapup">
+    <h2>本周观察</h2>
+    <p id="wrap"></p>
+    <div class="note" id="repolink">📦 已归档：<a href="https://github.com/MaiSukrajima/github-weekly-brief/blob/main/report-20261101.html" target="_blank" rel="noopener">report-20261101.html</a> ｜ 在线预览：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261101.html" target="_blank" rel="noopener">GitHub Pages</a></div>
+  </div>
+</div>
+
+<footer>
+  由 WorkBuddy + github-weekly-brief skill 自动生成 · 卡片可点击展开详情 · 数据以 GitHub API 实际返回为准
+</footer>
+
+<script>
+/* ---------- 卡片风格 / 语言配色 ---------- */
+const LANG_COLOR = {
+  "Python":"#3776AB","TypeScript":"#3178C6","JavaScript":"#B8860B","Go":"#00A7CE",
+  "Rust":"#C0562B","C++":"#D6406B","C":"#6E7681","Java":"#B07219","Swift":"#EE6A43",
+  "Shell":"#3F9E1F","HTML":"#E34C26","Dart":"#12B5A8"
+};
+const STYLES = ["st-soft","st-grid","st-bold","st-paper"];
+
+/* ---------- 数据 ---------- */
+const DATA = {
+  "sections": [
+    {
+      "key": "hot",
+      "title": "综合热门",
+      "sub": "近 7 天新建并快速冲榜的项目（不分类型，按 star 排序）",
+      "color": "#6366f1",
+      "items": [
+        {
+          "n": "unclebob/ub-mode",
+          "l": "—",
+          "s": "6.1k",
+          "stars": 6076,
+          "created": "2026-10-25",
+          "desc": "",
+          "topics": [],
+          "url": "https://github.com/unclebob/ub-mode",
+          "i": "📐",
+          "one": "Robert C. Martin 的 agent skill：把「先跑通、再做对」写成可执行的检查闸门。",
+          "use": "把 SKILL.md 拷进 agent 的 skills 目录（如 ~/.claude/skills/ub-mode/SKILL.md 或 ~/.cursor/skills/），调用 /ub-mode。它不靠嘴说规范，而是配三个确定性工具：crapper 算每个函数的圈复杂度+覆盖率得出 CRAP 分（要求 <10）、dryer 查结构重复（相似度 ≥0.8 判重）、mutator 跑变异测试找出没被杀死的变异体。改代码前先过闸门，不达标就继续改。",
+          "fit": "直接对上你的「文档/网页/代码生成与自动化」和 paper-deep-reading 的 assemble.py。你现在的核验是行为级（无头 Chrome 断言、锚点完整性、退出码 2），ub-mode 补的是结构级——复杂度、重复、测试杀伤率。",
+          "opt": "把 crapper/dryer 接进 paper-deep-reading 的核验链：assemble.py 目前只校验契约，加一层 dryer 就能挡住模板 CSS 与 JS 的重复膨胀（上次自愈规则正是把 CSS 注释吞成了 <em>）。下一步：对 dist/github-weekly-brief/scripts 跑一次 crapper，看哪个函数 CRAP 超标，先拆 build_report.py 的 main()。"
+        },
+        {
+          "n": "deepseek-ai/dsh-superagent-prototype",
+          "l": "TypeScript",
+          "s": "5.2k",
+          "stars": 5218,
+          "created": "2026-10-31",
+          "desc": "Towards a More Autonomous Agent System",
+          "topics": [],
+          "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+          "i": "🧭",
+          "one": "DeepSeek 团队的「一个仓库一个常驻 Agent」原型：听 GitHub/飞书派活，自己开工作项、自己提 PR。",
+          "use": "打包成 DeepSeek Harness 的 bundle，装法本身就是让 agent 读 SETUP.md 一步步配。链路：监听 GitHub（可选飞书）→ 有人允许它干活 → 开一个 work item、在独立目录起自己的 session → 回到原会话答（通常是一个 PR）→ 网页面板列出「需要人处理」的项。设计原则写死：只在被叫到或团队规则允许时动手，只在必须人决策时才说话。",
+          "fit": "对上你的第六条：定时任务 + GitHub Pages 发布。你现在这套周报就是「无人值守跑一次、把结果丢给人看」，缺的正是「被派活才动手」的授权层和「需要人才说话」的降噪层。",
+          "opt": "给你现有 automation 的 prompt 加一段授权声明（允许做什么、不允许做什么、什么情况停下来问人）；再照它面板的思路，把每周简报汇总成一个 index。注意官方自述是 research prototype，别直接上生产。下一步：先给 weekly brief 那条加「取数失败即降级到 WebSearch 并标注」的显式规则。"
+        },
+        {
+          "n": "anhao/ai-pose-gallery-zh",
+          "l": "TypeScript",
+          "s": "5.0k",
+          "stars": 4992,
+          "created": "2026-10-27",
+          "desc": "中文版 AI 姿势参考图库 · 1439 组 / 2878 张图片 / 完整汉化 · 零依赖静态画廊",
+          "topics": [
+            "ai-art",
+            "chinese",
+            "cloudflare-pages",
+            "gallery",
+            "i18n",
+            "pose",
+            "reference-images",
+            "static-site"
+          ],
+          "url": "https://github.com/anhao/ai-pose-gallery-zh",
+          "i": "🧍",
+          "one": "三库合一的 AI 绘画参考站：姿势 1439 组 / 服装 1407 套 / 人像 1499 位，全中文元数据 + ComfyUI 原生节点。",
+          "use": "纯静态，在线打开即用（ai-pose-gallery.anhao.app）；要进 ComfyUI 就 git clone 到 ComfyUI/custom_nodes/，画布里会多出姿势/服装/人像/三合一角色四个节点。工作台选「人像+服装+姿势」配方可一键随机捏人，支持拖拽、Ctrl+V 粘贴、URL 三种加参考图方式，直连 Gemini / GPT Image / 通义 / 豆包 / 本地 ComfyUI 出图，生成记录存 IndexedDB。",
+          "fit": "对上心协海报与长图。你一直走「AI 生背景 + PS/Canva 手动叠字」，人物姿态和服装每次靠抽卡；这个库把这两项变成可检索、可编号引用的参数。",
+          "opt": "把「姿势编号 + 服装编号 + 画风预设」做成一张选型表存进心协物料目录，生成时连参考图一起喂。下一步：做「暮光里的云大」海报时先定姿势编号再定文案，减少反复抽卡。注意图库含默认隐藏的 18+ 分区，公开物料只用 SFW 部分。"
+        },
+        {
+          "n": "ccch1mneyyy/dsh-Go",
+          "l": "Dart",
+          "s": "4.2k",
+          "stars": 4203,
+          "created": "2026-10-25",
+          "desc": "dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
+          "topics": [
+            "ai-agent",
+            "android",
+            "android-app",
+            "coding-agent",
+            "deepseek",
+            "deepseek-harness",
+            "dsh",
+            "dsh-plugin",
+            "dsh-tui",
+            "flutter"
+          ],
+          "url": "https://github.com/ccch1mneyyy/dsh-Go",
+          "i": "📱",
+          "one": "把 DeepSeek Harness 塞进安卓手机：本机跑 agent，也能遥控电脑上的 DSH。",
+          "use": "装 release 里的 APK（Android 8+）。两种模式：手机本机跑；或把手机当遥控器接你电脑上的 DSH 会话。桌宠 Deepy 与鲸娘会在敲代码、完成、等你确认、睡觉四态切换，开「App 外显示」后跟到桌面。",
+          "fit": "对上你的自动化：周报这类定时任务跑完你未必在电脑前，它给了「手机上收结果 + 远程发指令」的形态，与你现在 automation 的单向下发互补。",
+          "opt": "短期不必装（AGPL，手机跑重活也不现实）。值得抄的是它的四态状态机：把「运行中/完成/等你确认/失败」做进自动化回报，而不是只丢一段文字。下一步：weekly brief 的 prompt 结尾加一句「结束时说明落在四态中的哪一个 + 一句阻塞原因」。"
+        },
+        {
+          "n": "heydamir/unslop",
+          "l": "JavaScript",
+          "s": "4.1k",
+          "stars": 4140,
+          "created": "2026-10-29",
+          "desc": "A Claude skill that turns vibecoded, AI-looking UI into a designed interface",
+          "topics": [],
+          "url": "https://github.com/heydamir/unslop",
+          "i": "🎨",
+          "one": "专治「AI 味界面」的 skill：先找出紫色渐变、发光、emoji 标签、喊口号的文案，再按设计方向逐轮改。",
+          "use": "git clone 后 cp -r unslop/skills/unslop ~/.claude/skills/，在 Claude Code 里 /unslop this dashboard；Codex 用 $skill-installer install <repo>/tree/main/skills/unslop。它先审计并列出每处 slop 的位置，再给一个方向（角色、世界、哪一两个瞬间承担颜色、签名细节），然后按间距/颜色/图标/文案/字体/布局逐 pass 改，改前不动手。可选 snapshot 线上站点，或输出 story video（需 Playwright + ffmpeg）。",
+          "fit": "正对你 paper-deep-reading 的三栏报告和这份周报模板：结构已经够好，视觉还靠手调 CSS 变量；unslop 把「设计判断」写成可重复执行的 pass 清单。",
+          "opt": "把它的「审计→定方向→逐 pass」三段抽成一页 design-review.md 挂到 skill 的 references 下，以后改三栏模板先跑审计；同时把「emoji 标签」「渐变发光」列进禁用清单——你正好踩过 emoji 缺字形。下一步：用它给周报模板跑一遍，只改首屏。"
+        },
+        {
+          "n": "designfuchen/word-atlas",
+          "l": "TypeScript",
+          "s": "3.6k",
+          "stars": 3647,
+          "created": "2026-10-25",
+          "desc": "词光 · Word Atlas — Illustrated IELTS vocabulary with 7,298 words, UK/US audio and FSRS review. Open-source app + CC BY 4.0 dataset.",
+          "topics": [
+            "chinese",
+            "dataset",
+            "english-learning",
+            "flashcards",
+            "fsrs",
+            "ielts",
+            "language-learning",
+            "pwa",
+            "react",
+            "spaced-repetition"
+          ],
+          "url": "https://github.com/designfuchen/word-atlas",
+          "i": "📖",
+          "one": "7298 个雅思词条配原创插画与英美发音，FSRS 间隔复习，词库 CC BY 4.0。",
+          "use": "在线直接学（0xlei.tech/words），也有 iOS 测试版；本地跑就 clone 后按 README 起前端，无需账号、进度存本机。三件事循环：看图理解词义、听发音建立联系、按 FSRS 排复习。19 个话题做成 WebGL2 词汇星图，拖动旋转看掌握度；词库在 data/ 下可直接下载。",
+          "fit": "弱关联——你的英文瓶颈不在背单词，而在读论文时的术语。但它把「数据集 + 插图 + 复习调度」打成一套可复用结构，这点可以借。",
+          "opt": "真正能用的是 FSRS 那一层：给术语表接一个排期，而不是每次从零查。下一步：把 paper-deep-reading v2.3 里 GLOSSARY 的 data-term（中文|English）导成 CSV，加「上次复习/下次到期」两列，读新论文前先抽 10 个到期术语。"
+        },
+        {
+          "n": "wangzan101/Mika",
+          "l": "Kotlin",
+          "s": "3.3k",
+          "stars": 3317,
+          "created": "2026-10-29",
+          "desc": "An on-device AI agent for Android that operates apps and the web to get things done for you.",
+          "topics": [
+            "accessibility",
+            "ai-agent",
+            "android",
+            "automation",
+            "jetpack-compose",
+            "kotlin",
+            "llm",
+            "mobile-agent"
+          ],
+          "url": "https://github.com/wangzan101/Mika",
+          "i": "📲",
+          "one": "安卓端本机 agent：说一句话，它在后台隐藏屏上替你操作 App 和网页。",
+          "use": "下 release 的 APK（Android 11+），授予无障碍权限。它跑在一个隐藏的后台屏上，你在前台照常用手机；例子是在微信里找到联系人发消息、翻完一个群聊总结今天聊了什么、在购物站挑一个 30 美元内 4.5 星以上的充电器加进购物车。",
+          "fit": "与你的网安课题间接相关：这类「后台屏 + 无障碍操作」正是移动端自动化与取证的机制底座；但对你七项工作没有直接落点，且需要真机常驻。",
+          "opt": "关联较弱，收藏观察。可借的是「隐藏屏」思路——把耗时操作放到用户看不见的第二现场。真要用先想清取证风险：无障碍权限能读到屏幕上的一切，包括验证码。下一步：无。"
+        },
+        {
+          "n": "valentderah/totk-pc-recomp",
+          "l": "C",
+          "s": "2.9k",
+          "stars": 2878,
+          "created": "2026-10-29",
+          "desc": "Static recompilation of The Legend of Zelda: Tears of the Kingdom to native Windows x86-64, with a Vulkan renderer. Game files not included.",
+          "topics": [],
+          "url": "https://github.com/valentderah/totk-pc-recomp",
+          "i": "🎮",
+          "one": "《王国之泪》静态重编译到 Windows x86-64：不是模拟器，是把 ARM 指令翻成本机代码跑 Vulkan。",
+          "use": "下 TotK-Setup-<ver>-windows.zip 解压跑 Setup，选你自己的游戏文件（本体 + 1.2.1/1.4.3 更新）与安装目录，它在你机器上一次性构建，之后跑 totk.exe。要求 Win10+、AVX2、Vulkan 1.3 + VK_EXT_external_memory_host，装时需 36 GiB 空闲。默认 60fps 可到 144，支持超宽屏与 FSR1。不含游戏文件。",
+          "fit": "与你的工作无关。有价值的是「静态重编译」这条技术路线：它和你在 CTF 里做的逆向是同一棵树的两种用法——逆向是读别人的二进制，重编译是把别人的二进制变成自己的源码级工程。",
+          "opt": "不要装（几十 G 且早期版本会崩）。要学就读 docs/architecture.md，把它当「AArch64 → x86-64 翻译 + 图形 API 桥接」的案例。下一步：读完用一段话写清「它和模拟器的分界在哪」，存进网安知识库。"
+        },
+        {
+          "n": "patch-gg/pixelfx",
+          "l": "JavaScript",
+          "s": "2.0k",
+          "stars": 1998,
+          "created": "2026-10-30",
+          "desc": "244 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
+          "topics": [
+            "agent-skills",
+            "animation",
+            "canvas",
+            "claude-code-plugin",
+            "gamedev",
+            "pixel-art",
+            "sprite-sheet",
+            "vfx"
+          ],
+          "url": "https://github.com/patch-gg/pixelfx",
+          "i": "🕹️",
+          "one": "244 个像素特效，每个都是一小段代码；附一个 Claude Code skill 让你照着做出新的。",
+          "use": "打开 patch-gg.github.io/pixelfx/ 就能实时看，可改色、镜像、导出 sprite sheet 给任意引擎；嵌网页就复制对应 js 片段（自研 sim.js 做像素模拟，无依赖）。方法是「代码是黏土，用眼睛判断，喂参考图」：draft → render → look → refine。带角色的特效是演出来的——蓄力、出手、命中定格、收招。",
+          "fit": "对上心协长图、海报动效，以及你给活动做的 HTML 页。你不缺生图工具，缺「小、可改、能直接放进页面」的动效素材。",
+          "opt": "把 canvas 小特效搬到你的页面：活动倒计时、扫码引导用代码画，比 GIF 体积小也可控。下一步：给心协长图做 8 秒像素风开场（火焰或光尘），导 GIF 备用，HTML 版直接内嵌片段。"
+        },
+        {
+          "n": "paipiange/nvzhuang",
+          "l": "Go",
+          "s": "1.8k",
+          "stars": 1828,
+          "created": "2026-10-29",
+          "desc": "1407 张 AI 女装参考图集与虚拟试穿网站，支持中英检索、OpenAI Images / Gemini / 豆包及自定义 Base URL、API Key、模型。https://github.com/paipiange/nvzhuang",
+          "topics": [],
+          "url": "https://github.com/paipiange/nvzhuang",
+          "i": "👗",
+          "one": "1407 张 AI 服装参考图 + 可选虚拟试穿，纯静态可离线，后端是 GoFrame。",
+          "use": "在线看不用部署（paipiange.github.io/nvzhuang/），中英检索、分类筛选、大图查看都是纯前端；要真试穿得自己起 backend/ 的 GoFrame 服务，填 GPT Image / 豆包 Seedream / Gemini 的 Base URL 与 Key，上传人像 + 选服装 → 出换装图。MIT，可商用。",
+          "fit": "与心协物料弱相关（服装参考），与网安、论文、地图都无关。工程价值在分层：不开后端也能用，开了才多出生成能力。",
+          "opt": "抄这个分层：你的活动物料页也该做到「不起服务就能看，起了服务才有生成能力」。下一步：检查现有 HTML 报告在断网、无 JS 下是否仍可读——三栏报告与简报模板都已做到，图库类页面还没试过。"
+        },
+        {
+          "n": "aschmelyun/print-my-profile-pic",
+          "l": "—",
+          "s": "1.7k",
+          "stars": 1678,
+          "created": "2026-10-27",
+          "desc": "Say cheese! Star this repo and your profile picture gets printed out on a receipt printer.",
+          "topics": [],
+          "url": "https://github.com/aschmelyun/print-my-profile-pic",
+          "i": "📠",
+          "one": "Star 这个仓库，你的 GitHub 头像就会被打印在小票上贴到作者墙上。",
+          "use": "没有安装步骤，star 一下就行。链路：GitHub star webhook → Cloudflare tunnel 域名 → 树莓派上的 PHP 脚本 → 从 payload 取昵称与头像 URL → 拼进相框模板 → 用 escpos-php 发给 Epson TM-T88IV 热敏打印机。打赏任意金额会换成特殊相框。",
+          "fit": "跟七项工作都无关，纯趣味。值得看的是它把「一次 webhook 事件」变成「物理世界的一个动作」——最便宜的端到端自动化示范。",
+          "opt": "别接。要抄就抄骨架：webhook 进 → 校验 → 取字段 → 渲染模板 → 落到一个具体产出。下一步：给周报的分享链接挂一个轻 webhook，把访问落进本地日志，比看 GitHub Insights 准。"
+        },
+        {
+          "n": "andyhuo520/digital-human-koubo",
+          "l": "TypeScript",
+          "s": "1.6k",
+          "stars": 1611,
+          "created": "2026-10-26",
+          "desc": "AI digital-human talking-head videos from one photo: Renoise MCP generation + 5 editing styles + 48 creator-grade packaging components. Agent skill for Claude Code / Codex / OpenClaw / WorkBuddy …",
+          "topics": [],
+          "url": "https://github.com/andyhuo520/digital-human-koubo",
+          "i": "🎬",
+          "one": "一张照片 + 一句话 → 数字人口播成片，含配音清洗、字幕、48 个包装组件。",
+          "use": "是 Agent Skill，README 明确支持 Claude Code / Codex / OpenClaw / WorkBuddy。装进 skills 目录后直接说需求，例如「用这张数字人做一条 30 秒直播广告」。流水线：写脚本 → Renoise MCP 生成口型同步视频 → 5 种剪辑风格（Remotion 4）→ 字幕 → 48 个创作者级包装组件。官方示例的 27 秒广告花掉 482 Renoise credits。",
+          "fit": "直接对上心协宣传：招新海报之外，活动预告短视频、推文配片都需要「真人口播」，但你没出镜预算。它明确写了支持 WorkBuddy。",
+          "opt": "本周与你自动化匹配度最高的一个：把「活动预告 30 秒口播」做成一条自动化——输入活动名、时间、地点、一句钩子，输出 mp4。下一步：先给「暮光里的云大」做 30 秒样片，评估 credits 成本（约 500）与合规（数字人需标注）。注意依赖付费 MCP，不是全离线。"
+        },
+        {
+          "n": "Djihads80/Eglantine",
+          "l": "C++",
+          "s": "1.6k",
+          "stars": 1582,
+          "created": "2026-10-29",
+          "desc": "VERY experimental Nintendo Switch 2 emulator",
+          "topics": [],
+          "url": "https://github.com/Djihads80/Eglantine",
+          "i": "🎮",
+          "one": "从 Eden/Yuzu/Sudachi 分叉出来的 Switch 2 模拟器，实验性，能跑马车世界。",
+          "use": "下 release 的 Windows/Linux/macOS 构建，自备游戏文件。目前能把《Mario Kart World》跑到达标或接近满速，《Splatoon Raiders》帧率不稳，兼容性列表还没做。代码基于 Yuzu 系。",
+          "fit": "与你的工作无关。技术上有意义的是：Switch 2 的模拟起点比上一代早得多——上一代从 0 到能玩用了两年，这一代一个月就有能跑的。",
+          "opt": "不要碰（GPL + 法律灰区 + 极不稳定）。要关注就看 issue 里内存管理与 GPU 指令翻译的讨论，那是逆向工程的公开实战课。下一步：无，把注意力放回 CTF。"
+        },
+        {
+          "n": "lexifina/global-law",
+          "l": "HTML",
+          "s": "1.5k",
+          "stars": 1493,
+          "created": "2026-10-28",
+          "desc": "Git for Global Law: the law of every country as one git history, each country's record a submodule, every commit one law taking effect",
+          "topics": [],
+          "url": "https://github.com/lexifina/global-law",
+          "i": "⚖️",
+          "one": "把全世界的法律放进一条 git 历史：每个国家一个子模块，一次提交就是一部法律生效。",
+          "use": "clone 后 git log 任意国家目录，就能看到「某部法律在某天生效」的提交。manifest.json 记录每个语料的来源仓库、覆盖范围、哪个 trailer 带生效日期；jurisdiction.json 是 193 个联合国成员 + 属地 + 欧盟的树。是美国法典那个 HN 第一项目的全球版。CC0。",
+          "fit": "对上 paper-deep-reading 的证据链思路：它把「谁在什么时候改了哪一条」变成可 diff 的历史，和你三栏报告里「段落锚点 → 批注」的对应关系同构。",
+          "opt": "借它的 manifest + trailer 约定，给你的 PAPER / ANNOTATIONS 片段加一个字段记录「这条批注基于论文的哪个版本」。下一步：给 assemble.py 再补一条校验——论文文件哈希变了就提示批注需复核，避免锚点还在但内容已换。"
+        }
+      ]
+    },
+    {
+      "key": "sec",
+      "title": "网络安全",
+      "sub": "攻防、渗透、逆向与应急响应方向",
+      "color": "#e11d48",
+      "items": [
+        {
+          "n": "interplains/Zero-Breach-Toolkit",
+          "l": "Python",
+          "s": "4.0k",
+          "stars": 4044,
+          "created": "2026-10-25",
+          "desc": "Free, open-source, offline checks for traces of known mercenary spyware. Works on Windows, macOS and Linux, Android phones and iPhone backups.",
+          "topics": [],
+          "url": "https://github.com/interplains/Zero-Breach-Toolkit",
+          "i": "🛡️",
+          "one": "离线自查间谍软件痕迹：Pegasus / Predator / Graphite / Candiru，覆盖 Win/mac/安卓/iPhone 备份。",
+          "use": "严格只读，扫描期间不联网（Python 网络调用被拦、重定向路径被拒），只写临时数据库快照与你要的报告。Windows 上：装 Python（勾 Add to PATH）→ 下 ZIP 解压 → 关掉浏览器和聊天 App → 跑对应脚本；手机通过连电脑检查。每份报告写清「找到了什么、证据强度、哪些没查到」，干净结果不会被说成「你安全」。",
+          "fit": "对上你的网安专业本身，也与每周网安板块选题有关。更实际的用法是把它当「检测工具该怎么写报告」的范本：证据分级、能力边界、无网络请求三件套。",
+          "opt": "拿它改造你自己的检测产出：以后写 PoC 或检测脚本，报告里必须有「证据强度」和「查不到什么」两栏，而不是只有一个 vulnerable: true。下一步：用它扫一遍本机与备份（约 20 分钟），顺手把报告结构抄进 CTF 的 WP 模板。"
+        },
+        {
+          "n": "qybaihe/bla",
+          "l": "JavaScript",
+          "s": "1.8k",
+          "stars": 1770,
+          "created": "2026-10-25",
+          "desc": "🛡️ BLA (Blind LLM Agents) — Adversarial defense shield that protects binaries, Electron apps, JS bundles, Python, and WebAssembly against AI reverse-engineering agents like REA. Poison -> Exhaust -> Hallucinate.",
+          "topics": [
+            "adversarial-ai",
+            "claude-code",
+            "cursor",
+            "electron-security",
+            "llm-security",
+            "mcp",
+            "mcp-server",
+            "obfuscation",
+            "reverse-engineering",
+            "webassembly"
+          ],
+          "url": "https://github.com/qybaihe/bla",
+          "i": "🕶️",
+          "one": "对着 AI 逆向 agent 做对抗：投毒、耗尽预算、诱导幻觉，让自动逆向不划算。",
+          "use": "npm 全局装 bla-agents，指向要发布的构建产物（二进制 / Electron / JS bundle / Python / WASM），按 Poison → Exhaust → Hallucinate 三步注入：喂假符号与诱饵路径、把资源预算打满、让分析器得出自洽但错误的结论。运行时行为不变。带 MCP 工具目录，可接 Claude Code / Cursor。",
+          "fit": "这是本周网安与 Agent 两个板块的交点，也接你 CTF 里「被服务器检测后停手」的经验——那边是防守方在拦你，这边是防守方在给 AI 逆向者下套。",
+          "opt": "反向用：你去逆向别人时先假设目标已做这类处理，任何「太顺」的符号表都要怀疑。下一步：在 CTF 笔记里加一节「对抗性混淆的识别信号」，先列 5 条（诱饵函数、预算耗尽、自洽错误结论、资源异常、符号与行为不符）。"
+        },
+        {
+          "n": "KillaBoi/StealMyBitcoin-PoC",
+          "l": "Python",
+          "s": "1.0k",
+          "stars": 1028,
+          "created": "2026-10-25",
+          "desc": "A public release of the Steal My Bitcoin challenge",
+          "topics": [],
+          "url": "https://github.com/KillaBoi/StealMyBitcoin-PoC",
+          "i": "💥",
+          "one": "一个 PHP 挑战赛的完整利用链，单文件、纯标准库 Python 复现。",
+          "use": "对着本地 Docker 靶场跑：起 Alpine + PHP 8.4.26 CLI + nginx，然后 python stealmybitcoin_poc.py。链子是 0 确认版本 → 1 堆泄漏（发 249,042B 生产者 + 8×6,672B 触发 OOM 污染 worker，回的 256B cookie 里带 Zend chunk base）→ 2 代码泄漏（251,557B + 8×92,388B，回 16B cookie 带 zval_ptr）→ 后续利用。每步先验证上一滴泄漏再往下走，并记录原始 HTTP 字节。",
+          "fit": "和你在 CTF 做的 git 源码泄露是同一类：都是「先拿到一点信息，再用它换下一点」。区别是一个走内存布局，一个走源码历史。",
+          "opt": "抄它两个习惯：① 每步泄漏都落盘原始 HTTP 字节，方便复现与写 WP；② 用 OOM 天然造「同步点」——这与上周 php2shell「占满 worker 池做同步」是同一技巧。下一步：把你手头靶场的利用脚本改成「每步断言 + 字节落盘」结构，WP 直接由日志生成。"
+        },
+        {
+          "n": "physicsdolphin/nv-uefi-unlocker",
+          "l": "Rust",
+          "s": "842",
+          "stars": 842,
+          "created": "2026-10-26",
+          "desc": "UEFI pre-driver NVIDIA GPU unlocker for Windows Linux Hackintosh and all EFI-bootable system (Rust): SEC2 scrubber -> FWSEC/WPR2 -> signed Booter -> V67 four-write payload, read-back verified. Verified on most RTX 20 30 40 Series.",
+          "topics": [],
+          "url": "https://github.com/physicsdolphin/nv-uefi-unlocker",
+          "i": "⚡",
+          "one": "在驱动加载前解锁 N 卡 Tensor 算力：FP16/BF16 最高约 2.6×，不刷 VBIOS，断电即复原。",
+          "use": "从 UEFI U 盘启动，关 Secure Boot。目标机上跑 make-usbroot.ps1（Linux/WSL 用 make-usbroot.sh），脚本自动识别显卡代际、下载校验固件、制盘；Turing 卡要先跑一次 enable-turing-unlock.ps1 并重启确认 GSP 固件已运行。支持 GTX16 与 RTX20/30/40，不支持 Pascal 及更早、GA100、RTX50。",
+          "fit": "与你的负载无直接关系（重活是 PDF 解析与无头 Chrome），但它是上周 gpu-unlock 的「不装内核模块、更彻底」版本。两周连着出现，说明「消费卡跑 AI 被限速」是持续热点。",
+          "opt": "不要在工作机上试（改 UEFI 启动链，风险远高于收益）。只留一条判断：需要长时间跑本地模型或生图时再评估，且先确认电源墙。下一步：无，本周报里作为趋势记录。"
+        },
+        {
+          "n": "N1nEmAn/sapper-v2",
+          "l": "Python",
+          "s": "400",
+          "stars": 400,
+          "created": "2026-10-30",
+          "desc": "Autonomous pentest legion — AI commander + worker swarm + layered fact-intent graph. 3rd Tencent Intelligent Attack-Defense online champion (634 teams · 8h unattended · 1B tokens beat 4.5B). The Nüwa Test: give AIs Create/Language/History, let a civilization grow.",
+          "topics": [
+            "ai-agents",
+            "autonomous-agents",
+            "claude-code",
+            "ctf",
+            "llm",
+            "multi-agent",
+            "pentest"
+          ],
+          "url": "https://github.com/N1nEmAn/sapper-v2",
+          "i": "⚔️",
+          "one": "打比赛的自主渗透军团：AI 指挥官 + 工人集群 + 分层事实图，腾讯攻防线上赛冠军。",
+          "use": "基于 Claude Code 跑，三层结构：commander 读盘面做决策并派活，generals 与 soldiers 并行打，零策略 watchdog 保活；所有战果沉淀进分层 fact-intent graph——个体可以死，图不死。成绩：634 队第 3、80.18 分、8 小时无人值守、85 个 flag，用 1B token 达到对手 4.5B 的效果且快 25 秒。仅限授权测试。",
+          "fit": "对你的 CTF 直接相关，而且它解决的正是你踩过的坑：多步利用中途断了要从头来。它的答案是「把状态放进图，而不是放进上下文」。",
+          "opt": "不必整装（8 小时烧 token）。抽它的 fact graph 做单机轻量版：每拿到一条事实（版本号、路径、凭据、漏洞点）就写进一张表，下一步决策只读表不读全文。下一步：给正在做的靶场建 facts.md，字段只要四个——事实 / 证据来源 / 可信度 / 推翻了什么。"
+        },
+        {
+          "n": "soimy/c3rb3r-rescue",
+          "l": "Python",
+          "s": "288",
+          "stars": 288,
+          "created": "2026-10-29",
+          "desc": "Evidence-based DSM ransomware recovery: preservation, RAM key recovery, copy decryption, and GitLab validation.",
+          "topics": [],
+          "url": "https://github.com/soimy/c3rb3r-rescue",
+          "i": "🚑",
+          "one": "群晖 NAS 被 C3RB3R(.L0CK3D) 加密后的应急：先保现场，再从内存里捞密钥解副本。",
+          "use": "第一原则是别重启、别断电、别 kill -9：用 sudo kill -STOP PID 冻住加密进程（要确认所有线程都是 T，D 是在等 IO 不算停住），断网断同步，立刻把内存与可执行文件 dump 到独立存储，再从内存里找会话密钥、解密幸存副本。找不到密钥时，Btrfs 的部分文件仍可能从旧数据块恢复。有 PVE 与群晖实机两个成功案例。",
+          "fit": "本周网安板块的主线之一（同类恢复仓库至少五个），对你的实际意义是「应急响应流程该怎么写」——蓝队方向与检测报告都用得上。",
+          "opt": "把它开头那段「立刻做什么」抄成一张五步应急卡（冻结进程 / 断网 / 存内存 / 找副本 / 干净环境恢复），存进网安知识库当模板。下一步：补一条你环境特有的——先保住 console 或受限 SSH，否则断网后自己也进不去。"
+        },
+        {
+          "n": "assetnote/node2shell-scanner",
+          "l": "Python",
+          "s": "85",
+          "stars": 85,
+          "created": "2026-10-25",
+          "desc": "High fidelity detection mechanism for node2shell (CVE-2026-111497)",
+          "topics": [],
+          "url": "https://github.com/assetnote/node2shell-scanner",
+          "i": "🔍",
+          "one": "CVE-2026-111497（node2shell）的高保真检测：只用 Brotli 探测，不执行命令。",
+          "use": "pip install -r requirements.txt，或直接 docker run --rm node2shell-scanner -u https://target/api。原理：先发 4 个一字节控制请求，分辨端点对「合法 Brotli JSON / 畸形 Brotli / 无 JSON 类型头 / 不支持编码」四种情况的反应，再流式发一个 23 MB Brotli 探测包，最后重放控制请求确认端点还活着。三条件同时成立才判定有漏洞。支持批量 -l hosts.txt、多线程、JSON 输出。",
+          "fit": "对上你的网安课题与 CTF 检测题。价值不在漏洞而在方法论：用「控制组 + 差分响应」判漏洞，而不是靠一个指纹字符串。",
+          "opt": "把「控制组 + 差分」写进你自己的扫描脚本规范：任何检测都要先说清「正常响应长什么样」。下一步：给靶场写一个只读检测版（不落地 shell），JSON 输出里带 response class 对比，可直接进报告。"
+        },
+        {
+          "n": "fush520/fush-vue-mcp",
+          "l": "JavaScript",
+          "s": "54",
+          "stars": 54,
+          "created": "2026-10-27",
+          "desc": "Fush Vue MCP —— Vue 前端逆向 + Web 安全测试工具（Chrome 扩展 + MCP 服务端，91 个工具）",
+          "topics": [
+            "ai-agents",
+            "anti-debug",
+            "chrome-extension",
+            "mcp",
+            "pentesting",
+            "reverse-engineering-tools",
+            "security-tools",
+            "vue"
+          ],
+          "url": "https://github.com/fush520/fush-vue-mcp",
+          "i": "🕸️",
+          "one": "Vue 前端逆向 + Web 安全测试的 Chrome 扩展 + MCP 服务端，91 个工具让 AI 直接操作浏览器。",
+          "use": "Windows 10/11 + Chrome/Edge ≥116 + Node ≥18。装 release 的扩展，再起 MCP 服务端，把配置写进 Claude/Codex。三块能力：Vue 逆向（提全部路由、清路由守卫、批量探未授权路由、dump Pinia/Vuex 与按钮级权限矩阵、Nuxt payload 探测）、反调试与 Hook（无限 debugger、eval/Function 劫持、XHR/Fetch/CryptoJS/JSEncrypt 加密参数捕获）、请求头改包。",
+          "fit": "对你手上的 CTF Web 题最直接：你现在是手动在 devtools 里找路由、扒加密参数，它把这套动作变成 AI 可调的 91 个工具。定位也诚实——是「分诊原料」不是扫描器。",
+          "opt": "值得装。把 Web 题流程改成：扩展连上 → 让 AI 先提路由与权限矩阵 → 圈出「不登录却能拿数据」的端点 → 再手工验证。下一步：拿一道 Vue 站的旧题复跑，对比手动找加密参数与用 CryptoJS Hook 抓的时间差。"
+        }
+      ]
+    },
+    {
+      "key": "agent",
+      "title": "Agent",
+      "sub": "智能体技能、编排与协作",
+      "color": "#0284c7",
+      "items": [
+        {
+          "n": "DenisSergeevitch/ex-ussr-kinship-research",
+          "l": "Python",
+          "s": "1.4k",
+          "stars": 1418,
+          "created": "2026-10-25",
+          "desc": "Evidence-first genealogy skill for AI agents (Codex, Claude Code): church books, civil, military, deportation and repression records across the former USSR. Replies in your language.",
+          "topics": [
+            "agent-skills",
+            "archives",
+            "claude-code",
+            "codex",
+            "family-history",
+            "familysearch",
+            "genealogy",
+            "ussr"
+          ],
+          "url": "https://github.com/DenisSergeevitch/ex-ussr-kinship-research",
+          "i": "🌳",
+          "one": "证据优先的家谱研究 skill：读苏联/沙俄的教会簿、民事、军事、流放档案，每条结论可追溯。",
+          "use": "装进 skills 目录（Codex / Claude Code），给一个问题 + 已知事实 + 谁可能还在世 + 什么不许碰。产出可复现的登记册：人物、物件、主张、关系、完整检索日志（CSV）+ 报告模板；把每个事件解析到「事件发生当时」的州省县教区，而不是今天的地图；自带姓名变体矩阵（改革前俄文、乌克兰、波兰、罗马尼亚、德文、意第绪）。skill 说明是俄文写的，但用你的语言回答、原文照引并附译。",
+          "fit": "与七项工作不同域，但它解决的是 paper-deep-reading 的核心难题：跨版本、跨语种、命名不一致的史料，怎么保持可追溯。",
+          "opt": "抄它的三件套：Case intake（范围与禁区）→ 可复现登记册（多张 CSV）→ 报告模板。下一步：给 paper-deep-reading 加一张 claims.csv，每条批注落成一行，带「依据的段落锚点」与「可信度」，让报告里每句话都能回查。"
+        },
+        {
+          "n": "ZiChuanLan/agent-purge",
+          "l": "JavaScript",
+          "s": "945",
+          "stars": 945,
+          "created": "2026-10-25",
+          "desc": "One persona, many coding agents. Replace or inject system prompts across codex, claude, opencode, grok, omp, hermes, pi, zcode - with a local web console.",
+          "topics": [
+            "claude-code",
+            "codex",
+            "coding-agent",
+            "deepseek-harness",
+            "harness",
+            "omp",
+            "opencode",
+            "pi",
+            "system-prompt"
+          ],
+          "url": "https://github.com/ZiChuanLan/agent-purge",
+          "i": "🎭",
+          "one": "一份人设喂给所有 coding agent：替换/仅人设/追加/清空四种模式，热切换且可逆。",
+          "use": "npm i -g agent-purge（Node ≥20，零依赖）。agent-purge web 起本地控制台 127.0.0.1:7788，agent-purge codex 用当前人设启动，agent-purge pi --ask 一次性提问。三条通道统一写同一份 personas/<id>.md：install 写托管配置块（常驻）、shim 往 PATH 前置同名壳（裸敲命令也接管）、slash 会话内 /purge on|off|status（不动磁盘）。关掉总开关全部还原。数据在 ~/.agent-purge/。",
+          "fit": "对上你「改提示词」这件事：现在的规范散在 SKILL.md、references、以及每个 automation 的 prompt 里，改一次要同步多处。",
+          "opt": "别急着装（会 hook 多个 agent 的启动）。先借它的分层：把「人设/规范」与「任务指令」分开，规范只写一份，任务 prompt 只写变量。下一步：把六个 automation 里重复的部分（时间窗、文件名规则、必须 present_files）抽成共享片段，各 prompt 只留差异。"
+        },
+        {
+          "n": "blakeandersonw/ai-app-playbook",
+          "l": "TypeScript",
+          "s": "598",
+          "stars": 598,
+          "created": "2026-10-26",
+          "desc": "How to build useful, profitable apps in 2026. Clone it and point your coding agent at AGENTS.md.",
+          "topics": [],
+          "url": "https://github.com/blakeandersonw/ai-app-playbook",
+          "i": "🏗️",
+          "one": "可 clone 的 AGENTS.md 路线图：从选问题到第一个月盈利，14 个阶段每步都有验收标准。",
+          "use": "在空文件夹里把「Clone <repo> and read AGENTS.md」粘给 Claude Code / OpenCode，agent 按 AGENTS.md 带你走：Phase 0 挑一个「AI 几秒能解决」的高频问题（10 条视频 + waitlist 验证，评分 ≥25/35）；1–12 建产品（brief、repo、后端、auth、AI、Web、iOS/Android、支付、埋点、onboarding、留存、发布，每段有 done-when）；13 拿前 1000 用户；14 每周一个漏斗实验 + 一个修复。技术栈固定 Cloudflare Workers/D1/R2 + Better Auth。",
+          "fit": "对上你「本地 HTML 推 GitHub 拿二维码」这条链路：你已经在做工具→上线→触达的闭环，缺的是「这件事值不值得做」的前置判断。",
+          "opt": "只取 Phase 0 的验证法：新工具先写清「谁在什么场景下每周会用三次」，写不出来就不做。下一步：给云大 3D 地图写一句这样的判断，如果写不出就先只做呈贡一个门。"
+        },
+        {
+          "n": "konlu/story-studio",
+          "l": "Python",
+          "s": "594",
+          "stars": 594,
+          "created": "2026-10-26",
+          "desc": "从选题到剪映草稿的一站式 AI 短视频内容创作 Agent Skill",
+          "topics": [],
+          "url": "https://github.com/konlu/story-studio",
+          "i": "🎞️",
+          "one": "从选题到剪映草稿的短视频口播流水线：写稿、配音、对齐、分镜配图、导出可编辑工程。",
+          "use": "是 Agent Skill，装进 Claude Code/Codex 的 skills 目录。一句话一条龙，也能只做一段：只写稿 / 只改开头钩子 / 只拆镜生图 / 拿现成素材出草稿。内部：370+ 篇对标文案的 Writing-DNA（历史叙事、真实人物故事两套）+ 黄金 3 秒钩子库；豆包语音 V3 双向流式配音，或丢自己的 MP3 进去；Coli（sherpa-onnx）本地转录生成逐字 SRT 时间轴；3 套画风 + 参考图库；最后用 pyJianYingDraft 生成剪映专业版工程。",
+          "fit": "与 digital-human-koubo 是一对：那个给「人」，这个给「片」。对心协招新与活动回顾，传播效率都高于纯海报。",
+          "opt": "两条一起评估、不要都上。建议先这条（不依赖付费 MCP，配音可用本地 MP3，草稿可人工救）。下一步：给「暮光里的云大」做 60 秒回顾片，只跑写稿 + 配图 + 草稿，配音你自己念，看剪映里能省多少关键帧工作。"
+        },
+        {
+          "n": "MiniMax-AI/mcode-stack",
+          "l": "Python",
+          "s": "489",
+          "stars": 489,
+          "created": "2026-10-28",
+          "desc": "The workflows and skills the MiniMax Code team uses to build MiniMax Code. Open source, install and use.",
+          "topics": [
+            "agent-skills",
+            "ai-coding",
+            "claude-skills",
+            "coding-agent",
+            "harness-engineering",
+            "minimax-code"
+          ],
+          "url": "https://github.com/MiniMax-AI/mcode-stack",
+          "i": "🧰",
+          "one": "MiniMax Code 团队每天自己在用的 workflow 与 skill，不是最佳实践清单。",
+          "use": "Claude Code 一条命令装整套：claude plugin install ronny --marketplace MiniMax-AI/mcode-stack（会话内用 /plugin install；jiachen 是另一套 stack）。也可 clone 后跑 scripts/install.sh，有 claude/codex 就用它装，没有就拷进 ~/.agents/skills/。内容回答很具体的问题：怎么让 AI 写的代码保持高标准、什么任务该丢给 subagent、长命令该等多久、长会话怎么不变钝、每轮回什么进上下文。",
+          "fit": "对上你 SKILL.md 的写法与 automation 的 prompt 设计。你已经有 skill 工程化的底子（v2 三栏、v2.3 三件套），缺的是团队级的取舍标准。",
+          "opt": "挑「什么任务该丢给 subagent」这一篇落地：周报现在是一条长串行链路（取数→写 38 段解读→渲染→上传），解读最耗上下文。下一步：把「写解读」拆成 4 个并行 subagent（每板块一个），各返回 JSON，主线程只做合并与校验。"
+        },
+        {
+          "n": "Pluviobyte/douyin-comments",
+          "l": "JavaScript",
+          "s": "362",
+          "stars": 362,
+          "created": "2026-10-30",
+          "desc": "抓取抖音单条视频完整评论区（一级 + 楼中楼）的 Agent Skill：在已登录的 Chrome 里照抄页面真实请求，签名交给页面 SDK",
+          "topics": [
+            "agent-skill",
+            "claude-code",
+            "comments-scraper",
+            "douyin"
+          ],
+          "url": "https://github.com/Pluviobyte/douyin-comments",
+          "i": "💬",
+          "one": "抖音单条视频评论区全量抓取 skill：在已登录页面上照抄请求，签名交给页面 SDK。",
+          "use": "git clone 到 ~/.claude/skills/douyin-comments，需要 Claude Code + Claude in Chrome 扩展（会话内 /chrome）+ 已登录抖音。给它一个链接说「抓一下评论区」，支持 /video/<id>、modal_id、v.douyin.com 短链。产出 raw/（模板、每页响应）、comments_top.json、comments_replies.json、按点赞排序的 评论全文.md。实测 195 条评论用 35 次请求 138 秒，无验证码；节奏是每次间隔 2–4 秒、每 15 次多停 8–15 秒。",
+          "fit": "对心协的选题参考：判断「这个活动怎么宣传有人看」，评论区比点赞数有信息量。也对你理解风控——它绕开 a_bogus 的方式不是逆向，而是不自己拼参数。",
+          "opt": "先别抓别人的数据。抄「不逆向签名，改用页面自己发请求」这个思路：CTF 里遇到前端签名，同样可以先 Hook 页面原有请求当模板，只替换三个变量。下一步：把这条写进 Web 题 checklist 第一条。"
+        },
+        {
+          "n": "jmanico/grim-prompter",
+          "l": "—",
+          "s": "325",
+          "stars": 325,
+          "created": "2026-10-28",
+          "desc": "Threat modeling for AI coding agents: point Claude Code, Codex or any agent at your repo and get an evidence-traced threat model. 36 architectures, 29 methods, MIT.",
+          "topics": [
+            "ai-agents",
+            "appsec",
+            "claude-code",
+            "codex",
+            "linddun",
+            "llm",
+            "pasta",
+            "prompt-engineering",
+            "security",
+            "stride"
+          ],
+          "url": "https://github.com/jmanico/grim-prompter",
+          "i": "🗡️",
+          "one": "给 AI coding agent 用的威胁建模：36 种架构 + 29 种方法，产出可核对证据的威胁模型。",
+          "use": "clone 后把 skills/threat-model 软链到 ~/.claude/skills/ 或 ~/.agents/skills/。用 /threat-model（自动选架构）、/threat-model quick api、/threat-model deep web（六阶段完整分析）、/threat-model STRIDE per element（只跑一种方法）。方法库含 STRIDE / LINDDUN / PASTA，覆盖信任边界、威胁、现有控制、建议缓解，每条都带能核对的证据。其他 agent 就把项目片段加进 AGENTS.md。",
+          "fit": "对网安课设与 CTF 赛后复盘直接可用，也适合给 paper-deep-reading 的 HTML 做一次轻量建模——那东西是本地 file:// 打开、带 JS，而你天天在无头浏览器里跑不可信内容。",
+          "opt": "先给你手上「会被别人打开」的东西做：简报 HTML、心协活动页。下一步：跑 /threat-model quick static-site，只处理三条最实际的（外链、用户输入、第三方脚本），不做全套。"
+        },
+        {
+          "n": "wanghao-SunSky/cs329z-chinese",
+          "l": "HTML",
+          "s": "310",
+          "stars": 310,
+          "created": "2026-10-28",
+          "desc": "斯坦福 Stanford CS329Z Engineering AI Agents 中文教程：面向 Python 开发者的 AI 智能体课程，19 讲与 4 项实践，涵盖 LLM、RAG、工具调用、记忆、多智能体、评测与安全。完整 Markdown、在线与离线 HTML。Chinese course notes.",
+          "topics": [
+            "agent-memory",
+            "agentic-ai",
+            "ai-agents",
+            "chinese",
+            "chinese-tutorial",
+            "course-notes",
+            "cs329z",
+            "engineering-ai-agents",
+            "llm",
+            "llm-evaluation"
+          ],
+          "url": "https://github.com/wanghao-SunSky/cs329z-chinese",
+          "i": "📚",
+          "one": "斯坦福 CS329Z《Engineering AI Agents》中文教程：19 讲 + 4 个实践，含单文件离线版。",
+          "use": "html/index.html 浏览器直接开，或 html/offline.html 单文件离线版。19 讲覆盖 Agent 基础与全景、LLM、RAG、工具调用、记忆、多 Agent、评测、安全；实践是从零搭 Agent、设计评测、课程项目、论文实践；另有 HW1 与第 5 讲的代码导读。建议先读 1–4 讲再动手。改 Markdown 后 node tools/build_site.mjs 重建，python3 tools/verify_publication.py 校验。",
+          "fit": "对上你「数据结构与算法讲稿」的产出习惯——你习惯按章节顺序出讲稿照着讲；这套把 Agent 工程讲成可顺序读的结构，正好补你缺的系统部分（评测、记忆、安全）。",
+          "opt": "按你的讲稿风格做一份中文摘讲：只挑「工具调用」「记忆」「评测」三讲，各出一页（表格 + 类比 + 一句话总结）。下一步：先读工具调用那一讲，对照你 SKILL.md 的取数环节，看漏了哪些失败分支。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "title": "AI",
+      "sub": "模型、3D/视频生成与生态",
+      "color": "#059669",
+      "items": [
+        {
+          "n": "deepopen-com/deepopen-3d-webs",
+          "l": "Python",
+          "s": "1.1k",
+          "stars": 1131,
+          "created": "2026-10-26",
+          "desc": "Image-driven 3D scene generation system. Users provide a reference image and prompt words, and the system generates previewable, replayable, and traceable scene results according to the camera trajectory; official 3D demonstration assets allow direct viewing of color/depth animations and Gaussian point clouds in the browser 图像驱动的三维场景生成系统",
+          "topics": [
+            "3d",
+            "gaussian-filter",
+            "gaussian-splatting"
+          ],
+          "url": "https://github.com/deepopen-com/deepopen-3d-webs",
+          "i": "🧊",
+          "one": "一张参考图 + 一句提示词 → 沿相机轨迹生成可预览、可重放、可追溯的 3D 场景。",
+          "use": "Docker 起镜像，默认 8090 端口。给一张参考图 + 中文提示词，用「生成轨迹」决定空间怎么被观察、用「渲染轨迹」决定成片怎么运动；产出预览静帧、颜色动画、深度动画，可实时烘焙高斯点云，也能挂官方 PLY 直接看。浏览器里拖动预览点云，可下载模型给 SuperSplat / MeshLab。每个任务持久化，能按 ID 回看。无 GPU 时是 demo 模式（页面、图库 3D、任务回放仍可用），有 CUDA 与权重才切完整生成引擎。",
+          "fit": "直击你的云大双校区 3D 地图：瓶颈不是腾讯 LBS 的接口，而是「校园建筑与地标怎么快速有 3D 观感」。它给了「一张照片 → 可环绕场景」这条捷径。",
+          "opt": "先做单点试验：拿泽湖畔或会泽院的一张照片生成可环绕小场景，嵌进地图信息卡当「到点预览」。下一步：先用 demo 模式（不需要 GPU）验证交互形态，确认后再决定是否下 CUDA 权重。"
+        },
+        {
+          "n": "alchaincyf/huashu-bird-sticker",
+          "l": "—",
+          "s": "447",
+          "stars": 447,
+          "created": "2026-10-30",
+          "desc": "花叔开源的全球鸟类贴纸库 · Stickers for all 11,064 living bird species, with names in 43 languages and structured data",
+          "topics": [
+            "ai-generated",
+            "biodiversity",
+            "birding",
+            "birds",
+            "birdwatching",
+            "claude-code",
+            "codex",
+            "dataset",
+            "illustration",
+            "ioc-world-bird-list"
+          ],
+          "url": "https://github.com/alchaincyf/huashu-bird-sticker",
+          "i": "🐦",
+          "one": "全球 11064 种鸟各一张白边贴纸，附 43 种语言的鸟名与分布、形态、保护等级数据。",
+          "use": "贴纸可直接用于商业、编辑、再分发，唯一例外是做观鸟/识鸟/图鉴类应用；数据是 MIT。每张带结构化元数据（分类、多语言名、跨库 ID、来源）。源自观鸟 App「鸣迹」，按 IOC World Bird List v15.2 覆盖 44 目 250 科。",
+          "fit": "与工作不直接相关，但和「在云大做自然主题海报」有想象空间——昆明的鸟类素材现成就有。",
+          "opt": "值得抄的是它的发布形态：一个数据集 + 一份许可说明 + 一套预览图。下一步：把 paper-deep-reading 积累的术语表也按这个形态发一次（数据 + 许可 + 预览），比埋在 skill 目录里有用的多。"
+        },
+        {
+          "n": "speridlabs/idol-sdk",
+          "l": "Python",
+          "s": "413",
+          "stars": 413,
+          "created": "2026-10-28",
+          "desc": "Idol: a single image to 3D Gaussians. Inference SDK and demo.",
+          "topics": [],
+          "url": "https://github.com/speridlabs/idol-sdk",
+          "i": "🧱",
+          "one": "单图生成 3D 高斯物体：去背景、自动取景、补出照片没拍到的侧面，7.2GB 显存跑进 2 秒。",
+          "use": "pip install -e .（Python ≥3.10 / PyTorch ≥2.5），要跑 demo 再加 pip install -e \".[demo]\"。首次使用从 HuggingFace 下权重，需先申请 dinov3 与 FLUX.2-dev 访问权，然后 hf auth login。输入一张图，输出标准 3DGS .ply（默认 262,144 个高斯，可到 1,048,576）；装了 flash-attn 会自动启用。",
+          "fit": "和 deepopen 是同一件事的两个粒度：那个做场景，这个做单个物体。对你的 3D 地图，这正好是「地标建筑单独建模」那把刀。",
+          "opt": "先看 demo（93 个例子）判断质量够不够你的地图用，不要直接下 7GB 权重。下一步：拿一张会泽院正面照试一次，看补出来的背面是否可接受——校园地标往往只有一面照片。"
+        },
+        {
+          "n": "Pika-Labs/Pika-H3-Flex",
+          "l": "Python",
+          "s": "362",
+          "stars": 362,
+          "created": "2026-10-29",
+          "desc": "Pika H3 Flex: video and audio generation inference",
+          "topics": [],
+          "url": "https://github.com/Pika-Labs/Pika-H3-Flex",
+          "i": "🎥",
+          "one": "六步出片、带同步音频的视频模型：支持 12 路参考输入，靠参考与提示词控镜头。",
+          "use": "权重在 HuggingFace，按 README 起推理；要 1080p/2K/4K 就走 Pika 托管 API（dev.pika.art）。能力点：六步采样、原生 480p/768p、最多 12 个参考输入、原生音画同步，提示词规范在 docs/prompt-guidance.md。",
+          "fit": "对心协宣传片有潜力，但本地跑的成本与显存门槛高于你现在的需求；与 digital-human-koubo 相比它更偏镜头与画面，不擅长「人」。",
+          "opt": "暂不落地。要试就只试「用 3 张活动照片做 5 秒摇镜」这一个用法，评估能否替代剪辑里手动打的关键帧。下一步：等活动照片攒够再看，现在不花时间配环境。"
+        },
+        {
+          "n": "XiaoyeCodes/code-animation-prompts",
+          "l": "HTML",
+          "s": "209",
+          "stars": 209,
+          "created": "2026-10-29",
+          "desc": "341 种代码动画风格提示词、193 张参考静帧与离线挑选器，封装为 Claude Code / Codex Skill，支持一键导入与 HTML 视频渲染。",
+          "topics": [
+            "agent-skills",
+            "animation",
+            "claude-code",
+            "codex",
+            "creative-coding",
+            "prompts",
+            "video-generation"
+          ],
+          "url": "https://github.com/XiaoyeCodes/code-animation-prompts",
+          "i": "🌀",
+          "one": "341 种代码动画风格提示词 + 193 张参考静帧 + 离线挑选器，封成 Agent Skill。",
+          "use": "复制 README 的一键导入提示词粘给 Claude Code/Codex（需本地文件与终端权限），它会下载安装；或手动装进 skills 目录。按编号点单：粒子聚形 B3、萤火光尘 B2、剪纸 Z5、水墨 Z1、敦煌 Z8、霓虹雨夜 R1、白板手绘 M1 等，agent 读对应风格、规划镜头、写 HTML 动画；配套浏览器渲染工具能把带时间接口的 HTML 逐帧导成 MP4 并可混入音频。",
+          "fit": "对上你的 HTML 页面与活动宣传：现在做动效要么 GIF 要么手写 CSS，缺「风格可点单」这一层。",
+          "opt": "和 pixelfx 二选一：pixelfx 偏素材片段，这个偏整段片头，你更需要片头。下一步：给心协招新页做 5 秒国风片头（Z1 水墨或 Z5 剪纸），导出 MP4 进推文，同时留 HTML 版给网页。"
+        },
+        {
+          "n": "wquguru/shisei",
+          "l": "Python",
+          "s": "208",
+          "stars": 208,
+          "created": "2026-10-29",
+          "desc": "💃 Free CC0 mannequin pose reference library for AI image tools (Nano Banana, ChatGPT, ComfyUI, Midjourney) — 250+ poses × 5 angles in line art, names in ja/zh/en/ko",
+          "topics": [
+            "ai-art",
+            "ai-image-generation",
+            "art-reference",
+            "cc0",
+            "comfyui",
+            "controlnet",
+            "dataset",
+            "drawing-reference",
+            "figure-drawing",
+            "line-art"
+          ],
+          "url": "https://github.com/wquguru/shisei",
+          "i": "🕺",
+          "one": "CC0 人体姿势参考库：280 个姿势 × 5 个机位，线稿 + 黏土/深度/法线贴图。",
+          "use": "在线画廊直接挑（shisei.indaloop.app），线稿包 36.5 MB 可下载（含 1212 张通过质检的线稿），按需下 clay / depth / normal 贴图。姿势名有日/中/英/韩四语，catalog.json 与 catalog.csv 是结构化索引，零运行时依赖。可直接喂 ControlNet / ComfyUI / 任意图生图工具。",
+          "fit": "和 ai-pose-gallery-zh 同类，但许可更干净（CC0，商用无限制）、更适合当 ControlNet 输入——做海报里的人物，用线稿控姿态比用照片控更稳。",
+          "opt": "两个库分工：shisei 定骨架（CC0 可商用），ai-pose-gallery-zh 定服装与画风。下一步：把 3–5 个适合「暮光」主题的姿势编号记下来，连同一张线稿存进素材目录，下次生图直接引用。"
+        },
+        {
+          "n": "huaguoxingkong/dsh-prompt-rewriter",
+          "l": "JavaScript",
+          "s": "207",
+          "stars": 207,
+          "created": "2026-10-28",
+          "desc": "One-click prompt enhancement beside the DeepSeek Harness composer: rewrites a draft in place without sending it.",
+          "topics": [
+            "deepseek-harness",
+            "dsh",
+            "dsh-plugin",
+            "prompt"
+          ],
+          "url": "https://github.com/huaguoxingkong/dsh-prompt-rewriter",
+          "i": "✏️",
+          "one": "DeepSeek Harness 输入框旁的一键改写：把半成品草稿补成能跑的任务指令，且不发送。",
+          "use": "npm 装 dsh-prompt-rewriter 作为 DeepSeek Harness 插件，输入框右边多一个鲸尾图标。点一下补三件事：目标（豆瓣 Top250 的标题、评分、链接）、格式（输出 CSV）、边界（遵守 robots.txt、间隔 ≥2 秒、限流就退避而不是绕过）。只改输入框不发送，Ctrl+Z 可撤。",
+          "fit": "直接对上你写 automation prompt 的习惯：你的 prompt 已经覆盖时间窗、板块、文件名、present_files，但「边界」这一项常常靠人补。",
+          "opt": "把「目标 / 格式 / 边界」当三行模板固定下来，写进所有 automation 的 prompt 开头。下一步：检查现有六个 automation，凡没写「失败时怎么办」的，补一句明确降级动作（如取数失败改抓 trending 并标注）。"
+        },
+        {
+          "n": "aa1143/NamiGPT",
+          "l": "Python",
+          "s": "157",
+          "stars": 157,
+          "created": "2026-10-28",
+          "desc": "零基础入门大模型（LLM）的基础教程：从零手写 GPT-2，一行行看懂大模型是怎么工作的 | Build GPT-2 from scratch in PyTorch, step by step",
+          "topics": [
+            "attention",
+            "chinese",
+            "deep-learning",
+            "from-scratch",
+            "gpt-2",
+            "large-language-models",
+            "llm",
+            "pytorch",
+            "transformer",
+            "tutorial"
+          ],
+          "url": "https://github.com/aa1143/NamiGPT",
+          "i": "🧮",
+          "one": "从零手写 GPT-2 的中文教程：模型代码不到 200 行，与 HuggingFace 实现逐项对齐。",
+          "use": "会 Python 与矩阵乘法就能读。不调用任何现成 Transformer 模块，用 PyTorch 从零写，加载 OpenAI 官方权重跑通推理与生成；用「猫吃鱼」三个词的例子从分词推到文本生成，每篇配可运行脚本；测试逐项对比 HuggingFace 保证一致。另有 Transformer 原论文架构图动态版（按数据流高亮）和注意力矩阵在线可视化。",
+          "fit": "对你的学习路径有用（网安专业、自述零基础、英文吃力），也是讲稿素材——你习惯按章节顺序出讲稿照着讲。",
+          "opt": "不要求手写一遍。取它的动态架构图与注意力可视化做讲稿插图，讲「为什么换顺序会影响结果」。下一步：读分词与注意力两节，各写 300 字白话解释，存到算法笔记旁边。"
+        }
+      ]
+    }
+  ],
+  "wrap": "四板块指向同一件事：把一次性演示变成可复现流程。① 防守方开始对抗 AI 本身——BLA 给逆向 agent 下套，Zero-Breach 只给证据强度不给结论；② skill 成了交付形态，ub-mode、unslop 只给一份 SKILL.md 加闸门，不给框架；③ 3D 从建模变成一张图加一条轨迹。对你的意义：简报、讲稿、活动片都该按「输入→闸门→产出」重写，人只做验收。"
+};
+
+/* ---------- 渲染 ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lc = l => LANG_COLOR[l] || "#6366F1";
+let gi = 0;
+
+function cardHTML(it){
+  const accent = lc(it.l);
+  const st = STYLES[gi++ % STYLES.length];
+  const url = "https://github.com/" + it.n;
+  return `<article class="card ${st}" style="--accent:${accent}" tabindex="0" role="button" aria-expanded="false">
+    <div class="card-head">
+      <span class="ico">${it.i}</span>
+      <div class="hd">
+        <h3 class="pname"><a href="${url}" target="_blank" rel="noopener">${esc(it.n)}</a></h3>
+        <p class="one">${esc(it.one)}</p>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="tags">
+      <span class="tag lang">${esc(it.l)}</span>
+      <span class="tag hot">★ ${esc(it.s)}</span>
+    </div>
+    <div class="detail"><div class="detail-in">
+      <div class="blk"><h4>能怎么用</h4><p>${esc(it.use)}</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>${esc(it.fit)}</p></div>
+      <div class="blk"><h4>如何优化你的 agent</h4><p>${esc(it.opt)}</p></div>
+    </div></div>
+  </article>`;
+}
+
+function render(){
+  const main = document.getElementById("main");
+  const navin = document.getElementById("navin");
+  const stats = document.getElementById("stats");
+  let total = 0, html = "", nav = "";
+
+  DATA.sections.forEach((sec, si) => {
+    total += sec.items.length;
+    nav += `<a class="navlink" href="#s-${sec.key}" style="--accent:${sec.color}"><span class="dot" style="background:${sec.color}"></span>${sec.title} <b style="color:#9aa3b2;font-weight:600">${sec.items.length}</b></a>`;
+    html += `<section id="s-${sec.key}" style="--accent:${sec.color}">
+      <div class="sec-head"><h2>${sec.title}</h2><span class="count">${sec.items.length} 项</span></div>
+      <p class="sec-sub">${sec.sub}</p>
+      <div class="grid">${sec.items.map(cardHTML).join("")}</div>
+    </section>`;
+  });
+
+  main.innerHTML = html;
+  navin.insertAdjacentHTML("afterbegin", nav);
+
+  stats.innerHTML =
+    `<div class="stat"><b>${total}</b>个项目</div>` +
+    DATA.sections.map(s => `<div class="stat"><span style="color:${s.color}">●</span> ${s.title} <b>${s.items.length}</b></div>`).join("") +
+    `<div class="stat">🏷️ 4 大板块</div>`;
+
+  document.getElementById("wrap").textContent = DATA.wrap;
+
+  // 展开 / 收起
+  document.querySelectorAll(".card").forEach(card => {
+    const toggle = () => { card.classList.toggle("open"); card.setAttribute("aria-expanded", card.classList.contains("open")); };
+    card.addEventListener("click", e => { if(e.target.closest("a")) return; toggle(); });
+    card.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
+  });
+
+  // 搜索过滤
+  const q = document.getElementById("q");
+  q.addEventListener("input", () => {
+    const kw = q.value.trim().toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.toggle("hidden", kw && !card.textContent.toLowerCase().includes(kw));
+    });
+  });
+}
+render();
+</script>
+</body>
+</html>
