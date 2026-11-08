@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 周度热门简报 · 2026 第 45 周</title>
+<meta name="description" content="2026 第 45 周（11.01–11.08）GitHub 热门项目简报：综合热门 / 网络安全 / Agent / AI 四板块 41 个项目，含逐项落地分析。">
+<style>
+:root{
+  --bg:#f3f5f9; --card:#fff; --txt:#18202e; --muted:#5a6474; --line:#e3e7ee; --line2:#eef1f6;
+  --r:14px; --shadow:0 1px 2px rgba(16,24,40,.04);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);line-height:1.68;
+  font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:15px}
+a{color:inherit;text-decoration:none}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.88em;
+  background:#f0f2f7;border:1px solid #e4e8f0;border-radius:5px;padding:1px 5px;word-break:break-word}
+
+/* ---------- header ---------- */
+header{position:relative;overflow:hidden;color:#fff;padding:40px 28px 30px;
+  background:linear-gradient(135deg,#0d1526,#1b2a4a 62%,#243a63)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(620px 240px at 84% -12%,rgba(99,102,241,.45),transparent 70%),
+             radial-gradient(520px 210px at 4% 120%,rgba(13,148,136,.32),transparent 70%)}
+.hw{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.badge{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:#c3d0f5;border:1px solid rgba(195,208,245,.34);border-radius:999px;padding:3px 12px;margin-bottom:14px}
+h1{margin:0 0 9px;font-size:29px;line-height:1.32;font-weight:760;letter-spacing:.2px}
+.sub{margin:0;color:#c2ccdd;font-size:14px}
+.hlink{margin:10px 0 0;font-size:13px;color:#a8b6cc;word-break:break-all}
+.hlink a{color:#a9b8f5;border-bottom:1px dotted rgba(169,184,245,.55)}
+.hlink a:hover{color:#e2e8ff}
+.sep{color:#5b6b86;margin:0 7px}
+.stats{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.stat{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.14);border-radius:10px;
+  padding:7px 13px;font-size:13px;color:#e5eaf4;display:flex;align-items:center;gap:6px}
+.stat b{font-size:17px;color:#fff;font-variant-numeric:tabular-nums}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.nv{max-width:1280px;margin:0 auto;padding:9px 28px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.jump{font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;
+  color:var(--muted);white-space:nowrap;transition:.15s;cursor:pointer}
+.jump:hover{border-color:var(--c);color:var(--txt)}
+.jump .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:1px}
+.jump b{color:#98a2b3;font-weight:600;margin-left:4px}
+.sp{flex:1}
+#q{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);min-width:150px;
+  outline:none;background:#fff;color:var(--txt)}
+#q:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.13)}
+.btn{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:#fff;
+  color:var(--muted);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:#b9c0cd;color:var(--txt)}
+
+/* ---------- sections ---------- */
+main{max-width:1280px;margin:0 auto;padding:26px 28px 40px}
+section{margin:0 0 34px;scroll-margin-top:64px}
+.sh{display:flex;align-items:baseline;gap:11px;padding-left:12px;border-left:5px solid var(--c);margin-bottom:3px}
+.sh h2{margin:0;font-size:20.5px;font-weight:760}
+.sh .cnt{font-size:12px;color:var(--muted);background:#eaeef5;border-radius:999px;padding:2px 9px}
+.ssub{margin:5px 0 16px;padding-left:17px;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(325px,1fr));gap:15px;align-items:start}
+
+/* ---------- card ---------- */
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s,border-color .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(18,26,44,.09)}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 8%,transparent));z-index:2}
+.card.v-soft{background:color-mix(in srgb,var(--accent) 6%,#fff);border-radius:18px}
+.card.v-grid{background-image:linear-gradient(rgba(15,23,42,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(15,23,42,.04) 1px,transparent 1px);background-size:19px 19px}
+.card.v-bold{border-left:6px solid var(--accent);border-radius:7px}
+.card.v-paper{background:#fdfbf4;border:1.5px dashed #d6dae3;border-radius:6px}
+.card.v-tape::after{content:"";position:absolute;top:-22px;right:-22px;width:48px;height:48px;
+  background:color-mix(in srgb,var(--accent) 20%,#fff);transform:rotate(45deg);opacity:.5;z-index:0}
+.chead,.tags{position:relative;z-index:1}
+.nm a{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom}
+
+details{margin:0}
+summary{list-style:none;cursor:pointer;outline:none}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.chead{display:flex;gap:11px;padding:15px 15px 9px;align-items:flex-start}
+.ico{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:19px;
+  background:color-mix(in srgb,var(--accent) 15%,#fff);border:1px solid color-mix(in srgb,var(--accent) 32%,#fff)}
+.hd{flex:1;min-width:0;display:block}
+.nm{font-size:15px;font-weight:700;margin:0 0 2px;letter-spacing:.1px;display:flex;align-items:center;gap:6px}
+.nm span{min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.one{display:block;margin:0;font-size:12.9px;color:var(--muted);line-height:1.58}
+.chv{flex:0 0 auto;color:#9aa3b2;font-size:12px;margin-top:3px;transition:transform .25s}
+details[open] .chv{transform:rotate(180deg)}
+.tags{display:flex;gap:6px;padding:0 15px 12px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#eef1f7;color:var(--muted);
+  border:1px solid #e6eaf1;font-variant-numeric:tabular-nums}
+.tag.lg{background:color-mix(in srgb,var(--accent) 12%,#fff);
+  color:color-mix(in srgb,var(--accent) 78%,#111);border-color:color-mix(in srgb,var(--accent) 26%,#fff);font-weight:600}
+.tag.st{background:#fff4e8;color:#a85a09;border-color:#fbe0c2}
+
+/* 展开动画：grid-template-rows 0fr → 1fr */
+.body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.4,0,.2,1)}
+details[open] .body{grid-template-rows:1fr}
+.body>div{overflow:hidden}
+.bin{padding:2px 15px 15px;border-top:1px dashed #e6eaf1;margin-top:2px}
+.blk{margin-top:12px}
+.blk h4{margin:0 0 4px;font-size:12px;letter-spacing:.4px;color:color-mix(in srgb,var(--accent) 82%,#111);
+  font-weight:750;display:flex;align-items:center;gap:6px}
+.blk h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);flex:0 0 auto}
+.blk p{margin:0 0 5px;font-size:12.9px;color:#3b4453}
+.blk p:last-child{margin-bottom:0}
+
+/* ---------- wrapup ---------- */
+.wrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:6px}
+.wrap h2{margin:0 0 10px;font-size:17.5px;padding-left:12px;border-left:5px solid #6366f1}
+.wrap p{margin:0;color:#38414f;font-size:14px}
+.note{margin-top:14px;padding:10px 13px;border-radius:9px;background:#eef2ff;border:1px solid #dee4ff;
+  color:#3a3f78;font-size:12.4px;line-height:1.6}
+.note a{color:#4338ca;border-bottom:1px dotted #a5aef0}
+footer{max-width:1280px;margin:0 auto;padding:0 28px 46px;color:#98a1b0;font-size:12.4px}
+.empty{padding:26px;text-align:center;color:var(--muted);font-size:13.5px}
+@media (max-width:600px){
+  h1{font-size:22px} header{padding:30px 16px 24px} .hw,.nv,main,footer{padding-left:15px;padding-right:15px}
+  .grid{grid-template-columns:1fr} .nm{font-size:14px}
+}
+@media print{
+  nav{display:none} .card{break-inside:avoid} .body{grid-template-rows:1fr !important}
+  .card:hover{transform:none;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hw">
+    <span class="badge">Weekly GitHub Digest</span>
+    <h1>GitHub 周度热门简报 · 2026 第 45 周</h1>
+    <p class="sub">统计窗口 11.01 – 11.08 ｜ 数据源 GitHub Search API（created:&gt;=2026-11-01，按 star 排序）｜ 生成于 2026-11-08</p>
+    <p class="hlink">🔗 本周报告：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261108.html" target="_blank" rel="noopener">https://maisukrajima.github.io/github-weekly-brief/report-20261108.html</a><span class="sep">｜</span>归档仓库：<a href="https://github.com/Maisukrajima/github-weekly-brief" target="_blank" rel="noopener">https://github.com/Maisukrajima/github-weekly-brief</a></p>
+    <div class="stats"><div class="stat"><b>41</b>个项目</div><div class="stat"><span style="color:#5B5BD6">●</span>综合热门<b>14</b></div><div class="stat"><span style="color:#B3243C">●</span>网络安全<b>8</b></div><div class="stat"><span style="color:#1E7BC4">●</span>Agent<b>9</b></div><div class="stat"><span style="color:#0F8060">●</span>AI<b>10</b></div><div class="stat">📅 统计窗口 11.01 – 11.08</div></div>
+  </div>
+</header>
+
+<nav><div class="nv">
+  <a class="jump" href="#s-hot" style="--c:#5B5BD6"><span class="dot"></span>综合热门<b>14</b></a><a class="jump" href="#s-sec" style="--c:#B3243C"><span class="dot"></span>网络安全<b>8</b></a><a class="jump" href="#s-agent" style="--c:#1E7BC4"><span class="dot"></span>Agent<b>9</b></a><a class="jump" href="#s-ai" style="--c:#0F8060"><span class="dot"></span>AI<b>10</b></a>
+  <div class="sp"></div>
+  <input id="q" type="search" placeholder="搜索项目 / 语言 / 关键词…" autocomplete="off">
+  <button class="btn" id="toggleAll">全部展开</button>
+  <button class="btn" id="toTop">到顶部</button>
+</div></nav>
+
+<main>
+<section id="s-hot" style="--c:#5B5BD6">
+  <div class="sh"><h2>综合热门</h2><span class="cnt">14 项</span></div>
+  <p class="ssub">近 7 天新建、按 star 排序的高增长项目（已剔除破解包、投毒仓库、外挂与成人向内容）</p>
+  <div class="grid"><article class="card v-tape" style="--accent:#2867A8">
+  <details class="d">
+    <summary aria-label="展开 KKKKhazix/agent-autoloop 的详情">
+      <span class="chead">
+        <span class="ico">🔁</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener" title="KKKKhazix/agent-autoloop">KKKKhazix/agent-autoloop</a></span></h3>
+          <span class="one">让命令行 Agent 在后台自己接活、跑完一轮就退出，只在要删数据 / 花钱 / 对外发消息时推一张卡片找你拍板。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">TypeScript</span>
+        <span class="tag st">★ 4.1k</span>
+        <a class="tag" href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>Windows 用 `irm .../install.ps1 | iex` 装（要 Node 24 + 一个已登录的 CLI Agent）。内核零外部依赖，事件来源、Agent、通知通道全是插件：定时任务、GitHub Issue、业务报错都能变成一条标准事件；`agent-autoloop try` 会真实走一遍「提问 → 退出 → answer 1 → status 接着干」。同一件事排队时消息合并成一轮；等你回复期间不占后台进程也不烧 token。通知走飞书 / 钉钉 / 企微 / Slack / Discord / 桌面。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上「定时任务 + 无人值守」这条线。你这套周报 automation 是「跑完丢结果」，中途遇到拿不准的情况只能等下周；它给的是「跑到判断点停下 → 发卡片问你 → 续上原会话」的机制。也贴合心协流程里需要老师或部长拍板的节点（场地、预算、公开物料）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>把周报拆成两段：取数 / 生成 / 上传照旧全自动，遇到「上传失败但本地已生成」「候选池出现疑似投毒仓库」「本周项目数明显偏少」这类判断点时改为推卡片等确认，而不是自己猜一个默认值。下一步：先在一个 workflow 上跑本周简报，用 `status` 看轮数与 token 消耗，再决定要不要搬进正式 automation。注意它要 Node 24 常驻，机器得一直开着。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#B33355">
+  <details class="d">
+    <summary aria-label="展开 NotRexed/Hookshot 的详情">
+      <span class="chead">
+        <span class="ico">🎮</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/NotRexed/Hookshot" target="_blank" rel="noopener" title="NotRexed/Hookshot">NotRexed/Hookshot</a></span></h3>
+          <span class="one">《时之笛》Switch 2 版静态重编译到 Windows / Linux 原生跑，不用模拟器，游戏文件在你自己机器上现场构建。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">C++</span>
+        <span class="tag st">★ 2.4k</span>
+        <a class="tag" href="https://github.com/NotRexed/Hookshot" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>要自备游戏副本（仓库不含游戏、密钥和可执行文件）。用 Hookshot Builder 选游戏文件 + 安装目录，一次性在你机器上构建出 hookshot.exe，之后原生运行；图形走 Vulkan 重建，手柄、存档、内建菜单、帧生成、超分都能用。README 明说只在一台机器（7600X + 4060Ti）上测过，只验证到开局区域，AMD / Intel 卡从未测试。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与你的六项工作没有直接落点，但它和你在 CTF 里做的逆向是同一棵树的两端：逆向是读别人的二进制，静态重编译是把别人的二进制翻成自己的源码级工程。本周同题至少五个仓库（ocarina-recomp、switch2-recomp、NX2navi、pokopia-native…），适合当「二进制 → 可维护代码」的观察样本。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不装（几十 G，早期版本会崩）。真正该抄的是它的验证口径：README 用一张表逐项标「已验证 / 未测 / 仍有问题」，并写明只在一种硬件上测过。你的简报和论文报告也该这么标——把「我没验证的部分」显式列出来，而不是让读者默认全对。下一步：给周报每张卡加一行可信度标注（README 声称 vs 我实际核过的）。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#2867A8">
+  <details class="d">
+    <summary aria-label="展开 mromidev/claude-animated-shorts 的详情">
+      <span class="chead">
+        <span class="ico">🎬</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/mromidev/claude-animated-shorts" target="_blank" rel="noopener" title="mromidev/claude-animated-shorts">mromidev/claude-animated-shorts</a></span></h3>
+          <span class="one">一个 Claude skill：55–70 秒竖屏动画短片，2D 角色站在 3D 世界，three.js + Remotion 全程本机渲染，不用 AI 视频模型。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">TypeScript</span>
+        <span class="tag st">★ 2.4k</span>
+        <a class="tag" href="https://github.com/mromidev/claude-animated-shorts" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>把仓库拷到 `~/.claude/skills/cartoon-3d-short/`，装 Remotion + @remotion/three + Node + Python3 + ffmpeg，然后说「用 cartoon short skill 做一个关于……的短片」。SKILL.md 里是完整流水线：选题与事实 → 剧本 → 配音 → story.ts 分镜 → still 校验 → 渲染。附一份从 20 部参考片量出来的 STYLE_BIBLE 和 38 张 540×960 对照帧。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上心协的招新与活动宣传。你现在是「AI 生背景 + PS/Canva 叠字 + 二维码」，以静态为主；它给的是可复现的竖屏短片产线，且不依赖视频生成模型——不用担心抽卡和角色一致性。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不建议整包装（Remotion 链路重）。可抄的是「参照系」做法：把风格写成可测数值（镜头运动、景深、描边、调色、片头节奏），再配参考帧让 agent 两两比对。你的三栏报告已经有「对照」结构，缺的是数值化。下一步：给心协做一张「海报风格卡」——3 组方向，每组定 5 个数（字号比、留白率、主色、辅助色占比、二维码位置），以后出稿先对表。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#CE5232">
+  <details class="d">
+    <summary aria-label="展开 govijr/terminal-mac 的详情">
+      <span class="chead">
+        <span class="ico">🖥️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/govijr/terminal-mac" target="_blank" rel="noopener" title="govijr/terminal-mac">govijr/terminal-mac</a></span></h3>
+          <span class="one">在终端里开一台独立的 macOS 虚拟机专供 computer-use agent 用，画面通过 Kitty / iTerm2 图形协议流过来。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Swift</span>
+        <span class="tag st">★ 2.3k</span>
+        <a class="tag" href="https://github.com/govijr/terminal-mac" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`curl -fsSL .../get.sh | bash` 装（Apple 芯片 + macOS 14+，安装器会校验 SHA-256）。首次运行直接从 Apple 下载系统镜像，VM 磁盘默认 64 GiB。guest 是另一台 Mac：有自己的 App、文件、账号和权限，不继承宿主的登录态；agent 的点击输入走 guest 内的 helper，不动你物理机的指针和剪贴板。要看画面需 Ghostty / Kitty / iTerm2。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的 CTF 实战——凡是要在浏览器里点、又要防站点检测或投毒的活，最稳的是扔进一次性 guest。你之前「一发现被检测就停手转本地」的处置，缺的正是这样一个整机隔离的落点。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>你是 Windows，装不了；但它把「隔离到什么粒度」说清了：不是进程沙箱，是整台虚拟机 + 独立剪贴板 + 独立指针。Windows 侧的对应落点是本周的 sandbox-mcp。下一步：给 CTF 流程加一条硬规则——执行来源不明的 exp / 工具，先进一次性环境，跑完销毁，只把文本结果带出来。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#2867A8">
+  <details class="d">
+    <summary aria-label="展开 caru-ini/stack-diagram 的详情">
+      <span class="chead">
+        <span class="ico">📐</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener" title="caru-ini/stack-diagram">caru-ini/stack-diagram</a></span></h3>
+          <span class="one">一句话描述技术栈，出一张带官方 logo 的架构图，浅色深色各一版。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">TypeScript</span>
+        <span class="tag st">★ 2.1k</span>
+        <a class="tag" href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`npx skills add caru-ini/stack-diagram` 装进 Claude Code / Codex / Cursor（或把 release 的 zip 当 skill 上传）。然后说「画我们的栈：Next.js 和 Hono 在 Vercel，Postgres 在 Neon，Clerk 做鉴权，Stripe 收款，GitHub Actions 部署」。它按各家官方图标集出图（AWS / GCP / Azure 各用自己的图标，连 monorepo 工具链这种「不是云」的栈也支持），每张图渲浅色和深色两版。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的论文报告与 3D 地图的项目文档。你现在写架构说明靠手画 SVG 或纯文字，这类「一句话 → 图」适合放在「先出草图、再人工改」的位置，而不是当终稿。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的落点是标准云架构，你的场景是「腾讯 LBS + 前端 + three.js」，logo 覆盖率会打折。可用的是输出契约：一次出浅深两版、logo 保持白底不随主题变色、字不压图。下一步：给 3D 地图画一张四层草图（数据源 / 瓦片与坐标 / 场景与模型 / 交互），先不追 logo 精确，把层次关系定下来。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#CE5232">
+  <details class="d">
+    <summary aria-label="展开 wquguru/cicada 的详情">
+      <span class="chead">
+        <span class="ico">🎙️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/wquguru/cicada" target="_blank" rel="noopener" title="wquguru/cicada">wquguru/cicada</a></span></h3>
+          <span class="one">知了：任何会议或直播的实时双语字幕、同声传译和结构化纪要，Mac / Windows / Linux / Android 全开源，Apple 芯片上全程本机识别。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Swift</span>
+        <span class="tag st">★ 1.8k</span>
+        <a class="tag" href="https://github.com/wquguru/cicada" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>下对应平台安装包。它直接读系统声音、不往会里塞机器人，对方完全无感；按住右 ⌥ 说话，对方在会里听到翻译后的语音（自动切到 BlackHole 虚拟声卡）。纪要边听边出：结论、待办、鱼骨图、人名术语表，点结论能跳回原话；支持导出 Markdown / Word / SRT，分享链接可设有效期和密码，上传前会拦密钥和未公开信息。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上心协的会议与活动复盘，也对你听英文讲座 / 组会。你现在的做法要么手记、要么会后靠记忆补；它把「记录 → 结构化 → 可回跳」压到实时。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>Windows 版要自己填 AI 服务 key，且 Linux 版 README 明说「纪要窗会被屏幕共享看到」——这类边界要提前知道。真正值得搬的是它的术语纠错回路：生僻名字先问你一次，答「对」以后自动改，还能批量改整场。你的 GLOSSARY 现在是静态表，缺「读错一次就记住」。下一步：给译文流水线加一份人名 / 术语修正表，每篇论文读完后追加，下次自动套用。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 sarpstar/cinecode 的详情">
+      <span class="chead">
+        <span class="ico">🎞️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/sarpstar/cinecode" target="_blank" rel="noopener" title="sarpstar/cinecode">sarpstar/cinecode</a></span></h3>
+          <span class="one">用代码拍片：agent 写剧本、每帧都用代码搭、声音也自己设计，最后交付一个 MP4。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 1.4k</span>
+        <a class="tag" href="https://github.com/sarpstar/cinecode" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>在 Claude Code 或 Cursor 里跑，不依赖付费服务（可选接自己的 Gemini 免费额度 / ElevenLabs）。流程是：一句话想法 → agent 把它和「世界上真实存在的某样东西」（博物馆藏品、动物、太空照片、旧发明、手艺）配对，避免给你最俗的版本 → 从参考帧拼的看板上选视觉风格 → 先看前两场再批准 → 渲成片。十分钟以上长片走「幕 + 章节」结构。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上心协活动宣传片，以及「暮光里的云大」这类场景展示。它的关键设计是「先给你看两场再批准」，正解决「AI 一次给你一坨、改不动」的问题。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>Windows 上直接跑很重（无头 Chrome 逐帧渲染）。可借的是它的防重复机制：每个提案都跟你以前做过的片子比对，不会给你第二遍同样的东西。这个可以搬到简报——把历周 report 的项目名单做成索引，取数后先做差集。下一步：把 index.html 里的历史清单抽成 excludes.txt 喂给取数脚本，本周这种「上周上过的项目再次出现」就能自动过滤。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#B4532A">
+  <details class="d">
+    <summary aria-label="展开 s1dashu/quiet-md 的详情">
+      <span class="chead">
+        <span class="ico">📝</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/s1dashu/quiet-md" target="_blank" rel="noopener" title="s1dashu/quiet-md">s1dashu/quiet-md</a></span></h3>
+          <span class="one">Rust + GPUI 手绘的原生笔记 App，本地优先，每条笔记直接存成飞书（Lark）DocxXML。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Rust</span>
+        <span class="tag st">★ 1.3k</span>
+        <a class="tag" href="https://github.com/s1dashu/quiet-md" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>Mac（Apple 芯片，macOS 13+）/ Windows 下安装包，Linux 需自己编译。本地库就是个普通文件夹，一条笔记一个 XML，可以用 Git / iCloud 任意同步；百万字文档下打字、删除、滚动 P95 都在 6ms 内。支持标题、待办、表格、分栏、callout、代码、公式、图片附件，与飞书文档互导不丢结构。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的两个 Obsidian 库。你现在的纠结点是「要不要为了移动端和协作再开一个工具」；它的定位正好是「文件还是你的、格式是飞书的」，可以当给人看的编辑面，Obsidian 继续当给链接看的图谱面。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>值钱的是 DocxXML 这一层：一条笔记既是可 git diff 的纯文本，又能被飞书直接打开——正好补你「报告只能给 PDF」的短板。下一步：拿一份心协活动总结在 quiet-md 里写，导入飞书看结构是否完整（标题层级、表格、待办）；成了就把「活动文书」改成 Markdown 主稿 + 一键转文档。注意还在 beta，别把唯一副本放进去。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#BE3E22">
+  <details class="d">
+    <summary aria-label="展开 Sandflow-ai/sand3d 的详情">
+      <span class="chead">
+        <span class="ico">🧊</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener" title="Sandflow-ai/sand3d">Sandflow-ai/sand3d</a></span></h3>
+          <span class="one">用 Python 写 3D 模型、专为 LLM 设计：一个零件几行代码，整套 API 只占约 3600 token。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">HTML</span>
+        <span class="tag st">★ 1.3k</span>
+        <a class="tag" href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>在 Blender 的 bpy 之上做了一层 DSL：profile / solid / edit / frame / joint / assembly。同一零件比 Blender Python、CadQuery 少 2–6 倍 token；零件、边、面用名字取，不手算坐标；同一段程序逐位重建出同一个 mesh。示例是一个 38 行的滚筒洗衣机：柜体、滚筒、门（玻璃 + 把手）、洗涤剂抽屉、旋钮，外加四个关节（门轴 0–143°、滚筒连续旋转、抽屉 200mm 滑轨、旋钮连续）。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上云大双校区 3D 地图。你的地图现在是「场景 + 相机 + 标注」，建筑体量要么手工建模、要么拿通用模型；sand3d 给的是「用代码描述体量」的路子——教学楼、图书馆这种规则体块，参数化生成比手工建模快一个量级。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的关键是「命名而非算坐标」：不许 agent 手算顶点，只能按名字引用面和边——这正是 agent 写 3D 代码最容易翻车的地方。下一步：拿一栋楼做试点（东陆校区图书馆），写「基座 + 主体 + 屋顶 + 门窗阵列 + 台阶」五段程序，导出 glTF 进 three.js 场景，看能不能替掉现有占位模型。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#B4532A">
+  <details class="d">
+    <summary aria-label="展开 libracoder/kiri 的详情">
+      <span class="chead">
+        <span class="ico">📦</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/libracoder/kiri" target="_blank" rel="noopener" title="libracoder/kiri">libracoder/kiri</a></span></h3>
+          <span class="one">Rust 写的轻量容器运行时，替代 Docker Desktop / OrbStack，说 Docker API，容器启停约 2.5ms。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Rust</span>
+        <span class="tag st">★ 1.1k</span>
+        <a class="tag" href="https://github.com/libracoder/kiri" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>Mac / Windows / Linux 装包，首次打开自动建一个 `kiri` Docker context，之后 `docker`、Compose、buildx、`docker login` 照常用，amd64 镜像走 Rosetta。空闲 60 秒后 VM 睡眠，守护进程约 15MB，唤醒约 0.15 秒。附带本地域名 `http://*.kiri.local`（自带 CA 发 HTTPS）、一键 k8s 集群和 Linux 机器。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的「网页 / 代码生成与自动化」以及 CTF 复现环境。你现在跑 Python 脚本、无头 Chrome 核验、git-dumper 全在宿主机上；需要「起一个干净环境跑一次」时，容器是最小代价。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>你真正缺的不是更快，而是「可丢弃」。Windows 装 kiri 后，把 CTF 运行环境做成一个镜像：进去跑、跑完 `docker rm`，宿主机不留痕迹。下一步：写一个 `ctf-run` 脚本（输入目录只读挂载、输出目录可写、限时、可选断网），先拿本周的 sshole check.sh 当第一个被测对象，顺便验证「不可信脚本进容器」这条流程。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#B4532A">
+  <details class="d">
+    <summary aria-label="展开 voyager-so/vork 的详情">
+      <span class="chead">
+        <span class="ico">🌌</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/voyager-so/vork" target="_blank" rel="noopener" title="voyager-so/vork">voyager-so/vork</a></span></h3>
+          <span class="one">给 agent 用的无头 3D / VFX 渲染内核：场景写成代码，渲完让 agent 自己看图再改，没有编辑器。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Rust</span>
+        <span class="tag st">★ 1.0k</span>
+        <a class="tag" href="https://github.com/voyager-so/vork" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>装好后把一段话贴给 agent：「vork init my-shot，读 vork help，渲一张预览并检查图像，调好相机和灯再出终稿」。Rust + Slang 写，Vulkan / Metal 渲。适合「一百万只鸟各自转向」「黑洞弯光」「一颗发光种子放在真实桌面上照亮房间」这类用代码描述的场景，不需要视频模型；agent 甚至能在镜头中间写 shader。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上 3D 地图的渲染表现（大气、光照、后期）和心协宣传片的场景镜头。它和 sand3d 互补：sand3d 造几何，vork 管渲染与镜头。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的核心是闭环：写场景 → 渲图 → 看图 → 改代码，人不在环里。你的地图现在还是人调参数，可以让 agent 走同一环。下一步：给地图写一个 `shoot.py`——输入「目标视角的一句话描述」，输出「改完的相机参数 + 截图」，人只看最终图。注意它是 research preview，别写进生产依赖。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 Th0rgal/satmux 的详情">
+      <span class="chead">
+        <span class="ico">📡</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/Th0rgal/satmux" target="_blank" rel="noopener" title="Th0rgal/satmux">Th0rgal/satmux</a></span></h3>
+          <span class="one">纯 Python 标准库的 TCP 多路复用 + 1-RTT 中继，专治高延迟卫星 Wi-Fi（机上 620ms RTT）。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 807</span>
+        <a class="tag" href="https://github.com/Th0rgal/satmux" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>零依赖，起本地中继把 HTTP / TLS 流量导进去：warm BBR 多路复用 + 1-RTT 地面 TLS + zlib。作者在 Inmarsat GX 实测：6 个源并发从 19.13 秒（3 个失败）降到 5.35 秒（0 失败），TTFB 降 76%。它点出了真正的原因——机上 :443 中间盒会掐连接、DNS 被劫持，而**非 443 端口原样透传**。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与日常弱相关，但与「弱网下取数」这个具体场景强相关：GitHub API 在你这里经常超时，你已经用 DoH + 直连 IP 绕了一圈。satmux 是另一类解法——把多次往返压成一次。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不要套在 api.github.com 上（IP 直连已经够）。可借的是它的诊断顺序：先分清是带宽不够还是中间盒掐连接，再决定优化点。下一步：给取数脚本加一行自检——失败时记录是 TCP 超时、TLS 超时还是连接被重置，三者对应三种处置（换 IP / 换端口 / 降级 WebSearch）。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#96701B">
+  <details class="d">
+    <summary aria-label="展开 JosssphZhou/poki 的详情">
+      <span class="chead">
+        <span class="ico">📱</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/JosssphZhou/poki" target="_blank" rel="noopener" title="JosssphZhou/poki">JosssphZhou/poki</a></span></h3>
+          <span class="one">让 AI agent 像一个真人那样操作你的 iPhone：本地 MCP server，不越狱、不加硬件。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">JavaScript</span>
+        <span class="tag st">★ 569</span>
+        <a class="tag" href="https://github.com/JosssphZhou/poki" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>需要 macOS 15+、完整 Xcode、Rust、Node 24+、ffmpeg；`./bin/setup` 自检后 `npm start`，再把 MCP 注册给 Claude Code 或 Codex（有 arm64 预编译包，免 Rust）。Linux / Windows 有社区移植，非官方维护。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的 CTF 移动端方向，以及心协「用手机发通知 / 发群消息」这类琐事。但对主线工作是边缘项。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>边缘，收藏即可。值得记的是它的分发方式：README 第一句就是「把这句话贴给你的 agent，让它照 AGENTS.md 自己装，需要我操作时停下」。这是本周很明显的趋势——安装说明写给 agent 读，不是写给人读。下一步：把 paper-deep-reading 的安装段改写成「贴给 agent 的一段话」。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-bold" style="--accent:#96701B">
+  <details class="d">
+    <summary aria-label="展开 SAOS-3624/dsh-see-now 的详情">
+      <span class="chead">
+        <span class="ico">👁️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/SAOS-3624/dsh-see-now" target="_blank" rel="noopener" title="SAOS-3624/dsh-see-now">SAOS-3624/dsh-see-now</a></span></h3>
+          <span class="one">让 AI 实时看见你的屏幕，但只传「画面变了」的那几帧，多帧拼进一张图，静止画面几乎不花 token。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">JavaScript</span>
+        <span class="tag st">★ 484</span>
+        <a class="tag" href="https://github.com/SAOS-3624/dsh-see-now" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>装成 DSH 插件。每帧先算 0–255 的「变化分」（HSV 三通道加权差，64×36 网格，约 0.2ms），只有「画面突然换了一张」或「一直在动、攒够量」才留下；留下的几帧按真实像素位置拼进同一张图，把单图固定成本摊到 4–8 帧。低档画布 798×462 约 222 token。同一段 30 秒操作，别人烧 30 张图，它常 2–3 张。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上「agent 操作网页 / 做浏览器测试」，对你现在的截图核验流程也有直接借鉴：你是「渲染 → 整页截图 → 自己看」，一次性成本可接受；一旦要连续观察（调 3D 相机、看动画、跟踪表单状态），token 立刻失控。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>抄它的判断顺序：先判断这一帧值不值得看，再决定传不传。下一步：给 3D 地图的调试脚本加「两次截图差分校验」——只把变化区域裁出来给模型，而不是整页重看。注意它绑 DSH，不能直接接到 WorkBuddy 上，思路可以移植。</p></div>
+    </div></div></div>
+  </details>
+</article></div>
+</section><section id="s-sec" style="--c:#B3243C">
+  <div class="sh"><h2>网络安全</h2><span class="cnt">8 项</span></div>
+  <p class="ssub">攻防、漏洞研究、取证、安全运营与「给 AI 代码设闸」</p>
+  <div class="grid"><article class="card v-tape" style="--accent:#327A1B">
+  <details class="d">
+    <summary aria-label="展开 oz9un/sshole 的详情">
+      <span class="chead">
+        <span class="ico">🐚</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/oz9un/sshole" target="_blank" rel="noopener" title="oz9un/sshole">oz9un/sshole</a></span></h3>
+          <span class="one">OpenSSH 在 musl 上从 2016 年起就接受任意 256 字符以上的密码，登录任何密码字段为 `*` 的账号——包括 root。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Shell</span>
+        <span class="tag st">★ 231</span>
+        <a class="tag" href="https://github.com/oz9un/sshole" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`curl -sO .../check.sh &amp;&amp; sudo sh check.sh`，输出逐条告诉你五个条件里哪条不满足，并打印暴露的账号名。仓库还有 docker 复现环境和补丁。2026-11-05 在 OpenSSH 10.6p2 修复，Alpine 包已发。暴露必须同时成立：musl + sshd 不带 pam + `PasswordAuthentication yes`（默认）+ 至少一个账号密码字段恰为 `*`（Alpine 云镜像的 root 就是）。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你在打的 CTF 与内网渗透。容器靶机大量用 Alpine，「密码字段是 `*`」在锁定的系统账号上极常见——这种「看着像被锁死、其实能登」的点，正是最容易漏的入口。补一句：`openssh-server-pam` + `UsePAM yes` 是安全的。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>把这条做成 checklist 而不是知识点：打点阶段先看 `/etc/shadow` 里有没有 `*`、`sshd_config` 有没有 `UsePAM`。下一步：在 D 盘网安库新增一页「OpenSSH 配置类漏洞速查」，三行判据 + 修复版本记在一处；顺手把 check.sh 放进 kiri 容器里跑一遍，验证「不可信脚本进容器」的流程。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#2867A8">
+  <details class="d">
+    <summary aria-label="展开 yorkeccak/globalhackmap 的详情">
+      <span class="chead">
+        <span class="ico">🌍</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/yorkeccak/globalhackmap" target="_blank" rel="noopener" title="yorkeccak/globalhackmap">yorkeccak/globalhackmap</a></span></h3>
+          <span class="one">把每一起公开披露的入侵、勒索声明、在野利用漏洞、恶意包和断网事件摆到一个地球上，每条都带来源和「诚实的状态」。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">TypeScript</span>
+        <span class="tag st">★ 129</span>
+        <a class="tag" href="https://github.com/yorkeccak/globalhackmap" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>在线看（globalhackmap.vercel.app）。四块：地球（落点按报道里的城市 / 总部 / 国家，**绝不比来源更精确**）、新 CVE（近 72 小时 critical + CISA 本周确认在野利用的）、Patch now（按产品一张卡，说清会发生什么、谁受影响、怎么修）、Am I affected（选你在用的产品，看有哪些正在被打）。给 agent 留了只读 MCP server、`llms.txt` 和纯文本修复 runbook。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的网安知识库与 CTF 赛前情报。你现在信息源是零散的（公众号、X、CVE 列表）；它把「漏洞 + 在野利用 + 修复动作」绑在一条时间线上，还能让 agent 直接读。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>最值得抄的是那句「绝不比来源更精确」——情报产品的基本诚实。你的简报也该这么标：星数来自 API、功能描述来自 README、我的判断单独标。下一步：读一下它的 MCP 接口，看能不能挂成只读连接器，让周报网安板块直接引用 CVE ticker，而不是我手动挑。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#6D4FD0">
+  <details class="d">
+    <summary aria-label="展开 zack0x01/burp-sectivai 的详情">
+      <span class="chead">
+        <span class="ico">🛡️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/zack0x01/burp-sectivai" target="_blank" rel="noopener" title="zack0x01/burp-sectivai">zack0x01/burp-sectivai</a></span></h3>
+          <span class="one">Burp Suite 里的 skill 驱动 AI 审计：选一段抓到的流量 + 一个审查目标（IDOR / XSS / SQLi / SSRF），出一张带严重度、复现步骤和 PoC 的看板。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Kotlin</span>
+        <span class="tag st">★ 98</span>
+        <a class="tag" href="https://github.com/zack0x01/burp-sectivai" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>下 `sectiv-1.0.0.jar`，Burp → Extensions → Add → 选 Java → 加载，Settings 里填 provider（DeepSeek / OpenAI / Claude / GLM / z.ai / OpenRouter / Ollama 都行）。流程：Scope 从 proxy history 或 site map 选要审的请求（自动去重、剔静态资源）→ 选 skill → 跑 → 在 Critical/High/Medium/Low 看板里标记三态，导出 HTML / Markdown / JSON。支持双账号做 BAC / IDOR 推理；cookie、token、JWT 发出去前会打码。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你的 Web 方向 CTF 与「git 源码泄露之后」的进一步利用。你已经能拿到源码，缺的是「把流量批量跑一遍看哪里漏」——这个正好补在 Burp 里，且能自己写 skill。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的取舍值得抄：不追求全自动打点，而是「给定范围与目标，出结构化发现」。你的 WP 现在靠事后回忆写，可以改成「每轮扫完导出 JSON，最后和 WP 一起归档」。下一步：拿一道已知漏洞的靶场跑一遍，看复现步骤能不能直接执行。注意：比赛流量别外发给第三方模型，本地 Ollama 更稳。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-bold" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 knot07/AegisOps 的详情">
+      <span class="chead">
+        <span class="ico">🗂️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/knot07/AegisOps" target="_blank" rel="noopener" title="knot07/AegisOps">knot07/AegisOps</a></span></h3>
+          <span class="one">御枢：AI 安全运营工作台，把告警研判、漏洞运营、应急响应三个工作空间塞进一套界面。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 97</span>
+        <a class="tag" href="https://github.com/knot07/AegisOps" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>Windows 直接解压双击 `start.cmd`（自带 Python / Node / Git 运行环境），Linux 用 install.sh 或 docker compose。首次登录自己设管理员账号（没有默认口令），模型 key、设备凭据、业务记录都要自己配。链路：设备接入与日志 → 告警研判 → 人工确认 → 应急响应与证据 → 转漏洞库 → 分派整改与复测。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与你的个人工作弱相关（这是给安全运营团队的），但和你想练的「渗透之后的处置与取证」有交集：三个工作空间的划分，正好是一份处置流程的骨架。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不装（Python + Node + 前端全家桶，个人用不值）。可抄的是它的证据链结构：每步留记录、人工确认才推进。下一步：把 CTF WP 的写法改成同一结构——现象、证据（命令 + 输出）、判断、处置、复核，五段固定，写起来反而快。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#B3243C">
+  <details class="d">
+    <summary aria-label="展开 BountyForge-xyz/pwn-skill 的详情">
+      <span class="chead">
+        <span class="ico">🎯</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/BountyForge-xyz/pwn-skill" target="_blank" rel="noopener" title="BountyForge-xyz/pwn-skill">BountyForge-xyz/pwn-skill</a></span></h3>
+          <span class="one">给 agent 的单文件 pwn skill：先指纹、再找 primitive、一路爬到代码执行，交付能跑的 exp 而不是一篇讲解。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">—</span>
+        <span class="tag st">★ 51</span>
+        <a class="tag" href="https://github.com/BountyForge-xyz/pwn-skill" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>按 agentskills.io 规范放进 skills 目录。内部是一条 primitive 阶梯：crash → RIP → leak → 任意写 → exec → 逃逸；覆盖栈（ret2libc / ret2csu / SROP / ret2dlresolve / pivot）、格式化字符串、堆（tcache 投毒、safe-linking、UAF、off-by-one、House 系列、FSOP）、seccomp（execve 被封时用 ORW / sendfile）、内核（modprobe_path、commit_creds、SMEP / SMAP / KPTI / KASLR 绕过）。开跑先 `checksec`、`readelf`、判 libc。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你的 CTF（PWN 方向）。你的流程是「人读保护 → 选套路」，它把这套判断写成了 checklist，并且强制「只写实测偏移、交付 exp.py」。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的「refusal engineering」（用上下文规则把 agent 摁在任务上）值得搬到 Web 方向：明确写出允许做什么、禁止做什么、什么情况停下来问人，比一句「帮我打这个靶」有效得多。下一步：照这个结构写一份 web-ctf skill（信息收集 → 入口判断 → 利用 → 提权 → 留证），先拿 git 源码泄露那道题做回归。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#1F5FA8">
+  <details class="d">
+    <summary aria-label="展开 whykusanagi/nikke_malware 的详情">
+      <span class="chead">
+        <span class="ico">🦠</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/whykusanagi/nikke_malware" target="_blank" rel="noopener" title="whykusanagi/nikke_malware">whykusanagi/nikke_malware</a></span></h3>
+          <span class="one">《NIKKE》PC 启动器被投毒事件的检测与清除套件：9-27 起 CDN 上的文件被改，10 月下旬开始下发 InsightJS 窃密木马。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">PowerShell</span>
+        <span class="tag st">★ 40</span>
+        <a class="tag" href="https://github.com/whykusanagi/nikke_malware" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>下 kit 的 zip 解压看 START-HERE.txt（不需要 GitHub 账号）。脚本默认只读，要清理必须显式加 flag。它查三样：注入的 agent 进程、Chrome 里的恶意 DLL、注册表劫持，附 YARA / Sigma 规则和 IOC。作者 11-08 的状态是「已控制未解决」：篡改文件没了、攻击者域名被暂停，但启动器本身仍有安全缺陷，已私报厂商和 CERT。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你网安库里的「恶意样本处置」栏，也给「客户端 / CDN 供应链投毒」一个完整案例：CDN 被改 → 长尾下发 → 偷钱包和密码 → 多支队伍各自出清理工具（本周同题至少四个仓库）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>该记的是时间线与处置边界：什么时候断网、什么时候改密码、「已控制」为什么不等于「已解决」。下一步：写成知识库一页（事件时间线、IOC、检测三件套、清理顺序），并把「装客户端前先扫」固化成硬习惯。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#0E7E96">
+  <details class="d">
+    <summary aria-label="展开 tharun208/cloneguard 的详情">
+      <span class="chead">
+        <span class="ico">🔍</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/tharun208/cloneguard" target="_blank" rel="noopener" title="tharun208/cloneguard">tharun208/cloneguard</a></span></h3>
+          <span class="one">跑之前先扫一遍仓库：抓窃取凭据、隐藏外连、混淆代码和自动执行钩子；只读，绝不执行被扫的东西。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Go</span>
+        <span class="tag st">★ 27</span>
+        <a class="tag" href="https://github.com/tharun208/cloneguard" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`go build -o cloneguard ./cmd/cloneguard`（Go 1.24+，零第三方依赖）。用法：`cloneguard clone &lt;url&gt;` 克隆完立刻扫、`cloneguard scan ./dir`、`cloneguard scan --json ./dir`。它专治「假招聘发的 take-home 项目」：你一 `npm install` 或一打开文件夹，install hook / editor task 就把 SSH 私钥、云凭据、浏览器密码往外传。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你「装别人的东西」这件事，且与本周的 vibe-shield 组成一对：一个扫别人写的恶意代码，一个扫 AI 写的危险代码。上周你的记录里就有「网安补检发现大量投毒仓库」——那些正是它要抓的东西。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>固化成硬闸门：任何 `git clone` 之后、`npm install` 之前先跑一次。下一步：写一个 5 行 `preclone` 脚本（clone → scan → 有 critical 就停在只读目录），加进 CTF 起手流程；顺手拿本周那批 244 星的「安装包」仓库做样本，看它抓不抓得住。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-bold" style="--accent:#2867A8">
+  <details class="d">
+    <summary aria-label="展开 avivgerz-hue/vibe-shield 的详情">
+      <span class="chead">
+        <span class="ico">🧿</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/avivgerz-hue/vibe-shield" target="_blank" rel="noopener" title="avivgerz-hue/vibe-shield">avivgerz-hue/vibe-shield</a></span></h3>
+          <span class="one">给「AI 写的代码」设一道静态安全闸：60 条规则，外加 MCP server 和 skill 投毒审计。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">TypeScript</span>
+        <span class="tag st">★ 13</span>
+        <a class="tag" href="https://github.com/avivgerz-hue/vibe-shield" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`npx -y @vibefoundry/vibe-shield scan`。典型场景：agent 写了一个 DELETE 路由，没鉴权、SQL 拼接、还能让调用方指定删谁的数据——17ms 全抓出来。也能当 skill 让 Claude Code / Codex / Cursor 在说「完成了」之前先自查。它甚至扫描自己（工程里带一条「我这个仓库也要过规则」的 CI）。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你所有「agent 生成网页 / 脚本」的场景（心协报名页、地图前端、报告生成器）。你自己的东西也要过闸：那几个 Python 脚本会从 git credential 里读出 GitHub token，一旦被写进 HTML 就是事故。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的规则集是「AI 生成代码的失败模式」，比通用 SAST 更贴你的场景；但星数只有 13、项目很新，别当唯一防线。下一步：对 dist/ 下四个 Python 脚本和三份 HTML 跑一遍，重点看「密钥写进前端」「无鉴权的写接口」两类，把结果记进本周观察的下一期。</p></div>
+    </div></div></div>
+  </details>
+</article></div>
+</section><section id="s-agent" style="--c:#1E7BC4">
+  <div class="sh"><h2>Agent</h2><span class="cnt">9 项</span></div>
+  <p class="ssub">harness、隔离执行、协作方法、故障复盘与记忆层</p>
+  <div class="grid"><article class="card v-soft" style="--accent:#0E7E96">
+  <details class="d">
+    <summary aria-label="展开 devvmhq/devvm 的详情">
+      <span class="chead">
+        <span class="ico">🧰</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/devvmhq/devvm" target="_blank" rel="noopener" title="devvmhq/devvm">devvmhq/devvm</a></span></h3>
+          <span class="one">一个项目一台 VM：装好工具链的隔离沙箱，你或编码 agent 都能直接在里头干活。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Go</span>
+        <span class="tag st">★ 390</span>
+        <a class="tag" href="https://github.com/devvmhq/devvm" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>macOS `brew install devvmhq/tap/devvm`（连带装 Lima），Linux 用 install.sh；先 `devvm doctor` 自检缺什么。release 用 minisign 签名，README 里教你怎么在跑 install.sh 之前验签——这个细节值得注意。底层是 Lima 虚拟机，一项目一机，工具链预置。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与本周的 sandbox-mcp、ovnfs 是同一主题：agent 需要一个「可以随便弄坏」的地方。对上你的论文流水线（conda / 依赖互相打架）和 CTF（不可信 exp）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>Windows 上不装（Lima / QEMU 不是最优解）。可借的是「一项目一环境 + doctor 自检」两个习惯：你的 Python 脚本全用 `C:/Python314/python.exe` 绝对路径硬跑，依赖一变就静默出错。下一步：给 paper-deep-reading 建一份最低依赖清单（只列真正用到的包与版本），每次跑前打印版本，不符就停。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-bold" style="--accent:#96701B">
+  <details class="d">
+    <summary aria-label="展开 shanselman/sandbox-mcp 的详情">
+      <span class="chead">
+        <span class="ico">🪟</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/shanselman/sandbox-mcp" target="_blank" rel="noopener" title="shanselman/sandbox-mcp">shanselman/sandbox-mcp</a></span></h3>
+          <span class="one">给 agent 一台全新的 Windows 11 机器：开机、部署、点控件、抓崩溃、留证据，然后销毁整台机器。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">JavaScript</span>
+        <span class="tag st">★ 306</span>
+        <a class="tag" href="https://github.com/shanselman/sandbox-mcp" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>直接 `sbx` 用 CLI，或挂 MCP adapter 让客户端调工具并回传截图；两个接口同一个引擎。底层是 Windows Sandbox——真虚拟机，不是容器假装 Windows，可断网。一个 GUI 样例端到端约 40–50 秒。README 也给了「把这段话贴给 agent 让它自己装」的入口。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你的 Windows 环境与「网页 / 桌面自动化」需求：你经常要在本机跑无头 Chrome 核验 HTML，但「装个东西试试」时不敢在本机做。它也补上了 terminal-mac 在 Windows 侧的空位。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的价值是「每次都是干净机器」——正好治「测一次能用、下次环境变了就不行」。下一步：把心协报名页的验收搬进去——sandbox 里开 Edge 打开页面、走一遍报名、截图存档，测完销毁，本地只留证据图。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 Open-RUA/uni-robot-agent 的详情">
+      <span class="chead">
+        <span class="ico">🤖</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/Open-RUA/uni-robot-agent" target="_blank" rel="noopener" title="Open-RUA/uni-robot-agent">Open-RUA/uni-robot-agent</a></span></h3>
+          <span class="one">跨环境的 robot-use agent harness：一套 Python 包，能跑内置 agent、也能从你自己的策略里调机器人工具，还能回放 episode。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 286</span>
+        <a class="tag" href="https://github.com/Open-RUA/uni-robot-agent" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip` / `uv` 装，带 Codex 与 Claude Code 两种 runtime；Direct 模式直接用机器人工具，Hybrid 模式再叠一个动作模型（如 Pi0.5）。带 dashboard、prompts 和 skills。新出的 Code as Policy 用代码控制机器人（`--interaction-mode code_as_policy`）；另有 OpenCode / Gemini CLI 的适配器。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与你的日常无关（要机械臂或仿真环境）。但它和本周的 3D 话题是一个方向的另一头：都在把「动作」变成可执行、可回放的代码。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不装。可看的是它的 episode 回放：一次执行存成可重放的轨迹，出问题能倒回去看哪一步错了。你的自动化失败只有一个日志。下一步：给周报 automation 加留痕——取数 / 筛选 / 生成 / 上传每步写一行 JSON（时间、结果、关键数字），失败时能看出断在哪。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#0E7E96">
+  <details class="d">
+    <summary aria-label="展开 Balanov/uncut 的详情">
+      <span class="chead">
+        <span class="ico">✂️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/Balanov/uncut" target="_blank" rel="noopener" title="Balanov/uncut">Balanov/uncut</a></span></h3>
+          <span class="one">无损、无头的编码 agent harness：一个 7MB 静态二进制、四个工具、纯 stdin / stdout，不截断上下文。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Go</span>
+        <span class="tag st">★ 257</span>
+        <a class="tag" href="https://github.com/Balanov/uncut" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>下 release 直接跑，接口是 OpenAI 兼容的 Chat Completions（本地模型也能接，`--json` 出 NDJSON 事件）。设计上明确没有 TUI、遥测、插件、后台 agent、自动重试和上下文压缩；每次调用都把整段对话发过去，文件内容和命令输出从不截断；如果 provider 因输出上限截断，它直接报错退出，而不是把半个答案当成功。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你「在脚本 / CI 里调 agent」的需求——比如周报取数之后「写解读」这一步。你现在是人坐在 WorkBuddy 里推进，这类「管道里的一环」更该是无头形态。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它该被抄成一句原则：宁可比对失败，也不要把半个答案当成功。你的生成脚本已有 `validate()` 缺字段就退出码 2，是同一种态度。下一步：把这条推到上传环节——Pages build 成功不等于页面正确，加一次 DOM 断言（卡片数 = 项目数）再算完成。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 drost-ai/tinker-ai-skill 的详情">
+      <span class="chead">
+        <span class="ico">🎓</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/drost-ai/tinker-ai-skill" target="_blank" rel="noopener" title="drost-ai/tinker-ai-skill">drost-ai/tinker-ai-skill</a></span></h3>
+          <span class="one">把你自己的编码 agent 会话变成可本地运行的微调模型：session 转数据集 → 在 Tinker 上训 LoRA → 合并 → 导出 GGUF。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 222</span>
+        <a class="tag" href="https://github.com/drost-ai/tinker-ai-skill" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>装成 skill 后说「用我最近三个月的 Claude Code 会话微调 Qwen3.6-35B-A3B」，agent 走完整流水线，并在任何花钱的步骤前停下。作者用同一套方法做出了 Tess-4 / 4.5 并开源权重——方法本身是验证过的，不是设想。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与你的「论文深度阅读」和「CTF WP 写作」高度契合：这两件事你都有大量历史会话，且风格强个人化。理论上可以让模型学会「你的三栏报告怎么批注」「你的 WP 怎么写」。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>现实门槛高（要 GPU 或 Tinker 额度、会话得能导出）。短期先做前半段：把会话导出成语料，即使不训练，也能提炼「我的写作偏好」。下一步：导出 20 篇论文报告的批注文本，统计高频句式与禁用词（比如「值得停留的是」这类赏析腔），写成 style-rules.md 直接喂给生成脚本——这一步今天就能做，不需要 GPU。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#1E7BC4">
+  <details class="d">
+    <summary aria-label="展开 dabingfy-dot/solo-to-team-skills 的详情">
+      <span class="chead">
+        <span class="ico">👥</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/dabingfy-dot/solo-to-team-skills" target="_blank" rel="noopener" title="dabingfy-dot/solo-to-team-skills">dabingfy-dot/solo-to-team-skills</a></span></h3>
+          <span class="one">一个人统筹 AI 团队的协作技能包：派活、收成果、核证据、经验复用——四支技能 + 一个模板 + 脱敏案例。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">—</span>
+        <span class="tag st">★ 213</span>
+        <a class="tag" href="https://github.com/dabingfy-dot/solo-to-team-skills" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>按各家真实配置装。仓库明确列了支持的宿主：**WorkBuddy**、Codex、DeepSeek Harness、Cursor、CodeBuddy、Kimi Work、千问办公；Grok Bot 需手动配；Claude Code 结构已备但未走通。核心是一条线：派 → 收 → 核 → 判。每件活派出去前登记一行「待收」（谁在干、谁来收、谁到点查），收回记「已收到成果 + 结果在哪」，核过证据记「已验收」才算完。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上你和我的协作方式：你现在是「一个人 + 一个 agent + 一堆 automation」，最缺的正是「派出去的活有没有人收」。它甚至把你正在用的 WorkBuddy 列进了支持列表——这本身是个信号。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>只抄「登记行」这一个动作就够：一张表三列（待收 / 已收到 / 已验收）+ 一行「证据在哪」。下一步：在 .workbuddy/memory 下加一个 dispatch.md，把每次派给 automation 或子 agent 的活登记一行；本周周报就先登记——谁做、证据是哪个 commit hash。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 dreamers-laboratory/good-door 的详情">
+      <span class="chead">
+        <span class="ico">🔑</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/dreamers-laboratory/good-door" target="_blank" rel="noopener" title="dreamers-laboratory/good-door">dreamers-laboratory/good-door</a></span></h3>
+          <span class="one">给人也给 agent 用的密钥管理 CLI：凭据加密存起来，每台机器的密钥放进系统钥匙串或芯片，agent 用的凭据它自己「看不见」。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 210</span>
+        <a class="tag" href="https://github.com/dreamers-laboratory/good-door" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>要 Python 3.9+ 和 age 1.2+；clone 后把 `bin/elbab` 装进 PATH（Windows 放 `bin\elbab` 和 `bin\elbab.cmd`），`elbab init --recovery ~/elbab-recovery.txt` 生成恢复文件并离线保存。作者的原话最值得记：攻击者很少破加密，他们读你留在明文里的东西——`~/.aws/credentials`、无密码的 SSH key、旧备份里的 `.env`、**agent 对话记录里的 token**。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>正对你的实际情况：你把 GitHub token 从 `git credential fill` 读出来用在脚本里，这些脚本和输出都留在磁盘上。哪次把 token 打进 HTML 或日志，就是实打实的泄露。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不必整套上，先做最小隔离：token 不落盘、不进日志、不进 HTML。下一步：检查本周这套脚本——`gh_http.py` 的 `load_token()` 每次现取是对的；再补两条：① 任何输出里出现 `gho_` / `ghp_` 前缀就中断；② 上传前先 grep 一遍 HTML 里的密钥模式。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 gogoymh/auto-ontology-mcp 的详情">
+      <span class="chead">
+        <span class="ico">🧠</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/gogoymh/auto-ontology-mcp" target="_blank" rel="noopener" title="gogoymh/auto-ontology-mcp">gogoymh/auto-ontology-mcp</a></span></h3>
+          <span class="one">把 NVIDIA Auto Ontology 的语义层做成 MCP server：既能对着数据库问问题，也能当个人知识库——原文留在 Obsidian，事实进可查的表。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 186</span>
+        <a class="tag" href="https://github.com/gogoymh/auto-ontology-mcp" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>接进任意 MCP 客户端（Claude / ChatGPT / Cursor / Codex），不需要模型 API key。两种用法：① 指向数据库，模型建业务术语、审 join、回答问题并用 SQL 校验；② 把回执、对账单、论文、书摘、截图丢给它，它把事实存成记录、想法连成概念、值得回找的段落进全文索引，并记下每条来自哪。它明确说「原文还在你的 Obsidian vault 里」。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>这是本周和你最贴的一个：你有两个 Obsidian 库，论文报告、CTF WP 都在里头，但检索靠双链和记忆。它给的正是「原文不动、事实变可查」的中间层，还顺手把 Obsidian 当原件仓库。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>注意它的取向是「把 markdown 换成有类型的表」，会和你「根目录平铺 + 双链」的习惯冲突——别全量导入。下一步：只对 D 盘网安库的 CVE / 漏洞类笔记做试点（这些天生是结构化事实），把「漏洞名、影响版本、前置条件、修复版本、验证命令」抽成记录，然后试着问它「哪些笔记里的漏洞在 10.6p2 之后才修」。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 TngSHoO/agentcase-lab 的详情">
+      <span class="chead">
+        <span class="ico">🔬</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/TngSHoO/agentcase-lab" target="_blank" rel="noopener" title="TngSHoO/agentcase-lab">TngSHoO/agentcase-lab</a></span></h3>
+          <span class="one">Agent 故障复盘与根因分析平台：把一次运行拆成可回放的轨迹，定位是提示词、检索、工具调用、上下文、记忆、权限还是幻觉的问题。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 183</span>
+        <a class="tag" href="https://github.com/TngSHoO/agentcase-lab" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip install -r requirements.txt &amp;&amp; streamlit run app.py`，开 8501，首次启动自动建 SQLite 并写 30 条演示案例。五个页面：数据看板（成功率 / 修复率 / 根因分布 / 延迟 / 成本）、故障案例（按场景 / 状态 / 根因筛）、轨迹回放（输入 → 计划 → 工具 → 记忆 → 模型 → 结果）、根因分析（规则模式 + 可选 OpenAI 兼容模型）、版本对比（改前改后）。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的 automation 与 skill 迭代：你改一个 prompt 或加一道核验，到底有没有变好，现在只能凭感觉。它给的是「改前后跑同一批案例、比成功率 / 延迟 / token」。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它是作品集 MVP（内置数据是模拟的），别当生产工具。可抄的是根因分类：把失败归到七类之一，比「又失败了」有用得多。下一步：给 paper-deep-reading 的 assemble.py 校验失败做归类（锚点悬空 / 段数不符 / 译文缺段 / 术语零命中），三次之后你会看到哪类占多数。</p></div>
+    </div></div></div>
+  </details>
+</article></div>
+</section><section id="s-ai" style="--c:#0F8060">
+  <div class="sh"><h2>AI</h2><span class="cnt">10 项</span></div>
+  <p class="ssub">模型、推理引擎、检索与评测、3D 与世界模型</p>
+  <div class="grid"><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 jwang771/3d-world-simulator 的详情">
+      <span class="chead">
+        <span class="ico">🧪</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/jwang771/3d-world-simulator" target="_blank" rel="noopener" title="jwang771/3d-world-simulator">jwang771/3d-world-simulator</a></span></h3>
+          <span class="one">混合粒子-体素动力学的多模态 3D 世界模拟器（Columbia / Berkeley 等），从视频 + 动作里学可交互的 3D 动力学。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 252</span>
+        <a class="tag" href="https://github.com/jwang771/3d-world-simulator" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>conda 环境现成（environment.yml），数据按 `data/&lt;task&gt;/{train,val}` 放，三步训练：粒子-体素自编码器（`scripts/train_vae.py --task plug`）→ 动力学模型 → 下游。任务集有 cloth / box / pusht / plug。作者说数据、权重和推理代码「即将上传」。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与 3D 地图弱相关（地图是静态场景，不需要物理仿真），与「论文深度阅读」强相关——这是一篇典型的「表示 + 三阶段训练」论文，适合当 paper-deep-reading 的练手对象。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>现在跑不了（权重没放）。可用的是它的结构：把复杂方法拆成「表示 → 动力学 → 应用」三段，每段一个可跑入口。你的批注也能按这个粒度切：这个方法在表示什么、怎么演进、用在哪。下一步：等权重放出，用这篇跑一遍三栏报告，检验 PRIMER 板块能不能把「粒子-体素」讲到零基础能懂。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 ubc-vision/solv3r 的详情">
+      <span class="chead">
+        <span class="ico">📷</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/ubc-vision/solv3r" target="_blank" rel="noopener" title="ubc-vision/solv3r">ubc-vision/solv3r</a></span></h3>
+          <span class="one">Solv3R：把 3D 循环 Transformer 当多视图求解器，做相机位姿与三维重建（UBC / Wayve / Sony）。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 210</span>
+        <a class="tag" href="https://github.com/ubc-vision/solv3r" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip install -e .`（Python 3.11），权重在 Hugging Face（`Solv3R.from_pretrained()` 首次自动下）。覆盖三个评测：离线基准、流式、基于地图的重定位。arXiv 2611.02857，代码与权重 11-05 同步放出。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上 3D 地图的「真实建筑重建」环节——若你要把实拍照片变成校区模型，这类多视图求解是底层能力（本周同族还有 InstantHMR 做人体的）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>这类研究仓库的落点是「离线跑一遍看效果」，不是产品。你的地图现在用腾讯 LBS 瓦片 + 自建体块；若要「实景重建一栋楼」，路径是手机拍一圈 → 多视图重建 → 减面 → three.js。下一步：先不动代码，拿东陆校区一栋楼拍 30 张照片，用任意开源 SfM 跑一次，看质量够不够——不够就别谈接模型。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 zaxiu88888/issue-rag 的详情">
+      <span class="chead">
+        <span class="ico">📊</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/zaxiu88888/issue-rag" target="_blank" rel="noopener" title="zaxiu88888/issue-rag">zaxiu88888/issue-rag</a></span></h3>
+          <span class="one">一个「会给自己打分」的 RAG：在真实项目 issue 上做问答，重点是把评测做扎实，并且审计自己的评分器。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 141</span>
+        <a class="tag" href="https://github.com/zaxiu88888/issue-rag" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>在 `vitejs/vite` 的 5473 篇 issue 上，用 95 条人工复核问题测：闭卷 8.4% → 检索 64.2% 正确率（加权 0.221 → 0.700）。四种检索配置之间**无法区分**（换个判分器排序就翻转，最大差距 0.03，落在判分器自身噪声里）。判分器被审计四个轴：换模型、同模型跑两遍、换 rubric、30 条人工盲评（一致率 70%，二次加权 κ=0.816）。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>这是本周最该学的「评测态度」，直接对上 paper-deep-reading：你也有一堆「看起来更好」的改动（引导线、跟随滚动、术语悬停），但没有评测集，改完只能靠感觉。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>抄三个动作：① 建一个小而人工复核的评测集（20 条就够）；② 报区间而不是最好成绩；③ 审计自己的检查器（你的 DOM 断言到底抓不抓得住回归）。两个反直觉结论尤其值：检索会把编造率从 1.1% 抬到 20%，检索质量最好的配置答案不一定最好。下一步：给三栏报告建 10 条回归用例（锚点数、术语命中、译文段数、引导线条数），每次改模板前后都跑。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-paper" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 liangjianshu/multimodal-image-retrieval 的详情">
+      <span class="chead">
+        <span class="ico">🖼️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/liangjianshu/multimodal-image-retrieval" target="_blank" rel="noopener" title="liangjianshu/multimodal-image-retrieval">liangjianshu/multimodal-image-retrieval</a></span></h3>
+          <span class="one">多模态检索实战教程：意图识别 + Prompt 工程 + Qwen LoRA + EmbeddingGemma 2 + 多正样本 InfoNCE，带真实演示与可复核的训练评测。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 126</span>
+        <a class="tag" href="https://github.com/liangjianshu/multimodal-image-retrieval" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>有零模型依赖的快速开始（12 张示例图），要跑真模型另看文档；`docs/CUSTOM_DATA.md` 讲怎么换成自己的图库，`docs/TRAINING.md` 讲 Qwen SFT / LoRA 与对比学习。它主张「先看结果、再换数据、最后训练」，并有系统学习路线。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上心协的物料管理（历次海报 / 长图 / 活动照片）：你要找「上次那种暖色调的招新图」，现在只能翻文件夹。图库检索正好补这个洞。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不必训模型，先建索引。下一步：把心协近两年的海报与长图（几十张）用开源 CLIP 类模型编码，做一个「以文搜图」的本地小工具；先手工标 10 组「这句话该搜出这几张」当验收标准，别一上来就调参。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 Video-Rebirth/hyperflow-h3-flash 的详情">
+      <span class="chead">
+        <span class="ico">🎥</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/Video-Rebirth/hyperflow-h3-flash" target="_blank" rel="noopener" title="Video-Rebirth/hyperflow-h3-flash">Video-Rebirth/hyperflow-h3-flash</a></span></h3>
+          <span class="one">MiniMax-H3 的蒸馏少步版（13.7B）：4 / 6 / 8 步出 5.2–15 秒 24fps 视频，带 32kHz 立体声，有 INT8 和 GGUF。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 125</span>
+        <a class="tag" href="https://github.com/Video-Rebirth/hyperflow-h3-flash" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>权重在 HF，有 ComfyUI 节点和 GGUF 部署指南。速度参考：5.2 秒片段 6 步，1×H200 约 36 秒，1×RTX 5090 约 92 秒，4×B200 可实时。参数量不到原版 31B 的一半，且不需要 CFG。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上心协宣传片与活动预告。你现在的视频要么手剪、要么靠视频模型抽卡；少步蒸馏 + 音画同步的意义是「能反复改、成本可控」。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>你的机器跑不动（要 H200 / 5090 级别）。可用的是它的位置：当「终稿渲染」之前的**分镜占位**——先用便宜的图或动画定节奏，只对通过的分镜跑一次高质量生成。下一步：给「暮光里的云大」做一版 30 秒分镜表（8 个镜头，每个写明主体 / 运镜 / 时长），先不生成视频。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#B4532A">
+  <details class="d">
+    <summary aria-label="展开 GGZ14/saber-engine 的详情">
+      <span class="chead">
+        <span class="ico">⚙️</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/GGZ14/saber-engine" target="_blank" rel="noopener" title="GGZ14/saber-engine">GGZ14/saber-engine</a></span></h3>
+          <span class="one">Rust 写的推理引擎，专攻 AMD R9700（gfx1201 / RDNA4）：Qwen3.8-27B 双卡 TP=2 约 229 tok/s 解码。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Rust</span>
+        <span class="tag st">★ 53</span>
+        <a class="tag" href="https://github.com/GGZ14/saber-engine" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>要 ROCm 内核驱动 + podman / docker，权重用预打包 pack（27B 约 26GB，Flash-Next 约 70GB）。服务端说 OpenAI API，带 prefix caching、262k 上下文、可选视觉；单卡 TP=1 也能跑。内核以 HIP code object + manifest 发布，宿主掌控每次 launch。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>与你的日常无关（没有 R 系列卡）。但它代表的方向值得记：非 NVIDIA 卡上的推理正在被逐个填坑（本周同族还有 Apple Silicon 的 inferd）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>不碰。可借的是一条选型判断：先看「有没有针对你的卡写的 kernel」，再看模型大小和参数。下一步：如果将来要本地跑模型，先确认卡型对应的引擎成熟度，再谈量化与上下文——顺序反了会白折腾。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 fieldpincocknxxc/prompt-poet 的详情">
+      <span class="chead">
+        <span class="ico">🧾</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/fieldpincocknxxc/prompt-poet" target="_blank" rel="noopener" title="fieldpincocknxxc/prompt-poet">fieldpincocknxxc/prompt-poet</a></span></h3>
+          <span class="one">低代码提示词模板：YAML + Jinja2 描述消息序列，带 token 计数和「缓存友好」的截断。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 50</span>
+        <a class="tag" href="https://github.com/fieldpincocknxxc/prompt-poet" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip install prompt-poet`，用 YAML 写若干条（name / role / content），传模板数据渲染。核心能力是 token 记账与 truncation 策略：知道该截哪段、截多少，而不是简单切字符串。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你所有的提示词工程环节：三栏报告的批注口径、周报的四段分析、讲稿的结构，现在都写在 prompt 字符串里硬拼。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>直接可用的是 cache-aware 截断：你的批注流水线一次要喂论文全文，超出窗口就丢中段，断在哪没人管。下一步：把批注 prompt 拆成「固定口径（前置、可缓存）+ 论文片段（可变）」两段，固定段吃前缀缓存、可变段按块滑动，先在一篇 20 页论文上量一次 token 与费用。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-grid" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 StarTrail-org/DRPixel 的详情">
+      <span class="chead">
+        <span class="ico">📄</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/StarTrail-org/DRPixel" target="_blank" rel="noopener" title="StarTrail-org/DRPixel">StarTrail-org/DRPixel</a></span></h3>
+          <span class="one">页面级（page-native）深度研究 agent 与基准：不做 OCR，直接把每一页论文渲染成图交给视觉模型读。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 40</span>
+        <a class="tag" href="https://github.com/StarTrail-org/DRPixel" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip install -e &#x27;.[client]&#x27;`，设 MODEL_NAME / BASE_URL / API_KEY、SEARCH_URL、判分用的 JUDGE_API_KEY；`python -m drbench.doctor` 约 20 秒自检（模型、检索端点、图像输入），再 `python -m drbench.eval --config Page` 跑并判分 500 道题。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>直接对上 paper-deep-reading 最大的瓶颈：你的链路是 PDF → 文本 → LaTeX 还原，表格、图、公式在抽取那一步就丢了。DR Pixel 的主张是「页就是单位，别先转文本」。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>这可能是本周最该做实验的一条。对照很简单：同一篇有复杂表格的论文，A 组走现在的 parsed.md，B 组直接给页面截图，看批注质量差多少。下一步：先 doctor 跑通，挑一篇你读过的论文做 A/B，重点看「表格里的数字」和「图注」谁抓得准；若 B 组明显好，就把 PRIMER 改成「页图 + 文本」双输入。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-soft" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 ZhuLinsen/LiteMoE 的详情">
+      <span class="chead">
+        <span class="ico">📖</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/ZhuLinsen/LiteMoE" target="_blank" rel="noopener" title="ZhuLinsen/LiteMoE">ZhuLinsen/LiteMoE</a></span></h3>
+          <span class="one">一个下午能读完的 MoE 推理引擎：约 1600 行 Python，固定 batch 下比 vLLM 快 5–9%。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 29</span>
+        <a class="tag" href="https://github.com/ZhuLinsen/LiteMoE" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>`pip install -e &#x27;.[vllm]&#x27;`，然后 `litemoe &quot;用一句话解释 MoE&quot;`。它调 vLLM 的 expert / attention / router kernel，自己实现 forward、KV 和生成循环。附交互式 demo 和「LLM 推理是怎么跑的」教程。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>对上你的「数据结构与算法讲稿」——这是一份可运行的教材，比讲 KV cache 的 PPT 有用得多。也让「显存里到底存了什么」有代码可指。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>它的诚实值得学：明说「只测固定 batch、贪心解码、单卡，vLLM 还有调度器和完整服务栈」，并给出 GSM8K 上 -0.9 分（95% CI -2.9~+1.1）的精度差。你的报告也该有这种边界声明。下一步：读它的 forward 与 KV 两段，改写成讲稿里的一页（配一张「token 怎么一步步变成下一个 token」的图），当数据结构课的补充材料。</p></div>
+    </div></div></div>
+  </details>
+</article><article class="card v-tape" style="--accent:#3776AB">
+  <details class="d">
+    <summary aria-label="展开 laszapens/Atta 的详情">
+      <span class="chead">
+        <span class="ico">📏</span>
+        <span class="hd">
+          <h3 class="nm"><span><a href="https://github.com/laszapens/Atta" target="_blank" rel="noopener" title="laszapens/Atta">laszapens/Atta</a></span></h3>
+          <span class="one">给 LLM 用的参数化 CAD 内核：先算几何事实（包围盒、体积、拓扑、壁厚、射线），通过三态校验才允许出图或导出。</span>
+        </span>
+        <span class="chv">▼</span>
+      </span>
+      <span class="tags">
+        <span class="tag lg">Python</span>
+        <span class="tag st">★ 28</span>
+        <a class="tag" href="https://github.com/laszapens/Atta" target="_blank" rel="noopener">GitHub ↗</a>
+      </span>
+    </summary>
+    <div class="body"><div><div class="bin">
+      <div class="blk"><h4>能怎么用</h4><p>十个工具、23 个配方、25 个特征操作，Blender 可选（几何与校验是纯 numpy，只有渲染和导出 GLB 才要 Blender）。流程：`describe` 0.3 秒内返回事实 → `verify` 返回 pass / degraded / fail 并附凭据 → `deliver` 拒绝任何非 pass 的结果。`model_id` 存的是「怎么重建」，同一份 spec 重建出同一几何哈希；报错自带 code + path + 具体修法。</p></div>
+      <div class="blk"><h4>能否结合你当前的 agent 实际</h4><p>和 sand3d 同族但取向相反：sand3d 追求写得短，Atta 追求验得严。对 3D 地图来说，Atta 的「先测量再交付」正好治 agent 建模时的瞎猜（「看起来对」就当完成）。</p></div>
+      <div class="blk"><h4>如何优化你的 agent 任务处理</h4><p>三态闸门（pass / degraded / fail + 拒绝交付）是本周最值得抄的工程模式，比「检查通过」四个字强得多。下一步：把你的核验脚本统一改三态输出（锚点悬空 = fail、术语命中率低 = degraded），fail 时拒绝上传——现在是生成成功就上传。</p></div>
+    </div></div></div>
+  </details>
+</article></div>
+</section>
+</main>
+
+<div style="max-width:1280px;margin:0 auto;padding:0 28px;">
+  <div class="wrap">
+    <h2>本周观察</h2>
+    <p>四条线都在把「一次能用」改成「可复现」：① 隔离执行成标配，三个项目同指一件事——让 agent 碰真机；② 安全两头夹，AI 审流量，也审 AI 写的代码与 skill 投毒，中间还埋着 OpenSSH 十年的 musl 认证绕过；③ 交付收敛成「SKILL.md + 参考帧 + 数值标准」；④ 评测开始讲区间与自审。论文链路瓶颈在「PDF 先转文本」，DR Pixel 值得 A/B。</p>
+    <div class="note">📦 已归档：<a href="https://github.com/Maisukrajima/github-weekly-brief/blob/main/report-20261108.html" target="_blank" rel="noopener">report-20261108.html</a>
+    　｜　在线预览：<a href="https://maisukrajima.github.io/github-weekly-brief/report-20261108.html" target="_blank" rel="noopener">GitHub Pages</a>
+    　｜　索引：<a href="https://maisukrajima.github.io/github-weekly-brief/index.html" target="_blank" rel="noopener">历周归档</a></div>
+  </div>
+</div>
+
+<footer>
+  由 WorkBuddy + github-weekly-brief 流程自动生成 · 卡片点击（或 Tab 聚焦后回车）展开详情 · 星数与语言取自 GitHub API 实际返回（2026-11-08 抓取）· 已人工剔除投毒 / 破解安装包类仓库
+</footer>
+<script>
+(function(){
+  var q=document.getElementById('q');
+  if(q){q.addEventListener('input',function(){
+    var kw=q.value.trim().toLowerCase();
+    document.querySelectorAll('.card').forEach(function(c){
+      c.style.display=(kw&&c.textContent.toLowerCase().indexOf(kw)<0)?'none':'';
+    });
+    document.querySelectorAll('section').forEach(function(s){
+      var vis=s.querySelectorAll('.card:not([style*="none"])').length;
+      s.style.display=vis?'':'none';
+    });
+  });}
+  // 卡片内链接不触发折叠
+  document.querySelectorAll('summary a').forEach(function(a){
+    a.addEventListener('click',function(e){e.stopPropagation();});
+  });
+  var all=document.getElementById('toggleAll');
+  if(all){all.addEventListener('click',function(){
+    var ds=document.querySelectorAll('details.d');
+    var anyClosed=Array.prototype.some.call(ds,function(d){return !d.open;});
+    ds.forEach(function(d){d.open=anyClosed;});
+    all.textContent=anyClosed?'全部收起':'全部展开';
+  });}
+  // 到顶
+  var top=document.getElementById('toTop');
+  if(top){top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
+})();
+</script>
+</body>
+</html>
