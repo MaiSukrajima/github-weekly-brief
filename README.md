@@ -10,12 +10,13 @@
 ## 入口
 
 - 索引页：<https://maisukrajima.github.io/github-weekly-brief/>
-- 最新一期：<https://maisukrajima.github.io/github-weekly-brief/report-20261108.html>
+- 最新一期：<https://maisukrajima.github.io/github-weekly-brief/report-20261115.html>
 
 ## 归档
 
 | 周次 | 日期 | 项目数 | 报告 |
 | --- | --- | --- | --- |
+| W46 | 2026-11-15 | 41 | [report-20261115.html](report-20261115.html) |
 | W45 | 2026-11-08 | 41 | [report-20261108.html](report-20261108.html) |
 | W44 | 2026-11-01 | 38 | [report-20261101.html](report-20261101.html) |
 | W43 | 2026-10-25 | 34 | [report-20261025.html](report-20261025.html) |
